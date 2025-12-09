@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Plan d’action GiHA 2025–2026</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Police moderne et lisible -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ocha-blue: #1F4E79;
+      --unw-blue: #448BCA;
+      --unw-orange: #F58220;
+      --bg-soft: #f5f7fb;
+      --text-dark: #222222;
+      --text-muted: #666666;
+      --border-soft: #dde3f0;
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --shadow-soft: 0 14px 40px rgba(15, 35, 52, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Source Sans 3", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, Arial, sans-serif;
+      font-size: 14px;
+      color: var(--text-dark);
+      background: radial-gradient(circle at top left, #e9f1ff 0, #f5f7fb 45%, #ffffff 100%);
+    }
+
+    /* Conteneur principal */
+    .page {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 18px 20px 24px;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+    }
+
+    /* En-tête */
+    .header {
+      border-radius: 16px;
+      padding: 14px 18px;
+      background: linear-gradient(135deg, var(--unw-blue), var(--ocha-blue));
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .header-left h1 {
+      margin: 0;
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .header-left p {
+      margin: 4px 0 0;
+      font-size: 0.9rem;
+      opacity: 0.95;
+    }
+
+    .header-right {
+      text-align: right;
+      font-size: 0.85rem;
+    }
+
+    .header-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      font-size: 0.8rem;
+      margin-bottom: 4px;
+    }
+
+    .header-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--unw-orange);
+    }
+
+    /* Zone de filtres */
+    .filters {
+      margin-bottom: 12px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: #f6f8ff;
+      border: 1px solid var(--border-soft);
+      display: grid;
+      grid-template-columns: 2fr 1.3fr 1.3fr 1fr;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .filter-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+      color: var(--text-muted);
+    }
+
+    .filter-input,
+    .filter-select {
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      background: #ffffff;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .filter-input:focus,
+    .filter-select:focus {
+      border-color: var(--unw-blue);
+      box-shadow: 0 0 0 2px rgba(68, 139, 202, 0.18);
+    }
+
+    /* Stats rapides */
+    .summary-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .summary-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 3px 9px;
+      border: 1px solid var(--border-soft);
+      background: #ffffff;
+    }
+
+    .summary-chip strong {
+      color: var(--ocha-blue);
+    }
+
+    /* Tableau plan d’action */
+    .table-wrapper {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border-soft);
+      background: #ffffff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    thead {
+      background: linear-gradient(90deg, #f4f7ff, #fdf8f3);
+    }
+
+    th,
+    td {
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-soft);
+      position: sticky;
+      top: 0;
+      background: linear-gradient(90deg, #f4f7ff, #fdf8f3);
+      z-index: 2;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #fafbff;
+    }
+
+    tbody tr:nth-child(odd) {
+      background: #ffffff;
+    }
+
+    tbody tr:hover {
+      background: #eef3ff;
+    }
+
+    .col-axe {
+      width: 13%;
+    }
+    .col-resultat {
+      width: 18%;
+    }
+    .col-activite {
+      width: 27%;
+    }
+    .col-echeance {
+      width: 10%;
+    }
+    .col-responsable {
+      width: 13%;
+    }
+    .col-statut {
+      width: 10%;
+    }
+    .col-priorite {
+      width: 9%;
+    }
+
+    .axe-pill {
+      display: inline-flex;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #f3f7ff;
+      border: 1px solid rgba(68, 139, 202, 0.3);
+      font-size: 0.78rem;
+      color: var(--ocha-blue);
+    }
+
+    .small-text {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border: 1px solid transparent;
+    }
+
+    .status-not-started {
+      background: #fff7e6;
+      color: #b36b00;
+      border-color: #ffd591;
+    }
+
+    .status-in-progress {
+      background: #e6f4ff;
+      color: #0050b3;
+      border-color: #91caff;
+    }
+
+    .status-completed {
+      background: #f6ffed;
+      color: #237804;
+      border-color: #b7eb8f;
+    }
+
+    .status-risk {
+      background: #fff1f0;
+      color: #a8071a;
+      border-color: #ffa39e;
+    }
+
+    .priority-badge {
+      display: inline-flex;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border: 1px solid transparent;
+    }
+
+    .priority-high {
+      background: #fff1f0;
+      color: #a8071a;
+      border-color: #ffa39e;
+    }
+
+    .priority-medium {
+      background: #fff7e6;
+      color: #b36b00;
+      border-color: #ffd591;
+    }
+
+    .priority-low {
+      background: #f6ffed;
+      color: #237804;
+      border-color: #b7eb8f;
+    }
+
+    .progress-bar {
+      width: 100%;
+      max-width: 140px;
+      height: 6px;
+      border-radius: 999px;
+      background: #f0f2f5;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+
+    .progress-inner {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--unw-blue), var(--unw-orange));
+      transition: width 0.25s ease;
+    }
+
+    .text-muted {
+      color: var(--text-muted);
+    }
+
+    /* Message "aucun résultat" */
+    .no-results {
+      padding: 16px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Pied de page léger */
+    .footer-note {
+      margin-top: 10px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .link-muted {
+      color: var(--text-muted);
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(102, 102, 102, 0.4);
+    }
+
+    .link-muted:hover {
+      color: var(--ocha-blue);
+      border-bottom-color: rgba(31, 78, 121, 0.7);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .page {
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header-right {
+        text-align: left;
+      }
+
+      .filters {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .col-resultat,
+      .col-activite {
+        min-width: 220px;
+      }
+
+      .table-wrapper {
+        overflow-x: auto;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .filters {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+  <!-- En-tête -->
+  <header class="header">
+    <div class="header-left">
+      <h1>Plan d’action GiHA 2025–2026</h1>
+      <p>Suivi dynamique des engagements du Comité Genre dans l’Action Humanitaire (GiHA) – RDC.</p>
+    </div>
+    <div class="header-right">
+      <div class="header-chip">
+        <span class="header-dot"></span>
+        <span><strong>ONU Femmes</strong> &amp; partenaires (OCHA, PAM, CARE, SOFEPADI, UNICEF…)</span>
+      </div>
+      <div><strong>Période :</strong> 2025–2026</div>
+      <div><strong>Mise à jour :</strong> <span id="lastUpdate"></span></div>
+    </div>
+  </header>
+
+  <!-- Filtres -->
+  <section class="filters" aria-label="Filtres du plan d’action">
+    <div class="filter-group">
+      <span class="filter-label">Recherche</span>
+      <input
+        type="search"
+        id="searchInput"
+        class="filter-input"
+        placeholder="Rechercher (activité, résultat, responsable, province, etc.)"
+      >
+    </div>
+
+    <div class="filter-group">
+      <span class="filter-label">Axe / Résultat</span>
+      <select id="axisFilter" class="filter-select">
+        <option value="">Tous les axes</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <span class="filter-label">Statut</span>
+      <select id="statusFilter" class="filter-select">
+        <option value="">Tous les statuts</option>
+        <option value="Non démarré">Non démarré</option>
+        <option value="En cours">En cours</option>
+        <option value="Achevé">Achevé</option>
+        <option value="À risque">À risque</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <span class="filter-label">Année</span>
+      <select id="yearFilter" class="filter-select">
+        <option value="">2025–2026</option>
+        <option value="2025">2025</option>
+        <option value="2026">2026</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- Résumé rapide -->
+  <section class="summary-bar" aria-label="Statistiques du plan d’action">
+    <div class="summary-chip">
+      <span>Actions totales :</span>
+      <strong id="totalActions">0</strong>
+    </div>
+    <div class="summary-chip">
+      <span>En cours :</span>
+      <strong id="inProgressCount">0</strong>
+    </div>
+    <div class="summary-chip">
+      <span>Achevées :</span>
+      <strong id="completedCount">0</strong>
+    </div>
+    <div class="summary-chip">
+      <span>À risque :</span>
+      <strong id="riskCount">0</strong>
+    </div>
+  </section>
+
+  <!-- Tableau -->
+  <section class="table-wrapper" aria-label="Plan d’action détaillé">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-axe">Axe / Résultat</th>
+          <th class="col-resultat">Résultat / Effet</th>
+          <th class="col-activite">Activité / Tâche clé</th>
+          <th class="col-echeance">Échéance</th>
+          <th class="col-responsable">Responsable &amp; partenaires</th>
+          <th class="col-statut">Statut</th>
+          <th class="col-priorite">Priorité</th>
+        </tr>
+      </thead>
+      <tbody id="actionTableBody">
+        <!-- Lignes générées en JS -->
+      </tbody>
+    </table>
+    <div id="noResults" class="no-results" style="display:none;">
+      Aucun résultat ne correspond à vos filtres. Essayez d’élargir la recherche.
+    </div>
+  </section>
+
+  <!-- Note de bas de page -->
+  <footer class="footer-note">
+    <span>
+      Ce plan d’action est basé sur le tableau Excel du Comité GiHA (2025–2026).  
+      Vous pouvez l’actualiser en modifiant les données dans le bloc <code>actionsData</code> du script.
+    </span>
+    <span>
+      Déployé comme page statique GitHub&nbsp;Pages (HTML/CSS/JS uniquement).
+    </span>
+  </footer>
+</div>
+
+<script>
+  // === 1. Données du plan d’action =======================================
+  // Remplace ces exemples par les lignes de ton Excel.
+  // Chaque objet = une ligne du plan d’action.
+  const actionsData = [
+    {
+      id: 1,
+      axe: "Axe 1 – Leadership & localisation",
+      resultat: "Renforcer la participation des organisations féminines dans la gouvernance humanitaire nationale.",
+      activite: "Mettre en place un mécanisme formel de consultation des WLOs avant chaque révision du HRP et des plans de réponse provinciaux.",
+      echeance: "T3 2025",
+      annee: 2025,
+      responsable: "ONU Femmes",
+      partenaires: "OCHA, SOFEPADI, AVSD, Clusters sectoriels",
+      statut: "En cours",
+      priorite: "Haute",
+      progression: 45
+    },
+    {
+      id: 2,
+      axe: "Axe 1 – Leadership & localisation",
+      resultat: "Accroître l’accès direct des WLOs aux financements humanitaires.",
+      activite: "Conduire une étude de capacité des organisations féminines et co-développer un plan d’accompagnement à l’éligibilité aux fonds humanitaires (CBPF, CERF…).",
+      echeance: "T1 2026",
+      annee: 2026,
+      responsable: "OCHA",
+      partenaires: "ONU Femmes, WFP, ONG internationales",
+      statut: "Non démarré",
+      priorite: "Haute",
+      progression: 5
+    },
+    {
+      id: 3,
+      axe: "Axe 2 – Qualité de la réponse",
+      resultat: "Intégrer systématiquement le genre dans les réponses multisectorielles prioritaires.",
+      activite: "Développer et déployer des modules de formation GiHA spécifiques aux clusters WASH, Santé, Nutrition et Abris.",
+      echeance: "T4 2025",
+      annee: 2025,
+      responsable: "ONU Femmes",
+      partenaires: "Clusters WASH, Santé, Nutrition, Abris",
+      statut: "En cours",
+      priorite: "Moyenne",
+      progression: 60
+    },
+    {
+      id: 4,
+      axe: "Axe 2 – Qualité de la réponse",
+      resultat: "Renforcer l’utilisation de données sexo-spécifiques dans la prise de décision.",
+      activite: "Mettre à jour le tableau de bord GiHA (Power BI) avec des indicateurs sexo-spécifiques par province et produire un brief analytique semestriel.",
+      echeance: "T2 2025",
+      annee: 2025,
+      responsable: "ONU Femmes – IM",
+      partenaires: "OCHA IMWG, Clusters, INGO",
+      statut: "Achevé",
+      priorite: "Moyenne",
+      progression: 100
+    },
+    {
+      id: 5,
+      axe: "Axe 3 – Redevabilité & gestion des risques",
+      resultat: "Réduire les risques de VBG liés à la réponse humanitaire.",
+      activite: "Documenter les risques de VBG liés aux distributions en espèces et en nature, et proposer des mesures d’atténuation pragmatiques aux clusters concernés.",
+      echeance: "T3 2026",
+      annee: 2026,
+      responsable: "UNFPA / Cluster VBG",
+      partenaires: "ONU Femmes, WFP, ONG locales",
+      statut: "À risque",
+      priorite: "Haute",
+      progression: 20
+    },
+    {
+      id: 6,
+      axe: "Axe 3 – Redevabilité & gestion des risques",
+      resultat: "Améliorer la redevabilité envers les femmes et les filles affectées.",
+      activite: "Intégrer des questions spécifiques aux femmes et aux filles dans les mécanismes de PSEA / CEA existants (hotlines, feedback desks, etc.).",
+      echeance: "T4 2025",
+      annee: 2025,
+      responsable: "OCHA / AAP-CEA",
+      partenaires: "ONU Femmes, Clusters, ONG",
+      statut: "En cours",
+      priorite: "Basse",
+      progression: 40
+    }
+  ];
+
+  // === 2. Utilitaires d’affichage ========================================
+
+  const tbody = document.getElementById("actionTableBody");
+  const noResultsDiv = document.getElementById("noResults");
+
+  const searchInput = document.getElementById("searchInput");
+  const axisFilter = document.getElementById("axisFilter");
+  const statusFilter = document.getElementById("statusFilter");
+  const yearFilter = document.getElementById("yearFilter");
+
+  const totalActionsSpan = document.getElementById("totalActions");
+  const inProgressCountSpan = document.getElementById("inProgressCount");
+  const completedCountSpan = document.getElementById("completedCount");
+  const riskCountSpan = document.getElementById("riskCount");
+
+  // Dernière mise à jour (date actuelle)
+  document.getElementById("lastUpdate").textContent =
+    new Date().toLocaleDateString("fr-FR");
+
+  // Remplir la liste des axes de manière dynamique
+  function populateAxisFilter() {
+    const axes = Array.from(new Set(actionsData.map(a => a.axe))).sort();
+    axes.forEach(axe => {
+      const opt = document.createElement("option");
+      opt.value = axe;
+      opt.textContent = axe;
+      axisFilter.appendChild(opt);
+    });
+  }
+
+  // Convertir le statut en classe CSS
+  function getStatusClass(status) {
+    switch (status) {
+      case "Non démarré":
+        return "status-not-started";
+      case "En cours":
+        return "status-in-progress";
+      case "Achevé":
+        return "status-completed";
+      case "À risque":
+        return "status-risk";
+      default:
+        return "";
+    }
+  }
+
+  // Priorité -> classe CSS
+  function getPriorityClass(priority) {
+    switch (priority) {
+      case "Haute":
+        return "priority-high";
+      case "Moyenne":
+        return "priority-medium";
+      case "Basse":
+        return "priority-low";
+      default:
+        return "";
+    }
+  }
+
+  // Filtrer les données selon les contrôles
+  function getFilteredActions() {
+    const query = searchInput.value.trim().toLowerCase();
+    const axisValue = axisFilter.value;
+    const statusValue = statusFilter.value;
+    const yearValue = yearFilter.value;
+
+    return actionsData.filter(action => {
+      // Filtre texte
+      if (query) {
+        const haystack =
+          (action.axe + " " +
+           action.resultat + " " +
+           action.activite + " " +
+           action.responsable + " " +
+           action.partenaires + " " +
+           (action.echeance || ""))
+          .toLowerCase();
+        if (!haystack.includes(query)) return false;
+      }
+
+      // Filtre axe
+      if (axisValue && action.axe !== axisValue) return false;
+
+      // Filtre statut
+      if (statusValue && action.statut !== statusValue) return false;
+
+      // Filtre année
+      if (yearValue && String(action.annee) !== yearValue) return false;
+
+      return true;
+    });
+  }
+
+  // Met à jour les stats (en se basant sur toutes les actions, pas seulement filtrées)
+  function updateSummary() {
+    totalActionsSpan.textContent = actionsData.length;
+    inProgressCountSpan.textContent = actionsData.filter(a => a.statut === "En cours").length;
+    completedCountSpan.textContent = actionsData.filter(a => a.statut === "Achevé").length;
+    riskCountSpan.textContent = actionsData.filter(a => a.statut === "À risque").length;
+  }
+
+  // Rendu du tableau
+  function renderTable() {
+    const filtered = getFilteredActions();
+    tbody.innerHTML = "";
+
+    if (filtered.length === 0) {
+      noResultsDiv.style.display = "block";
+      return;
+    } else {
+      noResultsDiv.style.display = "none";
+    }
+
+    filtered.forEach(action => {
+      const tr = document.createElement("tr");
+
+      // Colonne Axe
+      const tdAxe = document.createElement("td");
+      tdAxe.className = "col-axe";
+      tdAxe.innerHTML = `<span class="axe-pill">${action.axe}</span>`;
+      tr.appendChild(tdAxe);
+
+      // Colonne Résultat
+      const tdRes = document.createElement("td");
+      tdRes.className = "col-resultat";
+      tdRes.textContent = action.resultat;
+      tr.appendChild(tdRes);
+
+      // Colonne Activité
+      const tdAct = document.createElement("td");
+      tdAct.className = "col-activite";
+      tdAct.innerHTML = `
+        <div>${action.activite}</div>
+        <div class="progress-bar" aria-label="Progression">
+          <div class="progress-inner" style="width:${action.progression || 0}%"></div>
+        </div>
+        <div class="small-text">${action.progression || 0}% de mise en œuvre estimée</div>
+      `;
+      tr.appendChild(tdAct);
+
+      // Colonne Échéance
+      const tdEch = document.createElement("td");
+      tdEch.className = "col-echeance";
+      tdEch.innerHTML = `
+        <div>${action.echeance}</div>
+        <div class="small-text text-muted">${action.annee}</div>
+      `;
+      tr.appendChild(tdEch);
+
+      // Colonne Responsable
+      const tdResp = document.createElement("td");
+      tdResp.className = "col-responsable";
+      tdResp.innerHTML = `
+        <div><strong>${action.responsable}</strong></div>
+        <div class="small-text text-muted">${action.partenaires}</div>
+      `;
+      tr.appendChild(tdResp);
+
+      // Colonne Statut
+      const tdStat = document.createElement("td");
+      tdStat.className = "col-statut";
+      tdStat.innerHTML = `
+        <span class="status-badge ${getStatusClass(action.statut)}">
+          ${action.statut}
+        </span>
+      `;
+      tr.appendChild(tdStat);
+
+      // Colonne Priorité
+      const tdPrio = document.createElement("td");
+      tdPrio.className = "col-priorite";
+      tdPrio.innerHTML = `
+        <span class="priority-badge ${getPriorityClass(action.priorite)}">
+          ${action.priorite || ""}
+        </span>
+      `;
+      tr.appendChild(tdPrio);
+
+      tbody.appendChild(tr);
+    });
+  }
+
+  // === 3. Initialisation & écouteurs =====================================
+
+  function init() {
+    populateAxisFilter();
+    updateSummary();
+    renderTable();
+
+    searchInput.addEventListener("input", renderTable);
+    axisFilter.addEventListener("change", renderTable);
+    statusFilter.addEventListener("change", renderTable);
+    yearFilter.addEventListener("change", renderTable);
+  }
+
+  document.addEventListener("DOMContentLoaded", init);
+</script>
+
+</body>
+</html>
