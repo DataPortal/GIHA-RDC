@@ -24,31 +24,32 @@
       --radius-md: 12px;
       --shadow-soft: 0 10px 28px rgba(15, 35, 52, 0.16);
     }
-	  .top-nav {
-  background: linear-gradient(90deg, var(--unw-blue), var(--ocha-blue));
-  color: #fff;
-  padding: 6px 26px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 18px;
-  font-size: 0.9rem;
-}
-.top-nav a.active {
-  border-bottom-color: var(--unw-orange);
-  font-weight: 600;
-}
 
-.top-nav a {
-  color: #fff;
-  text-decoration: none;
-  padding-bottom: 2px;
-  border-bottom: 2px solid transparent;
-}
+    .top-nav {
+      background: linear-gradient(90deg, var(--unw-blue), var(--ocha-blue));
+      color: #fff;
+      padding: 6px 26px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 18px;
+      font-size: 0.9rem;
+    }
 
-.top-nav a:hover {
-  border-bottom-color: rgba(255, 255, 255, 0.9);
-}
+    .top-nav a {
+      color: #fff;
+      text-decoration: none;
+      padding-bottom: 2px;
+      border-bottom: 2px solid transparent;
+    }
 
+    .top-nav a:hover {
+      border-bottom-color: rgba(255, 255, 255, 0.9);
+    }
+
+    .top-nav a.active {
+      border-bottom-color: var(--unw-orange);
+      font-weight: 600;
+    }
 
     * { box-sizing: border-box; }
 
@@ -586,6 +587,9 @@
         break-inside: avoid;
         page-break-inside: avoid;
       }
+      .top-nav {
+        display: none !important;
+      }
     }
 
     @media (max-width: 900px) {
@@ -598,22 +602,17 @@
       }
       .content { padding: 10px 14px; }
     }
-	@media print {
-  /* ... ton CSS existant ... */
-  .top-nav {
-    display: none !important;
-  }
-}
-
   </style>
 </head>
 <body>
+
 <!-- Menu commun GiHA -->
 <nav class="top-nav">
   <a href="index.html">Accueil</a>
-  <a href="snapshot.html">Snapshot</a>
+  <a href="snapshot.html" class="active">Snapshot</a>
   <a href="plan_action.html">Plan d’action</a>
 </nav>
+
 <div class="page-wrapper">
 
   <!-- Bandeau haut -->
@@ -628,8 +627,9 @@
     <div class="header-right">
       <div class="header-chip">
         <span class="header-dot"></span>
+        <span>Comité GiHA – RDC</span>
       </div>
-      <div><strong>Production :</strong> Decembre – 2025</div>
+      <div><strong>Production :</strong> Décembre – 2025</div>
       <div><strong>Pays :</strong> République Démocratique du Congo</div>
     </div>
   </div>
@@ -652,12 +652,13 @@
             </p>
             <div class="tag-row">
               <span class="tag strong">Comité GiHA – RDC</span>
-			   <span class="tag">HCT &amp; mécanismes de coordination</span>
+              <span class="tag">HCT &amp; mécanismes de coordination</span>
             </div>
           </div>
           <div class="org-block">
             <div class="org-main">
               <span class="dot"></span>
+              <span>ONU Femmes – Lead GiHA</span>
             </div>
             <div class="org-sub">
               En partenariat avec OCHA, PAM, UNFPA, CARE International, UNICEF, SOFEPADI
@@ -901,7 +902,7 @@
         <div class="roadmap-grid">
           <div class="roadmap-card">
             <div class="roadmap-label">Financement</div>
-            <div class="roadmap-title">Objectif 20&nbsp;% & amp; étude diagnostic</div>
+            <div class="roadmap-title">Objectif 20&nbsp;% &amp; étude diagnostique</div>
             <ul>
               <li><strong>Cible&nbsp;:</strong> atteindre <strong>20&nbsp;% de financement direct</strong> pour les ONGs féminines.</li>
               <li><strong>Action 2026&nbsp;:</strong> conduire l’<strong>étude de capacité</strong> requise pour lever
@@ -939,65 +940,69 @@
         </div>
       </div>
     </section>
-<!-- 5. Outils stratégiques -->
-<section class="section" id="outils">
-  <div class="section-header">
-    <div class="section-title">Outils stratégiques &amp; diffusion</div>
-    <div class="section-label">Capitalisation &amp; partage</div>
-  </div>
 
-  <div class="section-body">
-    <div class="tools-row">
-
-      <!-- Cartographie interactive -->
-      <div class="tool-card">
-        <div class="tool-title">
-          📊 <a href="https://app.powerbi.com/view?r=eyJrIjoiNDg2YTUzMDItNTMxYy00NjhjLTg1YjctYWZjYzgxMGIyODdhIiwidCI6ImE2Mjk2ZWFiLTY0YmItNDI2My1iYTE2LTljMzc3MGFkMTRjMyJ9"
-              target="_blank"
-              style="color: var(--unw-blue); text-decoration: none; font-weight: 700;">
-              Cartographie interactive
-          </a>
-        </div>
-        <div class="tool-link">
-          Base de données des <strong>1&nbsp;766 organisations féminines</strong> en RDC,
-          incluant les 131 spécialisées dans l’action humanitaire. Outil clé pour la localisation
-          et le ciblage des partenariats.
-        </div>
+    <!-- 5. Outils stratégiques -->
+    <section class="section" id="outils">
+      <div class="section-header">
+        <div class="section-title">Outils stratégiques &amp; diffusion</div>
+        <div class="section-label">Capitalisation &amp; partage</div>
       </div>
 
-      <!-- Page ReliefWeb -->
-      <div class="tool-card">
-        <div class="tool-title">
-          🌐 <a href="https://response.reliefweb.int/democratic-republic-congo/genre"
-                target="_blank"
-                style="color: var(--unw-blue); text-decoration: none; font-weight: 700;">
-                Page ReliefWeb – Genre RDC
-          </a>
-        </div>
-        <div class="tool-link">
-          Plateforme de <strong>centralisation</strong> des alertes, rapports, analyses et documents de référence
-          produits par le Comité GiHA et ses partenaires, accessible à l’ensemble de la communauté humanitaire.
+      <div class="section-body">
+        <div class="tools-row">
+
+          <!-- Cartographie interactive -->
+          <div class="tool-card">
+            <div class="tool-title">
+              📊 <a href="https://app.powerbi.com/view?r=eyJrIjoiNDg2YTUzMDItNTMxYy00NjhjLTg1YjctYWZjYzgxMGIyODdhIiwidCI6ImE2Mjk2ZWFiLTY0YmItNDI2My1iYTE2LTljMzc3MGFkMTRjMyJ9"
+                    target="_blank"
+                    style="color: var(--unw-blue); text-decoration: none; font-weight: 700;">
+                    Cartographie interactive
+                  </a>
+            </div>
+            <div class="tool-link">
+              Base de données des <strong>1&nbsp;766 organisations féminines</strong> en RDC,
+              incluant les 131 spécialisées dans l’action humanitaire. Outil clé pour la localisation
+              et le ciblage des partenariats.
+            </div>
+          </div>
+
+          <!-- Page ReliefWeb -->
+          <div class="tool-card">
+            <div class="tool-title">
+              🌐 <a href="https://response.reliefweb.int/democratic-republic-congo/genre"
+                    target="_blank"
+                    style="color: var(--unw-blue); text-decoration: none; font-weight: 700;">
+                    Page ReliefWeb – Genre RDC
+                  </a>
+            </div>
+            <div class="tool-link">
+              Plateforme de <strong>centralisation</strong> des alertes, rapports, analyses et documents de référence
+              produits par le Comité GiHA et ses partenaires, accessible à l’ensemble de la communauté humanitaire.
+            </div>
+          </div>
+
+          <!-- Drive collaboratif -->
+          <div class="tool-card">
+            <div class="tool-title">
+              📂 <a href="https://drive.google.com/drive/folders/1l5m-O0RarFS7ZPvch73UYPeXi2yKSLuA"
+                    target="_blank"
+                    style="color: var(--unw-blue); text-decoration: none; font-weight: 700;">
+                    Drive collaboratif GiHA
+                  </a>
+            </div>
+            <div class="tool-link">
+              Dossier partagé regroupant les <strong>TDR, plans d’action, supports de formation</strong> et outils de
+              plaidoyer, facilitant la continuité et la capitalisation des travaux du Comité.
+            </div>
+          </div>
+
         </div>
       </div>
+    </section>
 
-      <!-- Drive collaboratif -->
-      <div class="tool-card">
-        <div class="tool-title">
-          📂 <a href="https://drive.google.com/drive/folders/1l5m-O0RarFS7ZPvch73UYPeXi2yKSLuA"
-                target="_blank"
-                style="color: var(--unw-blue); text-decoration: none; font-weight: 700;">
-                Drive collaboratif GiHA
-          </a>
-        </div>
-        <div class="tool-link">
-          Dossier partagé regroupant les <strong>TDR, plans d’action, supports de formation</strong> et outils de
-          plaidoyer, facilitant la continuité et la capitalisation des travaux du Comité.
-        </div>
-      </div>
+  </div> <!-- fin .content -->
 
-    </div>
-  </div>
-</section>
   <!-- Bandeau bas avec logos -->
   <div class="footer-band">
     <div class="footer-text">
@@ -1022,7 +1027,7 @@
     </div>
   </div>
 
-</div>
+</div> <!-- fin .page-wrapper -->
 
 </body>
 </html>
