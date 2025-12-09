@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Snapshot Comité GiHA – RDC</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Police lisible, proche des recommandations OCHA -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ocha-blue: #1F4E79;
+      --unw-blue: #448BCA;
+      --unw-orange: #F58220;
+      --text-dark: #222222;
+      --text-muted: #666666;
+      --bg-soft: #f5f7fb;
+      --card-bg: #ffffff;
+      --border-soft: #dde3f0;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --shadow-soft: 0 10px 28px rgba(15, 35, 52, 0.16);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 6px;
+      font-family: "Source Sans 3", "Source Sans Pro", -apple-system,
+        BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      font-size: 12pt;
+      background: radial-gradient(circle at top left, #e9f1ff 0, #f5f7fb 40%, #ffffff 100%);
+      color: var(--text-dark);
+    }
+
+    .page-wrapper {
+      max-width: 1150px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 760px; /* approx A4 paysage */
+      position: relative;
+    }
+
+    /* Bandeau en-tête ONU Femmes */
+    .header-band {
+      background: var(--unw-blue);
+      color: #ffffff;
+      padding: 10px 26px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .header-title-small {
+      font-size: 9pt;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      opacity: 0.9;
+    }
+
+    .header-title-main {
+      font-size: 14pt;
+      font-weight: 600;
+    }
+
+    .header-subtitle {
+      font-size: 10pt;
+      opacity: 0.9;
+    }
+
+    .header-right {
+      text-align: right;
+      font-size: 10pt;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .header-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 3px 9px;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      font-size: 9pt;
+      align-self: flex-end;
+    }
+
+    .header-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--unw-orange);
+    }
+
+    /* Contenu principal – colonne unique, sections empilées */
+    .content {
+      padding: 12px 24px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1 1 auto;
+      background: linear-gradient(135deg, #f7f9ff 0, #ffffff 50%, #fdf8f3 100%);
+    }
+
+    /* Section générique */
+    .section {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      padding: 10px 14px 11px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 3px;
+      background: linear-gradient(180deg, var(--unw-blue), var(--unw-orange));
+      opacity: 0.9;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 5px;
+    }
+
+    .section-title {
+      font-size: 13pt;
+      font-weight: 700;
+      color: var(--ocha-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .section-label {
+      font-size: 9pt;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+    }
+
+    .section-body {
+      font-size: 12pt;
+      line-height: 1.35;
+      color: var(--text-dark);
+      margin-top: 2px;
+    }
+
+    /* Section 0 – présentation générale */
+    .intro-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    h1 {
+      font-size: 14pt;
+      margin: 0;
+      color: var(--ocha-blue);
+      letter-spacing: 0.02em;
+    }
+
+    .subtitle-main {
+      margin-top: 4px;
+      font-size: 11pt;
+      color: var(--text-muted);
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .tag {
+      font-size: 9pt;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(31, 78, 121, 0.18);
+      background: #f8faff;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .tag.strong {
+      border-color: rgba(68, 139, 202, 0.5);
+      color: var(--ocha-blue);
+      font-weight: 600;
+      background: #ffffff;
+    }
+
+    .org-block {
+      border-radius: var(--radius-md);
+      background: #ffffff;
+      border: 1px solid var(--border-soft);
+      padding: 8px 10px;
+      font-size: 11pt;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .org-main {
+      font-weight: 600;
+      color: var(--ocha-blue);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .org-main span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--unw-orange);
+    }
+
+    .org-sub {
+      color: var(--text-muted);
+      line-height: 1.35;
+      font-size: 11pt;
+    }
+
+    .org-members {
+      font-size: 10pt;
+      color: var(--text-muted);
+    }
+
+    /* Éléments de texte */
+    .key-line {
+      margin-bottom: 4px;
+      display: flex;
+      align-items: flex-start;
+      gap: 5px;
+    }
+
+    .key-line-icon {
+      font-size: 10pt;
+      margin-top: 1px;
+    }
+
+    .key-line-text strong {
+      color: var(--ocha-blue);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin: 4px 0 6px;
+    }
+
+    .pill {
+      font-size: 9pt;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: #f6f9ff;
+      border: 1px solid rgba(68, 139, 202, 0.35);
+      color: var(--ocha-blue);
+      white-space: nowrap;
+    }
+
+    /* Chiffres clés */
+    .sub-section-title {
+      font-size: 12pt;
+      font-weight: 700;
+      margin: 6px 0 3px;
+      color: var(--unw-blue);
+    }
+
+    .sub-section-caption {
+      font-size: 10pt;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+      margin-top: 2px;
+    }
+
+    .metric-card {
+      background: linear-gradient(135deg, #f7f9ff 0, #ffffff 60%, #fff8f1 100%);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(68, 139, 202, 0.25);
+      padding: 6px 7px;
+      position: relative;
+      font-size: 10pt;
+    }
+
+    .metric-card.soft {
+      background: #ffffff;
+      border-style: dashed;
+    }
+
+    .metric-tag {
+      font-size: 9pt;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--text-muted);
+      margin-bottom: 1px;
+    }
+
+    .metric-value {
+      font-size: 11pt;
+      font-weight: 700;
+      color: var(--ocha-blue);
+      margin: 0;
+    }
+
+    .metric-desc {
+      margin-top: 3px;
+      font-size: 9pt;
+      color: var(--text-muted);
+      line-height: 1.25;
+    }
+
+    .metric-badge {
+      position: absolute;
+      right: 6px;
+      top: 4px;
+      font-size: 8pt;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: rgba(31, 78, 121, 0.08);
+      color: var(--ocha-blue);
+    }
+
+    /* Argumentaire */
+    .argument-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 7px;
+      margin-top: 4px;
+    }
+
+    .argument-card {
+      background: #ffffff;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-soft);
+      padding: 6px 7px;
+      position: relative;
+      font-size: 10pt;
+    }
+
+    .argument-title {
+      font-size: 10pt;
+      font-weight: 700;
+      color: var(--unw-blue);
+      margin-bottom: 2px;
+    }
+
+    .argument-body {
+      font-size: 9pt;
+      color: var(--text-dark);
+      line-height: 1.3;
+    }
+
+    .argument-chip {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      font-size: 8pt;
+      padding: 1px 5px;
+      border-radius: 999px;
+      background: #fef4ea;
+      color: var(--unw-orange);
+      border: 1px solid rgba(245, 130, 32, 0.4);
+    }
+
+    /* Feuille de route */
+    .roadmap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 7px;
+      margin-top: 3px;
+    }
+
+    .roadmap-card {
+      background: linear-gradient(145deg, #f8faff 0, #ffffff 60%);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(68, 139, 202, 0.25);
+      padding: 6px 7px;
+      font-size: 10pt;
+    }
+
+    .roadmap-label {
+      font-size: 9pt;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .roadmap-title {
+      font-size: 10pt;
+      font-weight: 700;
+      color: var(--ocha-blue);
+      margin-bottom: 3px;
+    }
+
+    .roadmap-card ul {
+      margin: 0 0 0 0.9em;
+      padding: 0;
+    }
+
+    .roadmap-card li {
+      margin-bottom: 2px;
+      font-size: 9pt;
+    }
+
+    /* Outils */
+    .tools-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .tool-card {
+      flex: 1 1 200px;
+      min-width: 200px;
+      background: #ffffff;
+      border-radius: var(--radius-md);
+      border: 1px dashed rgba(68, 139, 202, 0.4);
+      padding: 6px 7px;
+      font-size: 9pt;
+    }
+
+    .tool-title {
+      font-weight: 600;
+      color: var(--unw-blue);
+      margin-bottom: 2px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10pt;
+    }
+
+    .tool-link {
+      font-size: 9pt;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+
+    /* Bas de page avec logos */
+    .footer-band {
+      background: var(--unw-blue);
+      color: #ffffff;
+      padding: 6px 20px;
+      font-size: 9pt;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .footer-text {
+      flex: 1 1 260px;
+    }
+
+    .footer-logos {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      flex: 0 0 auto;
+    }
+
+    .footer-logo {
+      max-height: 30px;
+      width: auto;
+      display: block;
+    }
+
+    .btn-print {
+      border: none;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 9pt;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--ocha-blue), var(--unw-blue));
+      color: #ffffff;
+      box-shadow: 0 6px 16px rgba(15, 35, 52, 0.35);
+    }
+
+    .btn-print span.icon {
+      font-size: 11pt;
+    }
+
+    .btn-print:active {
+      transform: translateY(1px);
+      box-shadow: 0 3px 10px rgba(15, 35, 52, 0.35);
+    }
+
+    .no-print {}
+
+    /* Impression – A4 paysage, marges étroites */
+    @page {
+      size: A4 landscape;
+      margin: 8mm;
+    }
+
+    @media print {
+      body {
+        background: #ffffff !important;
+        padding: 0;
+      }
+      .page-wrapper {
+        box-shadow: none;
+        border-radius: 0;
+        border: none;
+        max-width: none;
+        min-height: auto;
+      }
+      .no-print {
+        display: none !important;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      .section,
+      .metric-card,
+      .argument-card,
+      .roadmap-card,
+      .tool-card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .page-wrapper { border-radius: 0; }
+      .intro-grid,
+      .grid-3,
+      .argument-grid,
+      .roadmap-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .content { padding: 10px 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <!-- Bandeau haut -->
+  <div class="header-band">
+    <div class="header-left">
+      <div class="header-title-small"></div>
+      <div class="header-title-main">Snapshot stratégique pour une coordination humanitaire sensible au genre</div>
+      <div class="header-subtitle">
+        Document de référence pour le HCT, l’Inter-Cluster et les partenaires techniques &amp; financiers.
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="header-chip">
+        <span class="header-dot"></span>
+      </div>
+      <div><strong>Production :</strong> Decembre – 2025</div>
+      <div><strong>Pays :</strong> République Démocratique du Congo</div>
+    </div>
+  </div>
+
+  <!-- Contenu -->
+  <div class="content">
+
+    <!-- 0. Présentation générale -->
+    <section class="section" id="presentation">
+      <div class="section-header">
+        <div class="section-title">SNAPSHOT COMITÉ GIHA – RDC</div>
+        <div class="section-label">Vision d’ensemble</div>
+      </div>
+      <div class="section-body">
+        <div class="intro-grid">
+          <div>
+            <h1>Comité Genre dans l’Action Humanitaire (GiHA)</h1>
+            <p class="subtitle-main">
+              Acquis, défis et perspectives pour une action humanitaire sensible au genre en RDC.
+            </p>
+            <div class="tag-row">
+              <span class="tag strong">Comité GiHA – RDC</span>
+			   <span class="tag">HCT &amp; mécanismes de coordination</span>
+            </div>
+          </div>
+          <div class="org-block">
+            <div class="org-main">
+              <span class="dot"></span>
+              <span>ONU Femmes – Lead GiHA</span>
+            </div>
+            <div class="org-sub">
+              En partenariat avec OCHA, PAM, UNFPA, CARE International, UNICEF, SOFEPADI
+              et autres ONGI/ONG nationales.
+            </div>
+            <div class="org-members">
+              <strong>Membres&nbsp;:</strong> agences des Nations Unies et organisations féminines clés,
+              ancrées au plus haut niveau de gouvernance humanitaire (EHP, HCT, clusters).
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. Identité, mandat & positionnement -->
+    <section class="section" id="identite-mandat">
+      <div class="section-header">
+        <div class="section-title">1. Identité, mandat &amp; positionnement</div>
+        <div class="section-label">Mandat, mission &amp; gouvernance</div>
+      </div>
+      <div class="section-body">
+        <div class="key-line">
+          <div class="key-line-icon">🎯</div>
+          <div class="key-line-text">
+            <strong>Mandat unique&nbsp;:</strong> le GiHA assure le mainstreaming (transversalité)
+            du genre dans toutes les phases du cycle de programme humanitaire et dans l’ensemble des secteurs.
+          </div>
+        </div>
+
+        <div class="key-line">
+          <div class="key-line-icon">🛡️</div>
+          <div class="key-line-text">
+            <strong>Mission&nbsp;:</strong> garantir une programmation basée sur l’égalité des sexes
+            et faciliter l’accès équitable à l’assistance pour les
+            <strong>21,2&nbsp;millions de personnes affectées</strong>, dont une majorité de femmes et de filles.
+          </div>
+        </div>
+
+        <div class="key-line">
+          <div class="key-line-icon">📏</div>
+          <div class="key-line-text">
+            <strong>Rôle stratégique&nbsp;:</strong> fournir l’appui technique, la redevabilité
+            et le contrôle qualité de la prise en compte du genre dans l’action humanitaire&nbsp;:
+            veiller à ce que les ressources limitées bénéficient équitablement aux femmes et aux filles
+            et que leurs besoins spécifiques soient pris en compte.
+          </div>
+        </div>
+
+        <div class="key-line">
+          <div class="key-line-icon">🔁</div>
+          <div class="key-line-text">
+            <strong>Évolution institutionnelle&nbsp;:</strong> passage d’un «&nbsp;Comité ad hoc&nbsp;»
+            à un <strong>Comité GiHA permanent</strong>, reconnu comme organe de conseil technique
+            sur le genre dans l’action humanitaire au sein des mécanismes de coordination.
+          </div>
+        </div>
+
+        <div class="pill-row">
+          <span class="pill">Lead&nbsp;: ONU Femmes</span>
+          <span class="pill">Co-lead&nbsp;: CARE International</span>
+          <span class="pill">Secrétariat&nbsp;: UNICEF &amp; SOFEPADI</span>
+        </div>
+
+        <div class="key-line">
+          <div class="key-line-icon">🤝</div>
+          <div class="key-line-text">
+            <strong>Membres&nbsp;:</strong> agences des Nations Unies (OCHA, PAM, UNFPA), ONGI et ONGs nationales.
+            Un élargissement aux agences avec un mandat fort de gender mainstreaming est recommandé
+            pour consolider cette approche «&nbsp;core&nbsp;» dans le contexte de «&nbsp;reset&nbsp;» humanitaire.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Chiffres clés & impact -->
+    <section class="section" id="chiffres-impact">
+      <div class="section-header">
+        <div class="section-title">2. Chiffres clés &amp; impact (2023–2025)</div>
+        <div class="section-label">Évidence, localisation &amp; leadership féminin</div>
+      </div>
+      <div class="section-body">
+        <p class="sub-section-caption">
+          Une <strong>montée en puissance progressive</strong> du Comité GiHA, construite sur l’évidence,
+          la localisation et le leadership féminin.
+        </p>
+
+        <div class="sub-section-title">A. Localisation &amp; leadership féminin</div>
+        <div class="grid-3">
+          <div class="metric-card">
+            <div class="metric-tag">Gouvernance humanitaire</div>
+            <div class="metric-value">2 ONGs féminines à l’EHP</div>
+            <div class="metric-desc">
+              <strong>SOFEPADI</strong> et <strong>AVSD</strong> siègent comme membres à part entière
+              de l’Équipe Humanitaire Pays, concrétisant les engagements en faveur du leadership féminin
+              et de la localisation.
+            </div>
+            <div class="metric-badge">EHP</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-tag">Base de données</div>
+            <div class="metric-value">1&nbsp;766 organisations</div>
+            <div class="metric-desc">
+              Cartographie des organisations féminines sur l’ensemble du pays,
+              <strong>dont 131 spécialisées</strong> dans l’action humanitaire (dashboard Power&nbsp;BI).
+            </div>
+            <div class="metric-badge">Localisation</div>
+          </div>
+
+          <div class="metric-card soft">
+            <div class="metric-tag">Plaidoyer direct</div>
+            <div class="metric-value">15 femmes leaders</div>
+            <div class="metric-desc">
+              Voyage d’étude pour 15 femmes leaders de l’Est vers Kinshasa
+              pour un <strong>plaidoyer direct</strong> auprès du HCT (juin&nbsp;2024).
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-section-title">B. Renforcement des capacités</div>
+        <div class="grid-3">
+          <div class="metric-card">
+            <div class="metric-tag">Communauté de pratique</div>
+            <div class="metric-value">201 acteurs formés</div>
+            <div class="metric-desc">
+              <strong>201 points focaux</strong> (70,1&nbsp;% de femmes) formés au GiHA
+              et au cycle de programme humanitaire en 2025, créant une base pour une
+              communauté de pratique au niveau provincial.
+            </div>
+            <div class="metric-badge">70,1&nbsp;% femmes</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-tag">ToT GiHA</div>
+            <div class="metric-value">100 formateurs</div>
+            <div class="metric-desc">
+              <strong>100 formateurs (ToT)</strong>, dont 66&nbsp;% de femmes,
+              formés dans 5 provinces&nbsp;: Nord-Kivu, Sud-Kivu, Ituri, Tanganyika et Kinshasa.
+            </div>
+            <div class="metric-badge">66&nbsp;% femmes</div>
+          </div>
+
+          <div class="metric-card soft">
+            <div class="metric-tag">ONGs féminines</div>
+            <div class="metric-value">123 points focaux</div>
+            <div class="metric-desc">
+              <strong>123 points focaux</strong> d’organisations féminines formés à la planification d’urgence
+              sensible au genre (2025), avec un taux de satisfaction supérieur à <strong>90&nbsp;%</strong>.
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-section-title">C. Évidence &amp; analyse genre</div>
+        <div class="grid-3">
+          <div class="metric-card soft">
+            <div class="metric-tag">Analyses genre</div>
+            <div class="metric-value">3 provinces de l’Est</div>
+            <div class="metric-desc">
+              Analyses genre menées dans trois provinces de l’Est (2022–2023) et
+              <strong>évaluations rapides</strong> conduites par des organisations féminines (février–avril&nbsp;2025).
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-tag">Réactivité aux urgences</div>
+            <div class="metric-value">Alerte Genre Ebola</div>
+            <div class="metric-desc">
+              Production d’une <strong>«&nbsp;Alerte Genre&nbsp;»</strong> lors de la réapparition d’Ebola au Kasaï
+              (septembre&nbsp;2025), mettant en avant les besoins différenciés des femmes et des filles.
+            </div>
+            <div class="metric-badge">Kasaï</div>
+          </div>
+
+          <div class="metric-card soft">
+            <div class="metric-tag">Audit sectoriel</div>
+            <div class="metric-value">Rapport d’étude</div>
+            <div class="metric-desc">
+              Audit sur l’intégration du genre dans la réponse multisectorielle,
+              aboutissant à un <strong>rapport d’étude</strong> (février&nbsp;2024).
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Argumentaire -->
+    <section class="section" id="argumentaire">
+      <div class="section-header">
+        <div class="section-title">3. Argumentaire : pourquoi soutenir le GiHA en 2026 ?</div>
+        <div class="section-label">Enjeux stratégiques</div>
+      </div>
+      <div class="section-body">
+        <p class="sub-section-caption">
+          Une analyse «&nbsp;coût-bénéfice&nbsp;» démontre la criticité du maintien et du renforcement
+          du Comité GiHA dans le contexte de financements contraints et de «&nbsp;reset&nbsp;» humanitaire.
+        </p>
+        <div class="argument-grid">
+          <div class="argument-card">
+            <div class="argument-title">Efficience (High value / Low cost)</div>
+            <div class="argument-body">
+              Le Comité GiHA fonctionne avec un <strong>coût de fonctionnement quasi nul</strong> pour sa structure,
+              les ressources humaines et logistiques étant apportées par les partenaires.
+              Il offre une <strong>forte valeur ajoutée stratégique</strong> pour la coordination,
+              sans alourdir le budget humanitaire.
+            </div>
+            <div class="argument-chip">Efficience</div>
+          </div>
+
+          <div class="argument-card">
+            <div class="argument-title">Risque de «&nbsp;dilution&nbsp;» des besoins des femmes</div>
+            <div class="argument-body">
+              Dans un contexte de priorisation extrême, les besoins spécifiques des femmes
+              (santé sexuelle et reproductive, VBG, accès aux services) risquent d’être relégués au second plan.
+              Le GiHA est indispensable pour <strong>garder les femmes et les filles au centre de l’analyse,
+              de la planification et de la réponse</strong>.
+            </div>
+            <div class="argument-chip">Risque</div>
+          </div>
+
+          <div class="argument-card">
+            <div class="argument-title">Non-duplication &amp; complémentarité</div>
+            <div class="argument-body">
+              Le Comité GiHA adopte une approche <strong>complémentaire</strong> vis-à-vis des autres clusters,
+              notamment ceux centrés sur les violences faites aux femmes et aux filles.
+              Il renforce l’intégration du genre dans la réponse multisectorielle, plutôt que de dupliquer
+              les mécanismes existants.
+            </div>
+            <div class="argument-chip">Complémentarité</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Feuille de route & recommandations -->
+    <section class="section" id="feuille-de-route">
+      <div class="section-header">
+        <div class="section-title">4. Feuille de route &amp; recommandations 2026</div>
+        <div class="section-label">Financement, opérationnalisation &amp; institutionnalisation</div>
+      </div>
+      <div class="section-body">
+        <div class="roadmap-grid">
+          <div class="roadmap-card">
+            <div class="roadmap-label">Financement</div>
+            <div class="roadmap-title">Objectif 20&nbsp;% &amp; étude diagnostique</div>
+            <ul>
+              <li><strong>Cible&nbsp;:</strong> atteindre <strong>20&nbsp;% de financement direct</strong> pour les ONGs féminines.</li>
+              <li><strong>Action 2026&nbsp;:</strong> conduire l’<strong>étude de capacité</strong> requise pour lever
+                  les obstacles techniques à l’éligibilité des WLOs aux Fonds humanitaires.</li>
+              <li><strong>Directive budgétaire&nbsp;:</strong> fixer une cible de <strong>1&nbsp;% à 5&nbsp;%</strong>
+                  du budget total des projets dédiée à l’intégration du genre.</li>
+            </ul>
+          </div>
+
+          <div class="roadmap-card">
+            <div class="roadmap-label">Opérationnel</div>
+            <div class="roadmap-title">Formation sectorielle «&nbsp;sur mesure&nbsp;»</div>
+            <ul>
+              <li>Passer des formations généralistes à des modules
+                  <strong>«&nbsp;Gender mainstreaming&nbsp;» spécifiques par cluster</strong>.</li>
+              <li>Prioriser les secteurs vitaux&nbsp;: <strong>WASH, Santé, Nutrition, Abris</strong>.</li>
+              <li>Renforcer les capacités des points focaux pour
+                  <strong>intégrer le genre dans tout le cycle de programmation humanitaire</strong>.</li>
+            </ul>
+          </div>
+
+          <div class="roadmap-card">
+            <div class="roadmap-label">Institutionnel</div>
+            <div class="roadmap-title">Ancrage &amp; partenariats renforcés</div>
+            <ul>
+              <li>Finaliser les <strong>diagnostics institutionnels</strong> des contreparties étatiques&nbsp;:
+                  Ministère du Genre &amp; Ministère de l’Action humanitaire.</li>
+              <li>Établir un <strong>partenariat formel</strong> avec les clusters pour compléter l’approche VBG
+                  centrée sur les victimes.</li>
+              <li>Renforcer les compétences des points focaux sur la prise en compte du genre et
+                  <strong>promouvoir le leadership et la participation des femmes</strong> dans les mécanismes
+                  de coordination.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Outils stratégiques -->
+    <section class="section" id="outils">
+      <div class="section-header">
+        <div class="section-title">Outils stratégiques &amp; diffusion</div>
+        <div class="section-label">Capitalisation &amp; partage</div>
+      </div>
+      <div class="section-body">
+        <div class="tools-row">
+          <div class="tool-card">
+            <div class="tool-title">📊 Cartographie interactive (Power&nbsp;BI)</div>
+            <div class="tool-link">
+              Base de données des <strong>1&nbsp;766 organisations féminines</strong> en RDC,
+              incluant les 131 spécialisées dans l’action humanitaire. Outil clé pour la localisation
+              et le ciblage des partenariats.
+            </div>
+          </div>
+
+          <div class="tool-card">
+            <div class="tool-title">🌐 Page ReliefWeb – Genre RDC</div>
+            <div class="tool-link">
+              Plateforme de <strong>centralisation</strong> des alertes, rapports, analyses et documents de référence
+              produits par le Comité GiHA et ses partenaires, accessible à l’ensemble de la communauté humanitaire.
+            </div>
+          </div>
+
+          <div class="tool-card">
+            <div class="tool-title">📂 Drive collaboratif GiHA</div>
+            <div class="tool-link">
+              Dossier partagé regroupant les <strong>TDR, plans d’action, supports de formation</strong> et outils de
+              plaidoyer, facilitant la continuité et la capitalisation des travaux du Comité.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Bandeau bas avec logos -->
+  <div class="footer-band">
+    <div class="footer-text">
+      <span>
+        Snapshot conçu pour un usage en réunion HCT, Inter-Cluster et avec les bailleurs,
+        comme support visuel synthétique sur les acquis, défis et perspectives du Comité GiHA.
+      </span>
+      <button class="btn-print no-print" type="button" onclick="window.print()" style="margin-left: 10px;">
+        <span class="icon">🖨️</span>
+        <span>Imprimer / PDF</span>
+      </button>
+    </div>
+
+    <div class="footer-logos">
+      <!-- Place ces fichiers dans le même dossier que ce HTML -->
+      <img src="logo-care.png" alt="CARE" class="footer-logo">
+      <img src="logo-ocha.jpg" alt="OCHA" class="footer-logo">
+      <img src="logo-pam.jpg" alt="PAM / WFP" class="footer-logo">
+      <img src="logo-sofepadi.png" alt="SOFEPADI" class="footer-logo">
+      <img src="logo-unicef.png" alt="UNICEF" class="footer-logo">
+      <img src="logo-unwomen.png" alt="UN Women" class="footer-logo">
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
