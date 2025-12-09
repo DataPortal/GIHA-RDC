@@ -2,10 +2,10 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>GIHA RDC – Portail Snapshot & Plan d’action</title>
+  <title>GIHA RDC – Portail Snapshot &amp; Plan d’action</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Police utilisée dans le snapshot -->
+  <!-- Même police que le snapshot -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -18,35 +18,35 @@
       --text-dark: #222222;
       --text-muted: #666666;
       --bg-soft: #f5f7fb;
+      --card-bg: #ffffff;
       --border-soft: #dde3f0;
       --radius-lg: 18px;
       --radius-md: 12px;
-      --shadow-soft: 0 14px 40px rgba(15, 35, 52, 0.15);
+      --shadow-soft: 0 10px 28px rgba(15, 35, 52, 0.16);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      padding: 0;
+      padding: 6px;
       font-family: "Source Sans 3", "Source Sans Pro", -apple-system,
         BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      font-size: 12pt;
       background: radial-gradient(circle at top left, #e9f1ff 0, #f5f7fb 40%, #ffffff 100%);
       color: var(--text-dark);
     }
 
-    /* En-tête inspiré du snapshot (bandeau bleu) */
+    /* Bandeau en-tête identique au snapshot */
     .header-band {
       background: var(--unw-blue);
       color: #ffffff;
-      padding: 10px 26px 8px;
+      padding: 10px 26px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      box-shadow: 0 4px 12px rgba(15, 35, 52, 0.15);
+      box-shadow: 0 4px 12px rgba(15, 35, 52, 0.18);
     }
 
     .header-left {
@@ -98,7 +98,7 @@
       background: var(--unw-orange);
     }
 
-    /* Menu navigation sous l’en-tête */
+    /* Menu commun */
     .top-nav {
       background: linear-gradient(90deg, var(--unw-blue), var(--ocha-blue));
       color: #fff;
@@ -127,13 +127,13 @@
 
     /* Contenu principal */
     .page {
-      max-width: 1100px;
-      margin: 20px auto;
-      padding: 18px 20px 24px;
+      max-width: 1150px;
+      margin: 14px auto 10px;
       background: #ffffff;
       border-radius: 20px;
       box-shadow: var(--shadow-soft);
-      border: 1px solid rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      padding: 18px 24px 22px;
     }
 
     .intro h1 {
@@ -148,7 +148,6 @@
       color: var(--text-muted);
     }
 
-    /* Cartes Snapshot / Plan d’action */
     .cards {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -219,21 +218,38 @@
 
     @media (max-width: 900px) {
       .page {
-        margin: 12px;
+        margin: 10px 6px;
+        border-radius: 14px;
       }
       .cards {
         grid-template-columns: minmax(0, 1fr);
       }
-      .header-band,
+    }
+
+    /* Impression : on masque le menu et le fond dégradé */
+    @media print {
+      body {
+        background: #ffffff !important;
+        padding: 0;
+      }
+      .header-band {
+        box-shadow: none;
+      }
       .top-nav {
-        padding: 8px 14px;
+        display: none !important;
+      }
+      .page {
+        box-shadow: none;
+        border-radius: 0;
+        border: none;
+        margin: 0;
+        padding: 12px;
       }
     }
   </style>
 </head>
 <body>
 
-<!-- En-tête type snapshot -->
 <header class="header-band">
   <div class="header-left">
     <div class="header-title-small">COMITÉ GENRE DANS L’ACTION HUMANITAIRE – RDC</div>
@@ -251,14 +267,12 @@
   </div>
 </header>
 
-<!-- Menu -->
 <nav class="top-nav">
   <a href="index.html" class="active">Accueil</a>
   <a href="snapshot.html">Snapshot</a>
   <a href="plan_action.html">Plan d’action</a>
 </nav>
 
-<!-- Contenu principal -->
 <main class="page">
   <section class="intro">
     <h1>Bienvenue sur le portail GiHA – RDC</h1>
@@ -302,9 +316,7 @@
 
   <section class="footer-note">
     Ce portail est statique (HTML/CSS/JS) et peut être servi directement via GitHub Pages
-    depuis le dépôt <code>DataPortal/GIHA_RDC</code>.  
-    Pour ajouter d’autres produits (cartes, dashboards Power&nbsp;BI, etc.), créez de nouveaux
-    fichiers HTML et ajoutez-les au menu.
+    depuis le dépôt <code>DataPortal/GIHA_RDC</code>.
   </section>
 </main>
 
