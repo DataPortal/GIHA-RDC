@@ -39,6 +39,10 @@
   padding-bottom: 2px;
   border-bottom: 2px solid transparent;
 }
+.top-nav a.active {
+  border-bottom-color: var(--unw-orange);
+  font-weight: 600;
+}
 
 .top-nav a:hover {
   border-bottom-color: rgba(255, 255, 255, 0.9);
@@ -414,6 +418,12 @@
         overflow-x: auto;
       }
     }
+    @media print {
+  /* ... ton CSS existant ... */
+  .top-nav {
+    display: none !important;
+  }
+}
 
     @media (max-width: 600px) {
       .filters {
@@ -427,7 +437,7 @@
 <nav class="top-nav">
   <a href="index.html">Accueil</a>
   <a href="snapshot.html">Snapshot</a>
-  <a href="plan_action.html">Plan d’action</a>
+  <a href="plan_action.html" class="active">Plan d’action</a>
 </nav>
 <div class="page">
   <!-- En-tête -->
