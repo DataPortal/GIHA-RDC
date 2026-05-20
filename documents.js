@@ -111,7 +111,7 @@ window.addEventListener("load", () => {
 
 
 // ================================
-// OUTILS DE NETTOYAGE DES NOMS
+// NETTOYAGE DES NOMS
 // ================================
 
 function cleanName(name) {
@@ -234,11 +234,12 @@ async function uploadFile() {
   fileInput.value = "";
 
   await loadFiles();
+  await loadFolders();
 }
 
 
 // ================================
-// LISTER LES FICHIERS
+// LISTER LES FICHIERS ET DOSSIERS
 // ================================
 
 async function loadFiles(path = "") {
@@ -287,8 +288,17 @@ async function loadFiles(path = "") {
 
     if (!item.metadata) {
       div.innerHTML = `
-        📁 <strong>${item.name}</strong><br><br>
-        <button onclick="loadFiles('${fullPath}')">Ouvrir</button>
+        📁 <strong>${item.name}</strong>
+        <br><br>
+
+        <button onclick="loadFiles('${fullPath}')">
+          Ouvrir
+        </button>
+
+        <button onclick="deleteFolder('${fullPath}')"
+          style="background:#dc2626;margin-left:8px;">
+          Supprimer dossier
+        </button>
       `;
     } else {
       const { data: publicUrlData } = supabaseClient.storage
@@ -296,12 +306,96 @@ async function loadFiles(path = "") {
         .getPublicUrl(fullPath);
 
       div.innerHTML = `
-        📄 <a href="${publicUrlData.publicUrl}" target="_blank">${item.name}</a>
+        📄 <a href="${publicUrlData.publicUrl}" target="_blank">
+          ${item.name}
+        </a>
+
+        <br><br>
+
+        <button onclick="deleteFile('${fullPath}', '${path}')"
+          style="background:#dc2626;">
+          Supprimer fichier
+        </button>
       `;
     }
 
     fileList.appendChild(div);
   });
+}
+
+
+// ================================
+// SUPPRIMER UN FICHIER
+// ================================
+
+async function deleteFile(filePath, currentPath = "") {
+  const confirmDelete = confirm(
+    "Voulez-vous vraiment supprimer ce fichier ?"
+  );
+
+  if (!confirmDelete) return;
+
+  const { error } = await supabaseClient.storage
+    .from(bucketName)
+    .remove([filePath]);
+
+  if (error) {
+    alert("Erreur suppression fichier : " + error.message);
+    return;
+  }
+
+  alert("Fichier supprimé avec succès.");
+
+  await loadFiles(currentPath);
+  await loadFolders();
+}
+
+
+// ================================
+// SUPPRIMER UN DOSSIER
+// ================================
+
+async function deleteFolder(folderPath) {
+  const confirmDelete = confirm(
+    "Voulez-vous vraiment supprimer ce dossier et tous ses fichiers ?"
+  );
+
+  if (!confirmDelete) return;
+
+  const { data, error } = await supabaseClient.storage
+    .from(bucketName)
+    .list(folderPath, {
+      limit: 1000,
+      offset: 0
+    });
+
+  if (error) {
+    alert("Erreur lecture dossier : " + error.message);
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    alert("Dossier vide ou introuvable.");
+    return;
+  }
+
+  const filesToDelete = data.map(item => {
+    return `${folderPath}/${item.name}`;
+  });
+
+  const { error: deleteError } = await supabaseClient.storage
+    .from(bucketName)
+    .remove(filesToDelete);
+
+  if (deleteError) {
+    alert("Erreur suppression dossier : " + deleteError.message);
+    return;
+  }
+
+  alert("Dossier supprimé avec succès.");
+
+  await loadFiles("");
+  await loadFolders();
 }
 
 
