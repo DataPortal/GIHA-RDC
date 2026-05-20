@@ -1,526 +1,315 @@
-//---------------------------------------------
-// CONFIGURATION
-//---------------------------------------------
+// ================================
+// CONFIGURATION SUPABASE
+// ================================
 
-const SUPABASE_URL="https://TONPROJET.supabase.co";
+const SUPABASE_URL = "https://pbxwkrvfzwbnkndjmkui.supabase.co";
 
-const SUPABASE_ANON_KEY="TON_ANON_KEY";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBieHdrcnZmendibmtuZGpta3VpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyNzI4ODQsImV4cCI6MjA5NDg0ODg4NH0.DnxRQPzJPFuxkK66vS_Epap47mKtwXCpYedaI-87BMw";
 
-const bucketName="giha-documents";
+const bucketName = "giha-documents";
 
-const ACCESS_CODE="GIHA2026";
+const ACCESS_CODE = "GIHA2026";
 
-//---------------------------------------------
-// INITIALISATION
-//---------------------------------------------
-
-const supabaseClient=supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
 );
 
-//---------------------------------------------
-// AUTHENTIFICATION SIMPLE
-//---------------------------------------------
 
-function checkAccess(){
+// ================================
+// AUTHENTIFICATION SIMPLE PAR CODE
+// ================================
 
-    const access=localStorage.getItem("giha_access");
+function checkAccess() {
+  const access = localStorage.getItem("giha_access");
 
-    if(access==="granted"){
-        return true;
+  if (access === "granted") {
+    return true;
+  }
+
+  showLoginScreen();
+  return false;
+}
+
+function showLoginScreen() {
+  document.body.innerHTML = `
+    <div style="
+      max-width:450px;
+      margin:80px auto;
+      padding:35px;
+      background:white;
+      border-radius:14px;
+      box-shadow:0 5px 20px rgba(0,0,0,.15);
+      font-family:Arial">
+
+      <h2>Accès Bibliothèque GiHA RDC</h2>
+
+      <p>Veuillez saisir le code d'accès partagé.</p>
+
+      <input
+        id="accessInput"
+        type="password"
+        placeholder="Code d'accès"
+        style="
+          width:100%;
+          padding:12px;
+          margin-top:10px;
+          border:1px solid #ccc;
+          border-radius:8px;
+          box-sizing:border-box">
+
+      <button
+        onclick="login()"
+        style="
+          margin-top:15px;
+          width:100%;
+          padding:12px;
+          background:#448BCA;
+          color:white;
+          border:none;
+          border-radius:8px">
+        Se connecter
+      </button>
+
+      <div id="error" style="color:red;margin-top:10px"></div>
+    </div>
+  `;
+}
+
+function login() {
+  const code = document.getElementById("accessInput").value.trim();
+
+  if (code === ACCESS_CODE) {
+    localStorage.setItem("giha_access", "granted");
+    location.reload();
+  } else {
+    document.getElementById("error").innerHTML = "Code incorrect.";
+  }
+}
+
+function logout() {
+  localStorage.removeItem("giha_access");
+  location.reload();
+}
+
+if (!checkAccess()) {
+  throw new Error("Accès refusé");
+}
+
+
+// ================================
+// BOUTON DECONNEXION
+// ================================
+
+window.addEventListener("load", () => {
+  const btn = document.createElement("button");
+  btn.innerHTML = "Déconnexion";
+  btn.className = "logout-btn";
+  btn.onclick = logout;
+  document.body.appendChild(btn);
+});
+
+
+// ================================
+// OUTILS DE NETTOYAGE DES NOMS
+// ================================
+
+function cleanName(name) {
+  return name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^\w.\s-]/gi, "")
+    .replace(/\s+/g, "-")
+    .toLowerCase();
+}
+
+
+// ================================
+// CREER UN DOSSIER
+// ================================
+
+async function createFolder() {
+  const folderName = document.getElementById("folderName").value.trim();
+
+  if (!folderName) {
+    alert("Veuillez saisir le nom du dossier.");
+    return;
+  }
+
+  const cleanFolderName = cleanName(folderName);
+  const folderPath = `${cleanFolderName}/.keep`;
+
+  const emptyFile = new Blob([""], {
+    type: "text/plain"
+  });
+
+  const { error } = await supabaseClient.storage
+    .from(bucketName)
+    .upload(folderPath, emptyFile, {
+      upsert: true
+    });
+
+  if (error) {
+    alert("Erreur création dossier : " + error.message);
+    return;
+  }
+
+  alert("Dossier créé avec succès.");
+
+  document.getElementById("folderName").value = "";
+
+  await loadFolders();
+  await loadFiles();
+}
+
+
+// ================================
+// CHARGER LES DOSSIERS
+// ================================
+
+async function loadFolders() {
+  const { data, error } = await supabaseClient.storage
+    .from(bucketName)
+    .list("", {
+      limit: 100,
+      offset: 0
+    });
+
+  if (error) {
+    alert("Erreur chargement dossiers : " + error.message);
+    return;
+  }
+
+  const folderSelect = document.getElementById("folderSelect");
+
+  folderSelect.innerHTML = `
+    <option value="">Racine principale</option>
+  `;
+
+  data.forEach(item => {
+    if (!item.name.includes(".")) {
+      const option = document.createElement("option");
+      option.value = item.name;
+      option.textContent = item.name;
+      folderSelect.appendChild(option);
+    }
+  });
+}
+
+
+// ================================
+// UPLOADER UN FICHIER
+// ================================
+
+async function uploadFile() {
+  const fileInput = document.getElementById("fileInput");
+  const folder = document.getElementById("folderSelect").value;
+
+  if (!fileInput.files.length) {
+    alert("Veuillez sélectionner un fichier.");
+    return;
+  }
+
+  const file = fileInput.files[0];
+  const cleanFileName = cleanName(file.name);
+
+  const filePath = folder
+    ? `${folder}/${cleanFileName}`
+    : cleanFileName;
+
+  const { error } = await supabaseClient.storage
+    .from(bucketName)
+    .upload(filePath, file, {
+      upsert: true,
+      contentType: file.type
+    });
+
+  if (error) {
+    alert("Erreur upload : " + error.message);
+    return;
+  }
+
+  alert("Fichier uploadé avec succès.");
+
+  fileInput.value = "";
+
+  await loadFiles();
+}
+
+
+// ================================
+// LISTER LES FICHIERS
+// ================================
+
+async function loadFiles(path = "") {
+  const { data, error } = await supabaseClient.storage
+    .from(bucketName)
+    .list(path, {
+      limit: 100,
+      offset: 0
+    });
+
+  if (error) {
+    alert("Erreur chargement fichiers : " + error.message);
+    return;
+  }
+
+  const fileList = document.getElementById("fileList");
+
+  fileList.innerHTML = "";
+
+  if (path !== "") {
+    const backDiv = document.createElement("div");
+    backDiv.className = "file-item";
+    backDiv.innerHTML = `
+      <button onclick="loadFiles('')">Retour à la racine</button>
+    `;
+    fileList.appendChild(backDiv);
+  }
+
+  if (!data || data.length === 0) {
+    const emptyDiv = document.createElement("div");
+    emptyDiv.className = "file-item";
+    emptyDiv.innerHTML = "Aucun fichier disponible.";
+    fileList.appendChild(emptyDiv);
+    return;
+  }
+
+  data.forEach(item => {
+    if (item.name === ".keep") return;
+
+    const fullPath = path
+      ? `${path}/${item.name}`
+      : item.name;
+
+    const div = document.createElement("div");
+    div.className = "file-item";
+
+    if (!item.metadata) {
+      div.innerHTML = `
+        📁 <strong>${item.name}</strong><br><br>
+        <button onclick="loadFiles('${fullPath}')">Ouvrir</button>
+      `;
+    } else {
+      const { data: publicUrlData } = supabaseClient.storage
+        .from(bucketName)
+        .getPublicUrl(fullPath);
+
+      div.innerHTML = `
+        📄 <a href="${publicUrlData.publicUrl}" target="_blank">${item.name}</a>
+      `;
     }
 
-    showLoginScreen();
-
-    return false;
+    fileList.appendChild(div);
+  });
 }
 
 
-function showLoginScreen(){
-
-document.body.innerHTML=`
-
-<div style="
-max-width:450px;
-margin:80px auto;
-padding:35px;
-background:white;
-border-radius:14px;
-box-shadow:0 5px 20px rgba(0,0,0,.15);
-font-family:Arial">
-
-<h2>Accès Bibliothèque GiHA RDC</h2>
-
-<p>Veuillez saisir le code d'accès partagé.</p>
-
-<input
-id="accessInput"
-type="password"
-placeholder="Code d'accès"
-style="
-width:100%;
-padding:12px;
-margin-top:10px;
-border:1px solid #ccc;
-border-radius:8px">
-
-<button
-onclick="login()"
-style="
-margin-top:15px;
-width:100%;
-padding:12px;
-background:#448BCA;
-color:white;
-border:none;
-border-radius:8px">
-
-Se connecter
-
-</button>
-
-<div
-id="error"
-style="
-color:red;
-margin-top:10px">
-</div>
-
-</div>
-
-`;
-}
-
-
-function login(){
-
-const code=document
-.getElementById("accessInput")
-.value;
-
-if(code===ACCESS_CODE){
-
-localStorage.setItem(
-"giha_access",
-"granted"
-);
-
-location.reload();
-
-}
-else{
-
-document
-.getElementById("error")
-.innerHTML="Code incorrect";
-
-}
-
-}
-
-
-function logout(){
-
-localStorage.removeItem(
-"giha_access"
-);
-
-location.reload();
-
-}
-
-
-//---------------------------------------------
-// VERIFICATION
-//---------------------------------------------
-
-if(!checkAccess()){
-throw new Error(
-"Accès refusé"
-);
-}
-
-
-//---------------------------------------------
-// AJOUT BOUTON DECONNEXION
-//---------------------------------------------
-
-window.addEventListener(
-"load",
-()=>{
-
-const btn=document.createElement(
-"button"
-);
-
-btn.innerHTML="Déconnexion";
-
-btn.style.position="fixed";
-
-btn.style.top="20px";
-
-btn.style.right="20px";
-
-btn.style.background="#f58220";
-
-btn.style.color="white";
-
-btn.style.border="none";
-
-btn.style.padding="10px 15px";
-
-btn.style.borderRadius="8px";
-
-btn.style.cursor="pointer";
-
-btn.onclick=logout;
-
-document.body.appendChild(btn);
-
-});
-    
-
-//---------------------------------------------
-// CREER DOSSIER
-//---------------------------------------------
-
-async function createFolder(){
-
-const folderName=document
-.getElementById(
-"folderName"
-)
-.value.trim();
-
-if(!folderName){
-
-alert(
-"Saisir un nom"
-);
-
-return;
-
-}
-
-const path=
-`${folderName}/.keep`;
-
-const emptyFile=
-new Blob(
-[""],
-{
-type:
-"text/plain"
-}
-);
-
-const {error}=await
-supabaseClient
-.storage
-.from(bucketName)
-.upload(
-path,
-emptyFile,
-{
-upsert:true
-}
-);
-
-if(error){
-
-alert(
-error.message
-);
-
-return;
-
-}
-
-alert(
-"Dossier créé"
-);
-
-loadFolders();
-
-loadFiles();
-
-document
-.getElementById(
-"folderName"
-)
-.value="";
-
-}
-
-
-
-//---------------------------------------------
-// CHARGER DOSSIERS
-//---------------------------------------------
-
-async function loadFolders(){
-
-const {data,error}
-=
-await supabaseClient
-.storage
-.from(bucketName)
-.list("");
-
-if(error){
-
-console.log(error);
-
-return;
-
-}
-
-const select=
-document
-.getElementById(
-"folderSelect"
-);
-
-select.innerHTML=
-`
-<option value="">
-Racine principale
-</option>
-`;
-
-data.forEach(item=>{
-
-if(
-!item.name.includes(".")
-){
-
-const option=
-document.createElement(
-"option"
-);
-
-option.value=
-item.name;
-
-option.textContent=
-item.name;
-
-select.appendChild(
-option
-);
-
-}
-
-});
-
-}
-
-
-
-//---------------------------------------------
-// UPLOAD FICHIER
-//---------------------------------------------
-
-async function uploadFile(){
-
-const input=
-document
-.getElementById(
-"fileInput"
-);
-
-if(
-!input.files.length
-){
-
-alert(
-"Sélectionner un fichier"
-);
-
-return;
-
-}
-
-const folder=
-document
-.getElementById(
-"folderSelect"
-)
-.value;
-
-const file=
-input.files[0];
-
-const path=
-folder
-?
-`${folder}/${file.name}`
-:
-file.name;
-
-
-const {error}=
-await supabaseClient
-.storage
-.from(bucketName)
-.upload(
-path,
-file,
-{
-upsert:true
-}
-);
-
-if(error){
-
-alert(
-error.message
-);
-
-return;
-
-}
-
-alert(
-"Upload réussi"
-);
-
-input.value="";
-
-loadFiles();
-
-}
-
-
-
-//---------------------------------------------
-// LISTER FICHIERS
-//---------------------------------------------
-
-async function loadFiles(path=""){
-
-const {data,error}
-=
-await supabaseClient
-.storage
-.from(bucketName)
-.list(path);
-
-if(error){
-
-return;
-
-}
-
-const list=
-document
-.getElementById(
-"fileList"
-);
-
-list.innerHTML="";
-
-for(
-const item
-of data
-){
-
-if(
-item.name
-===".keep"
-){
-
-continue;
-
-}
-
-const fullPath=
-path
-?
-`${path}/${item.name}`
-:
-item.name;
-
-if(
-!item.metadata
-){
-
-const div=
-document
-.createElement(
-"div"
-);
-
-div.className=
-"file-item";
-
-div.innerHTML=
-`
-📁
-<strong>
-${item.name}
-</strong>
-
-<br>
-
-<button onclick=
-"loadFiles('${fullPath}')">
-Ouvrir
-</button>
-`;
-
-list.appendChild(
-div
-);
-
-}
-else{
-
-const url=
-supabaseClient
-.storage
-.from(bucketName)
-.getPublicUrl(
-fullPath
-);
-
-const div=
-document
-.createElement(
-"div"
-);
-
-div.className=
-"file-item";
-
-div.innerHTML=
-`
-📄
-<a href=
-"${url.data.publicUrl}"
-target="_blank">
-
-${item.name}
-
-</a>
-`;
-
-list.appendChild(
-div
-);
-
-}
-
-}
-
-}
-
-
-//---------------------------------------------
+// ================================
 // INITIALISATION
-//---------------------------------------------
+// ================================
 
-loadFolders();
-
-loadFiles();
+window.addEventListener("load", async () => {
+  await loadFolders();
+  await loadFiles();
+});
