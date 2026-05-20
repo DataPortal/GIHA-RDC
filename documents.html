@@ -3,49 +3,54 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bibliothèque documentaire GiHA RDC</title>
+  <title>Stockage documentaire GiHA RDC</title>
   <link rel="stylesheet" href="documents.css" />
 </head>
 <body>
 
-<header class="hero">
-  <div>
-    <p class="tag">COMITÉ GENRE DANS L’ACTION HUMANITAIRE – RDC</p>
-    <h1>Bibliothèque documentaire GiHA</h1>
-    <p>Accès centralisé aux documents, notes, outils, rapports et produits d’analyse genre.</p>
-  </div>
-
-  <nav>
-    <a href="index.html">Accueil</a>
-    <a href="snapshot.html">Snapshot</a>
-    <a href="plan-action.html">Plan d’action</a>
-    <a class="active" href="documents.html">Documents</a>
-  </nav>
+<header class="header">
+  <h1>Bibliothèque documentaire GiHA RDC</h1>
+  <p>Uploader, organiser et consulter les documents partagés.</p>
 </header>
 
 <main class="container">
 
-  <section class="toolbar">
-    <input type="text" id="searchInput" placeholder="Rechercher un document..." />
+  <section class="panel">
+    <h2>Créer un dossier</h2>
 
-    <select id="categoryFilter">
-      <option value="all">Toutes les catégories</option>
-      <option value="Rapport">Rapports</option>
-      <option value="Analyse">Analyses genre</option>
-      <option value="Outil">Outils</option>
-      <option value="Présentation">Présentations</option>
-      <option value="Note">Notes</option>
-    </select>
+    <input 
+      type="text" 
+      id="folderName" 
+      placeholder="Exemple : Rapports 2026"
+    />
+
+    <button onclick="createFolder()">Créer le dossier</button>
   </section>
 
-  <section id="documentsGrid" class="grid"></section>
+  <section class="panel">
+    <h2>Uploader un fichier</h2>
+
+    <select id="folderSelect">
+      <option value="">Racine principale</option>
+    </select>
+
+    <input type="file" id="fileInput" />
+
+    <button onclick="uploadFile()">Uploader</button>
+  </section>
+
+  <section class="panel">
+    <h2>Documents disponibles</h2>
+
+    <button onclick="loadFiles()">Actualiser la liste</button>
+
+    <div id="fileList" class="file-list"></div>
+  </section>
 
 </main>
 
-<footer>
-  Portail GiHA RDC — Bibliothèque documentaire mise à jour par le support IM.
-</footer>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="documents.js"></script>
+
 </body>
 </html>
