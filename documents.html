@@ -3,47 +3,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stockage documentaire GiHA RDC</title>
+  <title>Bibliothèque documentaire GiHA RDC</title>
   <link rel="stylesheet" href="documents.css" />
 </head>
+
 <body>
 
 <header class="header">
   <h1>Bibliothèque documentaire GiHA RDC</h1>
-  <p>Uploader, organiser et consulter les documents partagés.</p>
+  <p>Stockage partagé des rapports, outils, notes, présentations et documents GiHA.</p>
 </header>
 
 <main class="container">
 
   <section class="panel">
     <h2>Créer un dossier</h2>
-
-    <input 
-      type="text" 
-      id="folderName" 
-      placeholder="Exemple : Rapports 2026"
-    />
-
+    <input type="text" id="folderName" placeholder="Exemple : Rapports 2026" />
     <button onclick="createFolder()">Créer le dossier</button>
   </section>
 
   <section class="panel">
     <h2>Uploader un fichier</h2>
 
+    <label>Dossier de destination</label>
     <select id="folderSelect">
       <option value="">Racine principale</option>
     </select>
 
     <input type="file" id="fileInput" />
-
-    <button onclick="uploadFile()">Uploader</button>
+    <button onclick="uploadFile()">Uploader le fichier</button>
   </section>
 
   <section class="panel">
     <h2>Documents disponibles</h2>
-
-    <button onclick="loadFiles()">Actualiser la liste</button>
-
+    <button onclick="loadFiles()">Actualiser</button>
     <div id="fileList" class="file-list"></div>
   </section>
 
