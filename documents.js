@@ -397,7 +397,66 @@ async function deleteFolder(folderPath) {
   await loadFiles("");
   await loadFolders();
 }
+async function loadHDXDataset() {
+  const datasetId = "republique-democratique-du-congo-cas-et-deces-d-ebola";
 
+  const apiUrl =
+    `https://data.humdata.org/api/3/action/package_show?id=${datasetId}`;
+
+  const box = document.getElementById("hdxDatasetBox");
+
+  box.innerHTML = "Chargement des données HDX...";
+
+  try {
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      throw new Error("Erreur API HDX");
+    }
+
+    const result = await response.json();
+
+    if (!result.success) {
+      throw new Error("Dataset introuvable");
+    }
+
+    const dataset = result.result;
+
+    let html = `
+      <div class="file-item">
+        <h3>${dataset.title}</h3>
+        <p>${dataset.notes || "Aucune description disponible."}</p>
+        <p><strong>Organisation :</strong> ${dataset.organization?.title || "Non précisée"}</p>
+        <p><strong>Dernière mise à jour :</strong> ${dataset.metadata_modified || "Non précisée"}</p>
+        <p>
+          <a href="https://data.humdata.org/dataset/${dataset.name}" target="_blank">
+            Voir la fiche complète sur HDX
+          </a>
+        </p>
+      </div>
+    `;
+
+    dataset.resources.forEach(resource => {
+      html += `
+        <div class="file-item">
+          <strong>📄 ${resource.name}</strong>
+          <p>Format : ${resource.format || "Non précisé"}</p>
+          <p>Date de mise à jour : ${resource.last_modified || resource.created || "Non précisée"}</p>
+          <a href="${resource.url}" target="_blank">Télécharger / ouvrir</a>
+        </div>
+      `;
+    });
+
+    box.innerHTML = html;
+
+  } catch (error) {
+    box.innerHTML = `
+      <div class="file-item" style="color:red;">
+        Erreur de chargement HDX : ${error.message}
+      </div>
+    `;
+  }
+}
 
 // ================================
 // INITIALISATION
