@@ -74,3 +74,10 @@ button:hover {
   background: #f58220;
   z-index: 999;
 }
+.delete-btn {
+  background: #dc2626;
+}
+
+.delete-btn:hover {
+  background: #991b1b;
+}
