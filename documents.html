@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Bibliothèque documentaire GiHA RDC</title>
+
   <link rel="stylesheet" href="documents.css" />
 </head>
 
@@ -16,37 +18,47 @@
 
 <main class="container">
 
-   <section class="panel">
+  <section class="panel">
     <h2>Documents disponibles</h2>
     <button onclick="loadFiles()">Actualiser</button>
     <div id="fileList" class="file-list"></div>
   </section>
+
   <section class="panel">
     <h2>Uploader un fichier</h2>
 
-    <label>Dossier de destination</label>
+    <label for="folderSelect">Dossier de destination</label>
+
     <select id="folderSelect">
       <option value="">Racine principale</option>
     </select>
 
     <input type="file" id="fileInput" />
+
     <button onclick="uploadFile()">Uploader le fichier</button>
   </section>
-    <section class="panel">
-    <h2>Créer un dossier</h2>
-    <input type="text" id="folderName" placeholder="Exemple : Rapports 2026" />
-    <button onclick="createFolder()">Créer le dossier</button>
-  <section class="panel">
-  <h2>Données HDX – Ebola RDC</h2>
-  <button onclick="loadHDXDataset()">Charger les données HDX</button>
-  <div id="hdxDatasetBox"></div>
-</section>
-    </section>
-  <h2>Data - Crise Ebola 2026</h2>
-</a>
 
-</div>
- </main>
+  <section class="panel">
+    <h2>Créer un dossier</h2>
+
+    <input
+      type="text"
+      id="folderName"
+      placeholder="Exemple : Rapports 2026"
+    />
+
+    <button onclick="createFolder()">Créer le dossier</button>
+  </section>
+
+  <section class="panel">
+    <h2>Données HDX – Ebola RDC</h2>
+
+    <button onclick="loadHDXDataset()">Charger les données HDX</button>
+
+    <div id="hdxDatasetBox"></div>
+  </section>
+
+</main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="documents.js"></script>
