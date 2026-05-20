@@ -16,11 +16,6 @@
 
 <main class="container">
 
-  <section class="panel">
-    <h2>Créer un dossier</h2>
-    <input type="text" id="folderName" placeholder="Exemple : Rapports 2026" />
-    <button onclick="createFolder()">Créer le dossier</button>
-  </section>
    <section class="panel">
     <h2>Documents disponibles</h2>
     <button onclick="loadFiles()">Actualiser</button>
@@ -37,7 +32,12 @@
     <input type="file" id="fileInput" />
     <button onclick="uploadFile()">Uploader le fichier</button>
   </section>
-
+    <section class="panel">
+    <h2>Créer un dossier</h2>
+    <input type="text" id="folderName" placeholder="Exemple : Rapports 2026" />
+    <button onclick="createFolder()">Créer le dossier</button>
+  </section>
+  
  </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
