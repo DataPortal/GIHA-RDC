@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", async () => {
 
-  const SUPABASE_URL =
-    "https://pbxwkrvfzwbnkndjmkui.supabase.co";
+const SUPABASE_URL =
+"https://pbxwkrvfzwbnkndjmkui.supabase.co";
 
-  const SUPABASE_ANON_KEY =
-    "VOTRE_CLE_ANON";
+const SUPABASE_ANON_KEY =
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBieHdrcnZmendibmtuZGpta3VpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyNzI4ODQsImV4cCI6MjA5NDg0ODg4NH0.DnxRQPzJPFuxkK66vS_Epap47mKtwXCpYedaI-87BMw";
 
   const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
