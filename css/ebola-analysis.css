@@ -1,0 +1,169 @@
+:root{
+  --blue:#00A3E0;
+  --blue-dark:#0077A3;
+  --orange:#F58220;
+  --bg:#F4FAFD;
+  --card:#FFFFFF;
+  --text:#334155;
+  --border:#DDE7EF;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Segoe UI, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+.header{
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  color:white;
+  padding:30px 40px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.header h1{
+  margin:0;
+  font-size:32px;
+}
+
+.header p{
+  margin-top:8px;
+  opacity:0.9;
+}
+
+.btn-secondary{
+  text-decoration:none;
+  background:white;
+  color:var(--blue-dark);
+  padding:12px 18px;
+  border-radius:12px;
+  font-weight:700;
+}
+
+.container{
+  width:min(1400px,95%);
+  margin:40px auto;
+}
+
+.kpi-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;
+}
+
+.kpi-card{
+  background:var(--card);
+  padding:24px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.06);
+}
+
+.kpi-card span{
+  color:#64748B;
+  font-size:14px;
+}
+
+.kpi-card h2{
+  margin:10px 0 0;
+  font-size:42px;
+}
+
+.kpi-card.alert{
+  border-left:6px solid var(--orange);
+}
+
+.chart-grid{
+  margin-top:30px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.chart-card{
+  background:white;
+  padding:24px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.06);
+}
+
+.chart-card h3{
+  margin-top:0;
+}
+
+.table-card{
+  margin-top:30px;
+  background:white;
+  border-radius:20px;
+  padding:24px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.06);
+}
+
+.table-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+#searchInput{
+  width:300px;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid var(--border);
+}
+
+.table-container{
+  overflow:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+thead{
+  background:#F1F7FA;
+}
+
+th,td{
+  padding:14px;
+  text-align:left;
+  border-bottom:1px solid var(--border);
+}
+
+tbody tr:hover{
+  background:#F9FCFE;
+}
+
+@media(max-width:1000px){
+
+  .kpi-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .chart-grid{
+    grid-template-columns:1fr;
+  }
+
+}
+
+@media(max-width:700px){
+
+  .header{
+    flex-direction:column;
+    gap:20px;
+    text-align:center;
+  }
+
+  .kpi-grid{
+    grid-template-columns:1fr;
+  }
+
+}
