@@ -1,189 +1,110 @@
 document.addEventListener("DOMContentLoaded", async () => {
 
-const SUPABASE_URL =
-"https://pbxwkrvfzwbnkndjmkui.supabase.co";
+  const SUPABASE_URL =
+    "https://pbxwkrvfzwbnkndjmkui.supabase.co";
 
-const SUPABASE_ANON_KEY =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBieHdrcnZmendibmtuZGpta3VpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyNzI4ODQsImV4cCI6MjA5NDg0ODg4NH0.DnxRQPzJPFuxkK66vS_Epap47mKtwXCpYedaI-87BMw";
+  const SUPABASE_ANON_KEY =
+    "TA_CLE_ANON_COMPLETE_ICI";
 
   const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY
   );
 
-  /*
-  ==========================================
-  FETCH DATA
-  ==========================================
-  */
+  console.log("Page analyse chargée");
 
   const { data, error } = await supabaseClient
     .from("giha_ebola_border_survey")
     .select("*")
-    .order("created_at", { ascending:false });
+    .order("created_at", { ascending: false });
 
-  if(error){
-
-    console.error(error);
-
-    alert("Erreur chargement données");
-
+  if (error) {
+    console.error("Erreur Supabase :", error);
+    alert("Erreur Supabase : " + error.message);
     return;
   }
 
-  console.log(data);
+  console.log("Données reçues :", data);
 
-  /*
-  ==========================================
-  KPI
-  ==========================================
-  */
+  if (!data || data.length === 0) {
+    alert("Aucune donnée trouvée dans Supabase.");
+    return;
+  }
 
-  document.getElementById("totalResponses")
-    .innerText = data.length;
+  document.getElementById("totalResponses").innerText = data.length;
 
-  const provinces =
-    [...new Set(data.map(d => d.province).filter(Boolean))];
+  const provinces = [...new Set(data.map(d => d.province).filter(Boolean))];
+  document.getElementById("totalProvinces").innerText = provinces.length;
 
-  document.getElementById("totalProvinces")
-    .innerText = provinces.length;
+  const organizations = [...new Set(data.map(d => d.organization_type).filter(Boolean))];
+  document.getElementById("totalOrganizations").innerText = organizations.length;
 
-  const organizations =
-    [...new Set(data.map(d => d.organization_type).filter(Boolean))];
+  const gbvAlerts = data.filter(d =>
+    d.gbv_risks_observed && d.gbv_risks_observed.trim() !== ""
+  );
 
-  document.getElementById("totalOrganizations")
-    .innerText = organizations.length;
-
-  const gbvAlerts =
-    data.filter(d =>
-      d.gbv_risks_observed &&
-      d.gbv_risks_observed.trim() !== ""
-    );
-
-  document.getElementById("gbvAlerts")
-    .innerText = gbvAlerts.length;
-
-  /*
-  ==========================================
-  PROVINCE CHART
-  ==========================================
-  */
+  document.getElementById("gbvAlerts").innerText = gbvAlerts.length;
 
   const provinceCounts = {};
 
   data.forEach(item => {
-
-    const province =
-      item.province || "Non spécifié";
-
-    provinceCounts[province] =
-      (provinceCounts[province] || 0) + 1;
+    const province = item.province || "Non spécifié";
+    provinceCounts[province] = (provinceCounts[province] || 0) + 1;
   });
 
-  new Chart(
-    document.getElementById("provinceChart"),
-    {
-      type:"bar",
-      data:{
-        labels:Object.keys(provinceCounts),
-        datasets:[{
-          label:"Réponses",
-          data:Object.values(provinceCounts),
-          borderWidth:1
-        }]
-      }
+  new Chart(document.getElementById("provinceChart"), {
+    type: "bar",
+    data: {
+      labels: Object.keys(provinceCounts),
+      datasets: [{
+        label: "Réponses",
+        data: Object.values(provinceCounts)
+      }]
     }
-  );
-
-  /*
-  ==========================================
-  ORGANIZATION CHART
-  ==========================================
-  */
+  });
 
   const orgCounts = {};
 
   data.forEach(item => {
-
-    const org =
-      item.organization_type || "Non spécifié";
-
-    orgCounts[org] =
-      (orgCounts[org] || 0) + 1;
+    const org = item.organization_type || "Non spécifié";
+    orgCounts[org] = (orgCounts[org] || 0) + 1;
   });
 
-  new Chart(
-    document.getElementById("organizationChart"),
-    {
-      type:"doughnut",
-      data:{
-        labels:Object.keys(orgCounts),
-        datasets:[{
-          data:Object.values(orgCounts)
-        }]
-      }
+  new Chart(document.getElementById("organizationChart"), {
+    type: "doughnut",
+    data: {
+      labels: Object.keys(orgCounts),
+      datasets: [{
+        data: Object.values(orgCounts)
+      }]
     }
-  );
+  });
 
-  /*
-  ==========================================
-  TABLE
-  ==========================================
-  */
-
-  const tbody =
-    document.querySelector("#surveyTable tbody");
+  const tbody = document.querySelector("#surveyTable tbody");
+  tbody.innerHTML = "";
 
   data.forEach(item => {
-
-    const row =
-      document.createElement("tr");
+    const row = document.createElement("tr");
 
     row.innerHTML = `
-
-      <td>
-        ${new Date(item.created_at)
-          .toLocaleDateString()}
-      </td>
-
+      <td>${item.created_at ? new Date(item.created_at).toLocaleDateString("fr-FR") : ""}</td>
       <td>${item.organisation || ""}</td>
-
       <td>${item.organization_type || ""}</td>
-
       <td>${item.province || ""}</td>
-
       <td>${item.affected_group || ""}</td>
-
       <td>${item.priority_needs || ""}</td>
     `;
 
     tbody.appendChild(row);
   });
 
-  /*
-  ==========================================
-  SEARCH
-  ==========================================
-  */
+  document.getElementById("searchInput").addEventListener("keyup", function () {
+    const value = this.value.toLowerCase();
+    const rows = document.querySelectorAll("#surveyTable tbody tr");
 
-  document
-    .getElementById("searchInput")
-    .addEventListener("keyup", function(){
-
-      const value =
-        this.value.toLowerCase();
-
-      const rows =
-        document.querySelectorAll("#surveyTable tbody tr");
-
-      rows.forEach(row => {
-
-        row.style.display =
-          row.innerText.toLowerCase().includes(value)
-          ? ""
-          : "none";
-      });
-
+    rows.forEach(row => {
+      row.style.display = row.innerText.toLowerCase().includes(value) ? "" : "none";
     });
+  });
 
 });
