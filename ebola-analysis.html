@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Analyse GIHA Ebola</title>
+
+  <link rel="stylesheet" href="css/ebola-analysis.css"/>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<header class="header">
+
+  <div>
+    <h1>Analyse rapide GIHA</h1>
+    <p>
+      Impact Ebola & fermeture des frontières sur les femmes et les filles
+    </p>
+  </div>
+
+  <div class="header-actions">
+    <a href="ebola-form.html" class="btn-secondary">
+      Retour au formulaire
+    </a>
+  </div>
+
+</header>
+
+<main class="container">
+
+  <!-- KPI -->
+
+  <section class="kpi-grid">
+
+    <div class="kpi-card">
+      <span>Total réponses</span>
+      <h2 id="totalResponses">0</h2>
+    </div>
+
+    <div class="kpi-card">
+      <span>Provinces couvertes</span>
+      <h2 id="totalProvinces">0</h2>
+    </div>
+
+    <div class="kpi-card">
+      <span>Types d'organisations</span>
+      <h2 id="totalOrganizations">0</h2>
+    </div>
+
+    <div class="kpi-card alert">
+      <span>Alertes VBG</span>
+      <h2 id="gbvAlerts">0</h2>
+    </div>
+
+  </section>
+
+  <!-- Charts -->
+
+  <section class="chart-grid">
+
+    <div class="chart-card">
+      <h3>Réponses par province</h3>
+      <canvas id="provinceChart"></canvas>
+    </div>
+
+    <div class="chart-card">
+      <h3>Types d’organisation</h3>
+      <canvas id="organizationChart"></canvas>
+    </div>
+
+  </section>
+
+  <!-- Tables -->
+
+  <section class="table-card">
+
+    <div class="table-header">
+
+      <h3>Données collectées</h3>
+
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Rechercher..."
+      />
+
+    </div>
+
+    <div class="table-container">
+
+      <table id="surveyTable">
+
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Organisation</th>
+            <th>Type</th>
+            <th>Province</th>
+            <th>Groupe affecté</th>
+            <th>Besoins prioritaires</th>
+          </tr>
+        </thead>
+
+        <tbody></tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+</main>
+
+<script src="js/ebola-analysis.js"></script>
+
+</body>
+</html>
