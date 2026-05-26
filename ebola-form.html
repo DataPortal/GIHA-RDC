@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Sondage rapide Ebola | GIHA RDC</title>
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+<header class="header">
+  <h1>Sondage rapide Ebola & fermeture des frontières</h1>
+  <p>Analyse rapide de l’impact sur les femmes et les filles</p>
+
+  <a href="index.html" class="btn-secondary">← Retour au portail GIHA</a>
+</header>
+
+<main class="container">
+
+  <section class="giha-card">
+
+    <form id="ebolaSurveyForm">
+
+      <label>Organisation</label>
+      <input type="text" id="organisation" required>
+
+      <label>Province</label>
+      <select id="province" required>
+        <option value="">Sélectionner</option>
+        <option>Nord-Kivu</option>
+        <option>Sud-Kivu</option>
+        <option>Ituri</option>
+        <option>Kinshasa</option>
+        <option>Équateur</option>
+        <option>Autre</option>
+      </select>
+
+      <label>Territoire / Ville</label>
+      <input type="text" id="territory">
+
+      <label>Zone de santé</label>
+      <input type="text" id="health_zone">
+
+      <label>Zone frontalière concernée</label>
+      <input type="text" id="border_area">
+
+      <label>Sexe du répondant</label>
+      <select id="respondent_sex">
+        <option value="">Sélectionner</option>
+        <option>Femme</option>
+        <option>Homme</option>
+        <option>Préfère ne pas répondre</option>
+      </select>
+
+      <label>Impact de l’Ebola sur les femmes et les filles</label>
+      <textarea id="ebola_impact" rows="4"></textarea>
+
+      <label>Impact de la fermeture des frontières</label>
+      <textarea id="border_closure_impact" rows="4"></textarea>
+
+      <label>Risques spécifiques observés pour les femmes et les filles</label>
+      <textarea id="women_specific_risks" rows="4"></textarea>
+
+      <label>Risques ou incidents de VBG rapportés</label>
+      <textarea id="gbv_risks_observed" rows="4"></textarea>
+
+      <label>Services devenus difficiles d’accès</label>
+      <textarea id="access_to_services" rows="4"></textarea>
+
+      <label>Besoins prioritaires</label>
+      <textarea id="priority_needs" rows="4"></textarea>
+
+      <label>Recommandations</label>
+      <textarea id="community_recommendations" rows="4"></textarea>
+
+      <label class="checkbox">
+        <input type="checkbox" id="consent" required>
+        J’accepte que les données soient utilisées pour une analyse rapide GIHA.
+      </label>
+
+      <button type="submit" class="btn-primary">Soumettre le formulaire</button>
+
+    </form>
+
+  </section>
+
+</main>
+
+<script src="js/ebola-form.js"></script>
+
+</body>
+</html>
