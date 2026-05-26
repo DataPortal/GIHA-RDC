@@ -3,11 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>Sondage rapide Ebola | GIHA RDC</title>
 
   <link rel="stylesheet" href="css/ebola-form.css" />
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
@@ -16,7 +14,6 @@
 <header class="header">
   <h1>Sondage rapide Ebola & fermeture des frontières</h1>
   <p>Analyse rapide de l’impact sur les femmes et les filles</p>
-
   <a href="index.html" class="btn-secondary">← Retour au portail GIHA</a>
 </header>
 
@@ -24,66 +21,178 @@
 
   <section class="giha-card">
 
+    <div class="form-intro">
+      <div>
+        <h2>Formulaire de collecte rapide</h2>
+        <p>
+          Cet outil permet aux partenaires de renseigner rapidement les effets de l’Ebola
+          et de la fermeture des frontières sur les femmes, les filles et les communautés affectées.
+        </p>
+      </div>
+      <span class="badge">GIHA RDC</span>
+    </div>
+
     <form id="ebolaSurveyForm">
 
-      <label>Organisation</label>
-      <input type="text" id="organisation" required>
+      <div class="form-section">
+        <h3>1. Informations générales</h3>
 
-      <label>Province</label>
-      <select id="province" required>
-        <option value="">Sélectionner</option>
-        <option>Nord-Kivu</option>
-        <option>Sud-Kivu</option>
-        <option>Ituri</option>
-        <option>Kinshasa</option>
-        <option>Équateur</option>
-        <option>Autre</option>
-      </select>
+        <div class="form-grid">
 
-      <label>Territoire / Ville</label>
-      <input type="text" id="territory">
+          <div class="form-group">
+            <label>Organisation <span class="required">*</span></label>
+            <input type="text" id="organisation" required />
+          </div>
 
-      <label>Zone de santé</label>
-      <input type="text" id="health_zone">
+          <div class="form-group">
+            <label>Type d’organisation <span class="required">*</span></label>
+            <select id="organization_type" required>
+              <option value="">Sélectionner</option>
+              <option>Agence des Nations Unies</option>
+              <option>Organisation féminine locale - WLO</option>
+              <option>Organisation de la société civile - OSC</option>
+              <option>ONG nationale</option>
+              <option>ONG internationale</option>
+              <option>Organisation communautaire</option>
+              <option>Structure gouvernementale</option>
+              <option>Autorité locale</option>
+              <option>Mouvement ou réseau de femmes</option>
+              <option>Organisation confessionnelle</option>
+              <option>Organisation de jeunes</option>
+              <option>Secteur privé</option>
+              <option>Autre</option>
+            </select>
+          </div>
 
-      <label>Zone frontalière concernée</label>
-      <input type="text" id="border_area">
+          <div class="form-group">
+            <label>Province <span class="required">*</span></label>
+            <select id="province" required>
+              <option value="">Sélectionner</option>
+              <option>Nord-Kivu</option>
+              <option>Sud-Kivu</option>
+              <option>Ituri</option>
+              <option>Équateur</option>
+              <option>Kinshasa</option>
+              <option>Autre</option>
+            </select>
+          </div>
 
-      <label>Sexe du répondant</label>
-      <select id="respondent_sex">
-        <option value="">Sélectionner</option>
-        <option>Femme</option>
-        <option>Homme</option>
-        <option>Préfère ne pas répondre</option>
-      </select>
+          <div class="form-group">
+            <label>Territoire / Ville</label>
+            <input type="text" id="territory" />
+          </div>
 
-      <label>Impact de l’Ebola sur les femmes et les filles</label>
-      <textarea id="ebola_impact" rows="4"></textarea>
+          <div class="form-group">
+            <label>Zone de santé</label>
+            <input type="text" id="health_zone" />
+          </div>
 
-      <label>Impact de la fermeture des frontières</label>
-      <textarea id="border_closure_impact" rows="4"></textarea>
+          <div class="form-group">
+            <label>Zone frontalière concernée</label>
+            <input type="text" id="border_area" />
+          </div>
 
-      <label>Risques spécifiques observés pour les femmes et les filles</label>
-      <textarea id="women_specific_risks" rows="4"></textarea>
+        </div>
+      </div>
 
-      <label>Risques ou incidents de VBG rapportés</label>
-      <textarea id="gbv_risks_observed" rows="4"></textarea>
+      <div class="form-section">
+        <h3>2. Profil du répondant</h3>
 
-      <label>Services devenus difficiles d’accès</label>
-      <textarea id="access_to_services" rows="4"></textarea>
+        <div class="form-grid">
 
-      <label>Besoins prioritaires</label>
-      <textarea id="priority_needs" rows="4"></textarea>
+          <div class="form-group">
+            <label>Sexe du répondant</label>
+            <select id="respondent_sex">
+              <option value="">Sélectionner</option>
+              <option>Femme</option>
+              <option>Homme</option>
+              <option>Préfère ne pas répondre</option>
+            </select>
+          </div>
 
-      <label>Recommandations</label>
-      <textarea id="community_recommendations" rows="4"></textarea>
+          <div class="form-group">
+            <label>Fonction / rôle du répondant</label>
+            <input type="text" id="respondent_role" placeholder="Ex. IM Officer, Responsable programme, Point focal genre..." />
+          </div>
+
+          <div class="form-group full">
+            <label>Groupe principalement affecté</label>
+            <select id="affected_group">
+              <option value="">Sélectionner</option>
+              <option>Femmes adultes</option>
+              <option>Filles adolescentes</option>
+              <option>Femmes enceintes et allaitantes</option>
+              <option>Femmes cheffes de ménage</option>
+              <option>Femmes vivant avec handicap</option>
+              <option>Femmes commerçantes transfrontalières</option>
+              <option>Survivantes de VBG</option>
+              <option>Toute la communauté</option>
+              <option>Autre</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>3. Impacts observés</h3>
+
+        <div class="form-grid">
+
+          <div class="form-group full">
+            <label>Impact de l’Ebola sur les femmes et les filles</label>
+            <textarea id="ebola_impact"></textarea>
+          </div>
+
+          <div class="form-group full">
+            <label>Impact de la fermeture des frontières</label>
+            <textarea id="border_closure_impact"></textarea>
+          </div>
+
+          <div class="form-group full">
+            <label>Risques spécifiques pour les femmes et les filles</label>
+            <textarea id="women_specific_risks"></textarea>
+          </div>
+
+          <div class="form-group full">
+            <label>Risques ou incidents de VBG rapportés</label>
+            <textarea id="gbv_risks_observed"></textarea>
+          </div>
+
+          <div class="form-group full">
+            <label>Services devenus difficiles d’accès</label>
+            <textarea id="access_to_services"></textarea>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>4. Besoins prioritaires et recommandations</h3>
+
+        <div class="form-grid">
+
+          <div class="form-group full">
+            <label>Besoins prioritaires</label>
+            <textarea id="priority_needs"></textarea>
+          </div>
+
+          <div class="form-group full">
+            <label>Recommandations des communautés / partenaires</label>
+            <textarea id="community_recommendations"></textarea>
+          </div>
+
+        </div>
+      </div>
 
       <label class="checkbox">
-        <input type="checkbox" id="consent" required>
+        <input type="checkbox" id="consent" required />
         J’accepte que les données soient utilisées pour une analyse rapide GIHA.
       </label>
 
-      <button type="submit" class="btn-primary">Soumettre le formulaire</button>
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">Soumettre le formulaire</button>
+      </div>
 
     </form>
 
