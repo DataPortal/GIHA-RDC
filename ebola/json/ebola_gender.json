@@ -1,0 +1,34 @@
+[
+  {
+    "date": "2026-05-29",
+    "province": "RDC Est",
+    "health_zone": "",
+    "women": "",
+    "men": "",
+    "girls": "",
+    "boys": "",
+    "pregnant_women": "",
+    "female_health_workers": "",
+    "women_percent": 60.0,
+    "girls_percent": "",
+    "gender_risk_level": "Très élevé",
+    "source": "Présentation ONU Femmes RDC",
+    "notes": "Plus de 60 pour cent des cas suspects concernent des femmes, liées aux rôles de soins, d’hygiène et de funérailles."
+  },
+  {
+    "date": "2026-05-29",
+    "province": "RDC Est",
+    "health_zone": "",
+    "women": "",
+    "men": "",
+    "girls": "",
+    "boys": "",
+    "pregnant_women": "",
+    "female_health_workers": "",
+    "women_percent": 66.7,
+    "girls_percent": "",
+    "gender_risk_level": "Élevé",
+    "source": "Présentation ONU Femmes RDC",
+    "notes": "Deux tiers des cas étaient des femmes lors de précédentes flambées d’Ebola."
+  }
+]

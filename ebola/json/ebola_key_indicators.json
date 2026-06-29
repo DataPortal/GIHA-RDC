@@ -1,0 +1,13 @@
+{
+  "last_update": "2026-06-24",
+  "publication_date": "2026-06-25",
+  "confirmed_cases": 1155,
+  "deaths": 304,
+  "recovered": 138,
+  "hospitalized": 326,
+  "case_fatality_rate": 26.3,
+  "contacts_followed_percent": 79.2,
+  "affected_provinces": 3,
+  "affected_health_zones": 34,
+  "strategic_alert_level": "Élevé"
+}
