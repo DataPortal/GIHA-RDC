@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>GIHA-RDC | Ebola Strategic Intelligence Center</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="assets/css/ebola.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+
+<body>
+
+<header class="header">
+  <h1>GIHA-RDC | Ebola Strategic Intelligence Center</h1>
+  <p>ONU Femmes RDC | Genre • Protection • Analyse humanitaire • Aide à la décision</p>
+</header>
+
+<nav class="nav">
+  <a href="#executive" class="active">Executive</a>
+  <a href="#epidemiology">Épidémiologie</a>
+  <a href="#gender">Genre</a>
+  <a href="#protection">Protection</a>
+  <a href="#humanitarian">Impact humanitaire</a>
+  <a href="#maps">Cartographie</a>
+  <a href="#documents">Sources</a>
+</nav>
+
+<main>
+
+<section class="hero" id="executive">
+  <h2>Suivi stratégique de la crise Ebola en RDC</h2>
+  <p>
+    Cette page consolide les données épidémiologiques, de genre, de protection,
+    de financement et d’impact humanitaire pour soutenir la prise de décision stratégique
+    de ONU Femmes RDC, du HCT, des agences des Nations Unies et des partenaires.
+  </p>
+</section>
+
+<section class="kpi-grid" id="kpiGrid"></section>
+
+<section class="alert" id="executiveBrief"></section>
+
+<section class="grid-2" id="epidemiology">
+  <div class="card">
+    <h3>Évolution mensuelle Ebola</h3>
+    <canvas id="ebolaTrend"></canvas>
+  </div>
+
+  <div class="card">
+    <h3>Zones de santé affectées ou sous surveillance</h3>
+    <div id="healthZonesBox"></div>
+  </div>
+</section>
+
+<section class="grid-2" id="gender">
+  <div class="card">
+    <h3>Analyse genre</h3>
+    <div id="genderBox"></div>
+  </div>
+
+  <div class="card">
+    <h3>Pourquoi le genre est déterminant</h3>
+    <p>
+      Les femmes et les filles sont exposées de manière disproportionnée en raison
+      des rôles de soins, d’hygiène, de funérailles, de mobilité contrainte et de
+      responsabilité familiale. La réponse Ebola doit intégrer les données
+      désagrégées, les services VBG/PSEA/SSR et le leadership des organisations féminines.
+    </p>
+  </div>
+</section>
+
+<section class="grid-2" id="protection">
+  <div class="card">
+    <h3>Violations de protection par territoire</h3>
+    <canvas id="protectionChart"></canvas>
+  </div>
+
+  <div class="card">
+    <h3>Synthèse protection</h3>
+    <div id="protectionSummary"></div>
+  </div>
+</section>
+
+<section class="grid-2">
+  <div class="card">
+    <h3>VBG</h3>
+    <div id="gbvBox"></div>
+  </div>
+
+  <div class="card">
+    <h3>Protection de l’enfant</h3>
+    <div id="childBox"></div>
+  </div>
+</section>
+
+<section class="grid-2" id="humanitarian">
+  <div class="card">
+    <h3>Financement et services essentiels</h3>
+    <div id="financingBox"></div>
+  </div>
+
+  <div class="card">
+    <h3>Messages stratégiques ONU Femmes</h3>
+    <div id="messagesBox"></div>
+  </div>
+</section>
+
+<section class="card" id="maps">
+  <h3>Cartographie stratégique</h3>
+
+  <div class="filter-bar">
+    <select id="provinceFilter">
+      <option value="all">Toutes les provinces</option>
+    </select>
+
+    <select id="riskFilter">
+      <option value="all">Tous les niveaux de risque</option>
+      <option value="Très élevé">Très élevé</option>
+      <option value="Élevé">Élevé</option>
+      <option value="Modéré">Modéré</option>
+      <option value="Faible">Faible</option>
+    </select>
+  </div>
+
+  <div id="map"></div>
+</section>
+
+<section class="card" id="documents">
+  <h3>Sources et documents utilisés</h3>
+  <p>
+    Sources consolidées : Gouvernement RDC, INSP, Cluster Protection / GTMP,
+    ONU Femmes RDC, CARE RGA, GIHA et autres partenaires humanitaires.
+  </p>
+</section>
+
+</main>
+
+<footer>
+  GIHA-RDC | Ebola Strategic Intelligence Center — ONU Femmes RDC
+</footer>
+
+<script src="assets/js/ebola.js"></script>
+
+<script>
+async function initDashboard() {
+  const kpi = await loadJSON("ebola_key_indicators.json");
+  const timeseries = await loadJSON("ebola_timeseries.json");
+  const healthZones = await loadJSON("ebola_health_zones.json");
+  const protection = await loadJSON("ebola_protection.json");
+  const gbv = await loadJSON("ebola_gbv.json");
+  const child = await loadJSON("ebola_child_protection.json");
+  const gender = await loadJSON("ebola_gender.json");
+  const financing = await loadJSON("ebola_financing.json");
+  const messages = await loadJSON("ebola_messages.json");
+  const brief = await loadJSON("ebola_executive_brief.json");
+
+  renderKPIs("kpiGrid", kpi);
+
+  document.getElementById("executiveBrief").innerHTML = `
+    <span class="badge">Niveau d’alerte : ${kpi.strategic_alert_level}</span>
+    <h3>${brief.title}</h3>
+    <p>${brief.situation}</p>
+    <h4>Risques clés</h4>
+    <ul>${brief.key_risks.map(r => `<li>${r}</li>`).join("")}</ul>
+    <h4>Actions recommandées</h4>
+    <ul>${brief.recommended_actions.map(r => `<li>${r}</li>`).join("")}</ul>
+    <p><strong>${brief.strategic_message}</strong></p>
+  `;
+
+  const monthly = aggregateByMonth(timeseries);
+  const monthLabels = monthly.labels;
+  const monthlyData = monthly.data;
+
+  buildChart(
+    "ebolaTrend",
+    "line",
+    monthLabels,
+    [
+      {
+        label: "Cas confirmés",
+        data: monthLabels.map(m => monthlyData[m].confirmed_cases),
+        borderWidth: 3,
+        tension: .3
+      },
+      {
+        label: "Décès",
+        data: monthLabels.map(m => monthlyData[m].deaths),
+        borderWidth: 3,
+        tension: .3
+      },
+      {
+        label: "Guéris",
+        data: monthLabels.map(m => monthlyData[m].recovered),
+        borderWidth: 3,
+        tension: .3
+      }
+    ],
+    {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  );
+
+  document.getElementById("healthZonesBox").innerHTML = healthZones.slice(0, 12).map(z => `
+    <div class="item">
+      <strong>${z.health_zone}</strong> — ${z.province}<br>
+      Statut : ${z.status || "-"} | Priorité : ${z.priority_level || "-"}
+    </div>
+  `).join("");
+
+  buildChart(
+    "protectionChart",
+    "bar",
+    protection.territories.map(d => d.territory),
+    [
+      {
+        label: "Violations",
+        data: protection.territories.map(d => Number(d.violations)),
+        borderWidth: 1
+      }
+    ],
+    {
+      indexAxis: "y",
+      scales: {
+        x: {
+          beginAtZero: true
+        }
+      }
+    }
+  );
+
+  document.getElementById("protectionSummary").innerHTML = `
+    <div class="item"><strong>Violations</strong><br>${formatNumber(protection.summary.violations)}</div>
+    <div class="item"><strong>Victimes</strong><br>${formatNumber(protection.summary.victims)}</div>
+    <div class="item"><strong>VBG</strong><br>${formatNumber(protection.summary.gbv)}</div>
+    <div class="item"><strong>Violations graves contre les enfants</strong><br>${formatNumber(protection.summary.child_violations)}</div>
+  `;
+
+  renderList("genderBox", gender);
+  renderList("financingBox", financing);
+  renderList("gbvBox", gbv);
+  renderList("childBox", child);
+  renderMessages("messagesBox", messages);
+
+  initMap(protection.territories);
+}
+
+function initMap(protectionData) {
+  const map = L.map("map").setView([-2.8, 23.7], 5);
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap contributors"
+  }).addTo(map);
+
+  const samplePoints = [
+    {name:"Ituri", lat:1.95, lon:29.2, risk:"Très élevé", value:1155},
+    {name:"Nord-Kivu", lat:-0.6, lon:29.1, risk:"Élevé", value:2418},
+    {name:"Sud-Kivu", lat:-2.5, lon:28.8, risk:"Élevé", value:3}
+  ];
+
+  samplePoints.forEach(p => {
+    L.circleMarker([p.lat, p.lon], {
+      radius: 12,
+      fillOpacity: 0.75,
+      color: "#005EB8"
+    })
+    .bindPopup(`<strong>${p.name}</strong><br>Risque : ${p.risk}<br>Valeur : ${p.value}`)
+    .addTo(map);
+  });
+}
+
+initDashboard();
+</script>
+
+</body>
+</html>
