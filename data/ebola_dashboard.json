@@ -1,1 +1,261 @@
-
+{
+  "metadata": {
+    "titre": "Portail GiHA RDC - Suivi Ebola",
+    "periode": "2026",
+    "derniere_mise_a_jour": "30 juin 2026",
+    "type_donnees": "Données fictives de démonstration",
+    "sources": [
+      "OMS",
+      "Ministère de la Santé RDC",
+      "Africa CDC",
+      "OCHA",
+      "ONU Femmes",
+      "Clusters",
+      "Partenaires GiHA"
+    ]
+  },
+  "kpis": {
+    "cas_cumules": 730,
+    "cas_confirmes": 684,
+    "cas_probables": 46,
+    "deces": 143,
+    "gueris": 494,
+    "cas_actifs": 93,
+    "taux_letalite_pct": 19.6,
+    "femmes_filles_pct": 53.7,
+    "hommes_garcons_pct": 46.3,
+    "zones_affectees": 15,
+    "provinces_affectees": 5,
+    "alertes_actives": 67,
+    "contacts_suivis": 2864,
+    "personnes_vaccinees": 12340,
+    "femmes_enceintes_infectees": 34,
+    "menages_diriges_femmes_touches": 212,
+    "survivantes_vbg_referees": 46,
+    "organisations_feminines_mobilisees": 38
+  },
+  "tendance_journaliere": [
+    { "date": "2026-06-01", "nouveaux_cas": 6, "deces": 1, "gueris": 3, "alertes": 18, "contacts_suivis": 1840, "vaccines": 120 },
+    { "date": "2026-06-02", "nouveaux_cas": 8, "deces": 1, "gueris": 4, "alertes": 21, "contacts_suivis": 1906, "vaccines": 145 },
+    { "date": "2026-06-03", "nouveaux_cas": 7, "deces": 2, "gueris": 5, "alertes": 24, "contacts_suivis": 1982, "vaccines": 160 },
+    { "date": "2026-06-04", "nouveaux_cas": 10, "deces": 2, "gueris": 6, "alertes": 29, "contacts_suivis": 2050, "vaccines": 190 },
+    { "date": "2026-06-05", "nouveaux_cas": 13, "deces": 3, "gueris": 7, "alertes": 34, "contacts_suivis": 2134, "vaccines": 220 },
+    { "date": "2026-06-06", "nouveaux_cas": 15, "deces": 2, "gueris": 8, "alertes": 38, "contacts_suivis": 2216, "vaccines": 245 },
+    { "date": "2026-06-07", "nouveaux_cas": 18, "deces": 4, "gueris": 9, "alertes": 42, "contacts_suivis": 2308, "vaccines": 280 },
+    { "date": "2026-06-08", "nouveaux_cas": 20, "deces": 5, "gueris": 10, "alertes": 47, "contacts_suivis": 2394, "vaccines": 315 },
+    { "date": "2026-06-09", "nouveaux_cas": 22, "deces": 4, "gueris": 11, "alertes": 52, "contacts_suivis": 2480, "vaccines": 350 },
+    { "date": "2026-06-10", "nouveaux_cas": 25, "deces": 6, "gueris": 12, "alertes": 58, "contacts_suivis": 2575, "vaccines": 390 },
+    { "date": "2026-06-11", "nouveaux_cas": 28, "deces": 5, "gueris": 13, "alertes": 62, "contacts_suivis": 2670, "vaccines": 420 },
+    { "date": "2026-06-12", "nouveaux_cas": 30, "deces": 7, "gueris": 14, "alertes": 66, "contacts_suivis": 2758, "vaccines": 450 },
+    { "date": "2026-06-13", "nouveaux_cas": 27, "deces": 5, "gueris": 16, "alertes": 63, "contacts_suivis": 2812, "vaccines": 470 },
+    { "date": "2026-06-14", "nouveaux_cas": 24, "deces": 5, "gueris": 18, "alertes": 60, "contacts_suivis": 2864, "vaccines": 500 },
+    { "date": "2026-06-15", "nouveaux_cas": 21, "deces": 4, "gueris": 20, "alertes": 56, "contacts_suivis": 2790, "vaccines": 480 },
+    { "date": "2026-06-16", "nouveaux_cas": 19, "deces": 4, "gueris": 21, "alertes": 51, "contacts_suivis": 2718, "vaccines": 460 },
+    { "date": "2026-06-17", "nouveaux_cas": 16, "deces": 3, "gueris": 22, "alertes": 48, "contacts_suivis": 2650, "vaccines": 430 },
+    { "date": "2026-06-18", "nouveaux_cas": 14, "deces": 2, "gueris": 24, "alertes": 44, "contacts_suivis": 2584, "vaccines": 410 },
+    { "date": "2026-06-19", "nouveaux_cas": 12, "deces": 2, "gueris": 25, "alertes": 40, "contacts_suivis": 2516, "vaccines": 380 },
+    { "date": "2026-06-20", "nouveaux_cas": 11, "deces": 2, "gueris": 26, "alertes": 38, "contacts_suivis": 2452, "vaccines": 360 },
+    { "date": "2026-06-21", "nouveaux_cas": 9, "deces": 1, "gueris": 24, "alertes": 34, "contacts_suivis": 2388, "vaccines": 340 },
+    { "date": "2026-06-22", "nouveaux_cas": 8, "deces": 1, "gueris": 22, "alertes": 31, "contacts_suivis": 2320, "vaccines": 320 },
+    { "date": "2026-06-23", "nouveaux_cas": 10, "deces": 2, "gueris": 20, "alertes": 36, "contacts_suivis": 2365, "vaccines": 335 },
+    { "date": "2026-06-24", "nouveaux_cas": 13, "deces": 2, "gueris": 18, "alertes": 43, "contacts_suivis": 2440, "vaccines": 360 },
+    { "date": "2026-06-25", "nouveaux_cas": 15, "deces": 3, "gueris": 17, "alertes": 49, "contacts_suivis": 2512, "vaccines": 390 },
+    { "date": "2026-06-26", "nouveaux_cas": 18, "deces": 3, "gueris": 16, "alertes": 55, "contacts_suivis": 2606, "vaccines": 420 },
+    { "date": "2026-06-27", "nouveaux_cas": 20, "deces": 4, "gueris": 15, "alertes": 61, "contacts_suivis": 2710, "vaccines": 455 },
+    { "date": "2026-06-28", "nouveaux_cas": 17, "deces": 3, "gueris": 16, "alertes": 59, "contacts_suivis": 2684, "vaccines": 440 },
+    { "date": "2026-06-29", "nouveaux_cas": 14, "deces": 2, "gueris": 18, "alertes": 54, "contacts_suivis": 2630, "vaccines": 410 },
+    { "date": "2026-06-30", "nouveaux_cas": 12, "deces": 2, "gueris": 20, "alertes": 50, "contacts_suivis": 2568, "vaccines": 390 }
+  ],
+  "tendance_mensuelle": [
+    { "mois": "Janvier", "cas": 15, "deces": 3, "gueris": 8 },
+    { "mois": "Février", "cas": 43, "deces": 8, "gueris": 26 },
+    { "mois": "Mars", "cas": 81, "deces": 17, "gueris": 52 },
+    { "mois": "Avril", "cas": 146, "deces": 31, "gueris": 92 },
+    { "mois": "Mai", "cas": 209, "deces": 43, "gueris": 144 },
+    { "mois": "Juin", "cas": 236, "deces": 41, "gueris": 172 }
+  ],
+  "repartition_sexe": [
+    { "sexe": "Femmes/Filles", "cas": 392 },
+    { "sexe": "Hommes/Garçons", "cas": 338 }
+  ],
+  "age_sexe": [
+    { "groupe_age": "0-4 ans", "femmes_filles": 18, "hommes_garcons": 16 },
+    { "groupe_age": "5-17 ans", "femmes_filles": 79, "hommes_garcons": 68 },
+    { "groupe_age": "18-29 ans", "femmes_filles": 92, "hommes_garcons": 78 },
+    { "groupe_age": "30-49 ans", "femmes_filles": 141, "hommes_garcons": 126 },
+    { "groupe_age": "50 ans et plus", "femmes_filles": 62, "hommes_garcons": 50 }
+  ],
+  "provinces": [
+    { "province": "Ituri", "cas": 318, "deces": 64, "gueris": 206, "femmes_filles_pct": 55.1, "zones_sante": 6 },
+    { "province": "Nord-Kivu", "cas": 264, "deces": 51, "gueris": 188, "femmes_filles_pct": 52.6, "zones_sante": 5 },
+    { "province": "Sud-Kivu", "cas": 92, "deces": 18, "gueris": 67, "femmes_filles_pct": 51.2, "zones_sante": 2 },
+    { "province": "Tshopo", "cas": 41, "deces": 7, "gueris": 25, "femmes_filles_pct": 48.9, "zones_sante": 1 },
+    { "province": "Haut-Uélé", "cas": 15, "deces": 3, "gueris": 8, "femmes_filles_pct": 46.7, "zones_sante": 1 }
+  ],
+  "zones_sante_prioritaires": [
+    {
+      "province": "Ituri",
+      "zone_sante": "Komanda",
+      "cas_cumules": 86,
+      "deces": 18,
+      "femmes_filles_pct": 58.4,
+      "priorite": "Critique",
+      "action_recommandee": "Renforcer la RCCE sensible au genre, la protection communautaire et l’engagement des organisations féminines locales."
+    },
+    {
+      "province": "Ituri",
+      "zone_sante": "Mambasa",
+      "cas_cumules": 64,
+      "deces": 13,
+      "femmes_filles_pct": 56.1,
+      "priorite": "Critique",
+      "action_recommandee": "Suivre les risques VBG, les femmes enceintes et les ménages dirigés par des femmes."
+    },
+    {
+      "province": "Ituri",
+      "zone_sante": "Bunia",
+      "cas_cumules": 52,
+      "deces": 9,
+      "femmes_filles_pct": 54.7,
+      "priorite": "Élevée",
+      "action_recommandee": "Appuyer les mécanismes de feedback communautaire et le référencement protection."
+    },
+    {
+      "province": "Nord-Kivu",
+      "zone_sante": "Beni",
+      "cas_cumules": 91,
+      "deces": 19,
+      "femmes_filles_pct": 53.9,
+      "priorite": "Critique",
+      "action_recommandee": "Renforcer la surveillance communautaire avec participation significative des femmes."
+    },
+    {
+      "province": "Nord-Kivu",
+      "zone_sante": "Butembo",
+      "cas_cumules": 72,
+      "deces": 14,
+      "femmes_filles_pct": 51.6,
+      "priorite": "Critique",
+      "action_recommandee": "Prioriser l’accès aux services essentiels pour les femmes et filles affectées."
+    },
+    {
+      "province": "Sud-Kivu",
+      "zone_sante": "Uvira",
+      "cas_cumules": 49,
+      "deces": 10,
+      "femmes_filles_pct": 50.2,
+      "priorite": "À surveiller",
+      "action_recommandee": "Documenter les impacts des restrictions de mobilité sur les moyens de subsistance."
+    },
+    {
+      "province": "Tshopo",
+      "zone_sante": "Kisangani",
+      "cas_cumules": 41,
+      "deces": 7,
+      "femmes_filles_pct": 48.9,
+      "priorite": "À surveiller",
+      "action_recommandee": "Renforcer la préparation, la coordination et la collecte de données désagrégées."
+    }
+  ],
+  "indicateurs_giha": [
+    { "indicateur": "Protection", "valeur": 85 },
+    { "indicateur": "Accès santé", "valeur": 76 },
+    { "indicateur": "RCCE", "valeur": 72 },
+    { "indicateur": "Leadership femmes", "valeur": 64 },
+    { "indicateur": "Moyens subsistance", "valeur": 82 },
+    { "indicateur": "Données SADD", "valeur": 96 }
+  ],
+  "indicateurs_genre": [
+    { "indicateur": "Femmes parmi les cas", "valeur": 53.7, "unite": "%" },
+    { "indicateur": "Hommes parmi les cas", "valeur": 46.3, "unite": "%" },
+    { "indicateur": "Filles parmi les enfants affectés", "valeur": 53.0, "unite": "%" },
+    { "indicateur": "Femmes enceintes infectées", "valeur": 34, "unite": "nombre" },
+    { "indicateur": "Ménages dirigés par des femmes touchés", "valeur": 212, "unite": "nombre" },
+    { "indicateur": "Survivantes VBG référées", "valeur": 46, "unite": "nombre" },
+    { "indicateur": "Organisations féminines mobilisées", "valeur": 38, "unite": "nombre" },
+    { "indicateur": "Sites avec espaces sûrs", "valeur": 27, "unite": "nombre" },
+    { "indicateur": "Comités communautaires avec femmes >= 50%", "valeur": 61, "unite": "%" },
+    { "indicateur": "Données SADD disponibles", "valeur": 96, "unite": "%" }
+  ],
+  "protection": [
+    { "indicateur": "Cas VBG référés", "valeur": 46 },
+    { "indicateur": "Femmes enceintes suivies", "valeur": 118 },
+    { "indicateur": "Femmes allaitantes assistées", "valeur": 164 },
+    { "indicateur": "Enfants séparés identifiés", "valeur": 29 },
+    { "indicateur": "Femmes handicapées assistées", "valeur": 37 },
+    { "indicateur": "Espaces sûrs opérationnels", "valeur": 27 }
+  ],
+  "vaccination_par_province": [
+    { "province": "Ituri", "personnes_vaccinees": 5140 },
+    { "province": "Nord-Kivu", "personnes_vaccinees": 4215 },
+    { "province": "Sud-Kivu", "personnes_vaccinees": 1810 },
+    { "province": "Tshopo", "personnes_vaccinees": 865 },
+    { "province": "Haut-Uélé", "personnes_vaccinees": 310 }
+  ],
+  "financement": [
+    { "source": "USAID", "usd": 4700000 },
+    { "source": "OMS", "usd": 2900000 },
+    { "source": "CERF", "usd": 2300000 },
+    { "source": "ECHO", "usd": 1800000 },
+    { "source": "UNICEF", "usd": 1200000 },
+    { "source": "ONU Femmes", "usd": 320000 }
+  ],
+  "clusters": [
+    { "cluster": "Santé", "progression_pct": 82 },
+    { "cluster": "Protection", "progression_pct": 61 },
+    { "cluster": "Nutrition", "progression_pct": 74 },
+    { "cluster": "WASH", "progression_pct": 69 },
+    { "cluster": "Éducation", "progression_pct": 55 },
+    { "cluster": "Sécurité alimentaire", "progression_pct": 63 }
+  ],
+  "organisations": [
+    { "organisation": "OMS", "activites": 93 },
+    { "organisation": "UNICEF", "activites": 87 },
+    { "organisation": "MSF", "activites": 74 },
+    { "organisation": "UN Women", "activites": 54 },
+    { "organisation": "ALIMA", "activites": 52 },
+    { "organisation": "IRC", "activites": 41 },
+    { "organisation": "Caritas", "activites": 36 },
+    { "organisation": "Croix-Rouge RDC", "activites": 58 }
+  ],
+  "alertes_decisionnelles": [
+    {
+      "titre": "Protection",
+      "description": "Risque accru pour les femmes et les filles dans les zones sous restriction de mobilité et les zones avec faible accès aux services essentiels."
+    },
+    {
+      "titre": "Accès aux services",
+      "description": "Suivi prioritaire requis pour les femmes enceintes, les survivantes de VBG, les femmes allaitantes et les ménages dirigés par des femmes."
+    },
+    {
+      "titre": "Leadership féminin",
+      "description": "Les organisations féminines locales doivent être intégrées dans la RCCE, la surveillance communautaire et les mécanismes de feedback."
+    },
+    {
+      "titre": "Données désagrégées",
+      "description": "La disponibilité des données par sexe, âge, handicap et statut de vulnérabilité reste essentielle pour orienter la réponse."
+    }
+  ],
+  "recommandations": [
+    "Prioriser les zones de santé avec hausse rapide des cas et forte proportion de femmes et filles affectées.",
+    "Renforcer la RCCE sensible au genre avec les organisations féminines locales.",
+    "Assurer le référencement protection/VBG dans toutes les zones de santé critiques.",
+    "Suivre les impacts des restrictions de mobilité sur les moyens de subsistance des femmes.",
+    "Mobiliser des financements dédiés au leadership des femmes, à la protection et aux espaces sûrs.",
+    "Institutionnaliser la collecte de données SADD dans les SitReps et tableaux de bord inter-agences."
+  ],
+  "chronologie": [
+    { "date": "2026-01-08", "evenement": "Premier cas suspect notifié dans une zone de santé frontalière." },
+    { "date": "2026-01-14", "evenement": "Confirmation biologique des premiers cas Ebola." },
+    { "date": "2026-01-18", "evenement": "Activation du mécanisme national de coordination de la réponse." },
+    { "date": "2026-02-02", "evenement": "Déploiement des équipes de surveillance et investigation rapide." },
+    { "date": "2026-02-18", "evenement": "Début de la vaccination ciblée des contacts et agents de santé." },
+    { "date": "2026-03-05", "evenement": "Extension de la flambée à une deuxième province." },
+    { "date": "2026-03-21", "evenement": "Mise en place des mécanismes communautaires de feedback." },
+    { "date": "2026-04-10", "evenement": "Mission conjointe OMS, OCHA, ONU Femmes et partenaires." },
+    { "date": "2026-05-15", "evenement": "Hausse importante des alertes communautaires." },
+    { "date": "2026-06-12", "evenement": "Pic mensuel des nouveaux cas rapportés." },
+    { "date": "2026-06-24", "evenement": "Reprise localisée des cas dans plusieurs zones de santé." },
+    { "date": "2026-06-30", "evenement": "Actualisation du tableau de bord GiHA Ebola." }
+  ]
+}
