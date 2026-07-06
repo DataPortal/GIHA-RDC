@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>GIHA RDC – Suivi de la crise Ebola</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -31,7 +31,7 @@
       margin: 0;
       padding: 6px;
       font-family: "Source Sans 3", Arial, sans-serif;
-      background: radial-gradient(circle at top left, #e9f1ff 0, #f5f7fb 40%, #ffffff 100%);
+      background: radial-gradient(circle at top left, #e9f1ff 0, #f5f7fb 40%, #fff 100%);
       color: var(--text-dark);
     }
 
@@ -74,7 +74,7 @@
       gap: 6px;
       border-radius: 999px;
       padding: 3px 9px;
-      border: 1px solid rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(255,255,255,0.45);
       font-size: 9pt;
       margin-bottom: 4px;
     }
@@ -145,7 +145,7 @@
       padding: 10px 14px;
       border-radius: 10px;
       font-size: 0.9rem;
-      min-width: 260px;
+      min-width: 280px;
     }
 
     .kpi-grid {
@@ -156,11 +156,11 @@
     }
 
     .kpi-card {
-      background: linear-gradient(135deg, #f7f9ff 0, #ffffff 65%);
-      border: 1px solid rgba(68, 139, 202, 0.18);
+      background: linear-gradient(135deg, #f7f9ff 0, #fff 65%);
+      border: 1px solid rgba(68,139,202,0.18);
       border-radius: 16px;
       padding: 12px;
-      box-shadow: 0 8px 20px rgba(15, 35, 52, 0.08);
+      box-shadow: 0 8px 20px rgba(15,35,52,0.08);
     }
 
     .kpi-label {
@@ -190,12 +190,19 @@
       margin-bottom: 16px;
     }
 
+    .two-cols {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
     .section-card {
       background: var(--card-bg);
       border: 1px solid var(--border-soft);
       border-radius: var(--radius-lg);
       padding: 16px;
-      box-shadow: 0 8px 20px rgba(15, 35, 52, 0.07);
+      box-shadow: 0 8px 20px rgba(15,35,52,0.07);
     }
 
     .section-card h2 {
@@ -204,31 +211,8 @@
       font-size: 1.05rem;
     }
 
-    .chart-box {
-      height: 310px;
-    }
-
-    .mini-chart {
-      height: 240px;
-    }
-
-    .two-cols {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-      margin-bottom: 16px;
-    }
-
-    .decision-list {
-      margin: 0;
-      padding-left: 18px;
-      color: var(--text-dark);
-      font-size: 0.92rem;
-    }
-
-    .decision-list li {
-      margin-bottom: 8px;
-    }
+    .chart-box { height: 310px; }
+    .mini-chart { height: 245px; }
 
     .alert {
       padding: 10px 12px;
@@ -238,6 +222,14 @@
       border-left: 5px solid var(--unw-orange);
       background: #fff8f1;
     }
+
+    .decision-list {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 0.92rem;
+    }
+
+    .decision-list li { margin-bottom: 8px; }
 
     table {
       width: 100%;
@@ -257,9 +249,7 @@
       border-bottom: 1px solid var(--border-soft);
     }
 
-    tr:nth-child(even) {
-      background: #f8fafd;
-    }
+    tr:nth-child(even) { background: #f8fafd; }
 
     .status-badge {
       display: inline-block;
@@ -279,44 +269,42 @@
       color: var(--ocha-blue);
     }
 
+    .low {
+      background: #f1f5f9;
+      color: #334155;
+    }
+
     .footer-note {
       margin-top: 12px;
       font-size: 0.78rem;
       color: var(--text-muted);
     }
 
+    .error-box {
+      display: none;
+      background: #fff1e8;
+      border-left: 5px solid var(--unw-orange);
+      color: #7c2d12;
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+    }
+
     @media (max-width: 1050px) {
-      .kpi-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-
-      .dashboard-grid,
-      .two-cols {
-        grid-template-columns: 1fr;
-      }
-
-      .intro {
-        flex-direction: column;
-      }
+      .kpi-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .dashboard-grid, .two-cols { grid-template-columns: 1fr; }
+      .intro { flex-direction: column; }
     }
 
     @media (max-width: 700px) {
-      .kpi-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .page {
-        padding: 14px;
-      }
-
+      .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .page { padding: 14px; }
       .header-band {
         flex-direction: column;
         align-items: flex-start;
       }
-
-      .header-right {
-        text-align: left;
-      }
+      .header-right { text-align: left; }
     }
 
     @media print {
@@ -324,11 +312,7 @@
         background: #fff !important;
         padding: 0;
       }
-
-      .top-nav {
-        display: none;
-      }
-
+      .top-nav { display: none; }
       .page {
         box-shadow: none;
         border-radius: 0;
@@ -353,7 +337,7 @@
       <span class="header-dot"></span>
       <span><strong>Early Warning</strong> &amp; GiHA</span>
     </div>
-    <div><strong>Période :</strong> 2026</div>
+    <div><strong>Période :</strong> <span id="periodLabel">2026</span></div>
   </div>
 </header>
 
@@ -367,6 +351,11 @@
 
 <main class="page">
 
+  <div class="error-box" id="dataError">
+    Impossible de charger le fichier <strong>data/ebola_dashboard.json</strong>.
+    Vérifie que le fichier existe bien dans le dossier <strong>data</strong> et que le site est publié via GitHub Pages.
+  </div>
+
   <section class="intro">
     <div>
       <h1>Suivi stratégique de la crise Ebola</h1>
@@ -378,52 +367,52 @@
     </div>
 
     <div class="update-box">
-      <strong>Dernière mise à jour :</strong> à renseigner selon le dernier SitRep OMS / Ministère de la Santé.<br>
-      <strong>Sources :</strong> OMS, Ministère de la Santé RDC, Africa CDC, OCHA, clusters, partenaires GiHA.
+      <strong>Dernière mise à jour :</strong> <span id="lastUpdate">Chargement...</span><br>
+      <strong>Sources :</strong> <span id="dataSources">Chargement...</span>
     </div>
   </section>
 
   <section class="kpi-grid">
     <div class="kpi-card">
       <div class="kpi-label">Cas cumulés</div>
-      <div class="kpi-value" id="kpiCases">128</div>
+      <div class="kpi-value" id="kpiCases">-</div>
       <div class="kpi-note">Confirmés + probables</div>
     </div>
 
     <div class="kpi-card">
       <div class="kpi-label">Décès</div>
-      <div class="kpi-value" id="kpiDeaths">42</div>
-      <div class="kpi-note">Taux létalité estimé</div>
+      <div class="kpi-value" id="kpiDeaths">-</div>
+      <div class="kpi-note" id="kpiFatalityRate">Taux létalité : -</div>
     </div>
 
     <div class="kpi-card">
       <div class="kpi-label">Guéris</div>
-      <div class="kpi-value" id="kpiRecovered">51</div>
+      <div class="kpi-value" id="kpiRecovered">-</div>
       <div class="kpi-note">Sorties guéries</div>
     </div>
 
     <div class="kpi-card">
       <div class="kpi-label">Femmes/Filles</div>
-      <div class="kpi-value" id="kpiFemale">56%</div>
-      <div class="kpi-note">Cas désagrégés genre</div>
+      <div class="kpi-value" id="kpiFemale">-</div>
+      <div class="kpi-note">Part des cas désagrégés</div>
     </div>
 
     <div class="kpi-card">
       <div class="kpi-label">Zones affectées</div>
-      <div class="kpi-value" id="kpiZones">9</div>
+      <div class="kpi-value" id="kpiZones">-</div>
       <div class="kpi-note">Zones de santé touchées</div>
     </div>
 
     <div class="kpi-card">
       <div class="kpi-label">Alertes actives</div>
-      <div class="kpi-value" id="kpiAlerts">23</div>
+      <div class="kpi-value" id="kpiAlerts">-</div>
       <div class="kpi-note">À investiguer / suivre</div>
     </div>
   </section>
 
   <section class="dashboard-grid">
     <div class="section-card">
-      <h2>Tendance journalière des cas et décès</h2>
+      <h2>Tendance journalière des cas, décès et alertes</h2>
       <div class="chart-box">
         <canvas id="dailyTrendChart"></canvas>
       </div>
@@ -431,25 +420,8 @@
 
     <div class="section-card">
       <h2>Signaux d’alerte décisionnels</h2>
-
-      <div class="alert">
-        <strong>Protection :</strong> risque accru pour les femmes et filles dans les zones sous restriction de mobilité.
-      </div>
-
-      <div class="alert">
-        <strong>Accès aux services :</strong> suivi nécessaire des femmes enceintes, survivantes de VBG et ménages dirigés par des femmes.
-      </div>
-
-      <div class="alert">
-        <strong>Leadership féminin :</strong> intégrer les organisations féminines locales dans la RCCE, la surveillance communautaire et les mécanismes de feedback.
-      </div>
-
-      <ul class="decision-list">
-        <li>Prioriser les zones avec hausse rapide des cas.</li>
-        <li>Suivre les écarts femmes/hommes dans l’accès aux services.</li>
-        <li>Documenter les impacts des restrictions sur les moyens de subsistance.</li>
-        <li>Mobiliser des ressources dédiées à la protection et au leadership des femmes.</li>
-      </ul>
+      <div id="alertsContainer"></div>
+      <ul class="decision-list" id="recommendationsList"></ul>
     </div>
   </section>
 
@@ -485,6 +457,22 @@
     </div>
   </section>
 
+  <section class="two-cols">
+    <div class="section-card">
+      <h2>Contacts suivis et vaccination</h2>
+      <div class="mini-chart">
+        <canvas id="contactsVaccinationChart"></canvas>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <h2>Financement de la réponse</h2>
+      <div class="mini-chart">
+        <canvas id="fundingChart"></canvas>
+      </div>
+    </div>
+  </section>
+
   <section class="section-card">
     <h2>Zones de santé prioritaires</h2>
 
@@ -500,40 +488,17 @@
           <th>Action recommandée ONU Femmes</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="healthZonesTable">
         <tr>
-          <td>Ituri</td>
-          <td>Exemple ZS 1</td>
-          <td>34</td>
-          <td>11</td>
-          <td>59%</td>
-          <td><span class="status-badge critical">Critique</span></td>
-          <td>Renforcer RCCE sensible au genre, protection et engagement WLOs.</td>
-        </tr>
-        <tr>
-          <td>Nord-Kivu</td>
-          <td>Exemple ZS 2</td>
-          <td>28</td>
-          <td>8</td>
-          <td>53%</td>
-          <td><span class="status-badge critical">Critique</span></td>
-          <td>Suivre accès aux services essentiels et risques VBG.</td>
-        </tr>
-        <tr>
-          <td>Sud-Kivu</td>
-          <td>Exemple ZS 3</td>
-          <td>17</td>
-          <td>4</td>
-          <td>48%</td>
-          <td><span class="status-badge moderate">À surveiller</span></td>
-          <td>Documenter impacts sur moyens de subsistance et mobilité.</td>
+          <td colspan="7">Chargement des données...</td>
         </tr>
       </tbody>
     </table>
   </section>
 
   <section class="footer-note">
-    Les données actuellement affichées sont illustratives. Remplacer les séries dans le bloc JavaScript par les données consolidées issues des SitReps, fichiers OMS, Ministère de la Santé, OCHA, Africa CDC et partenaires.
+    Les données de démonstration sont fictives et servent uniquement à présenter le portail.
+    Pour la mise à jour réelle, remplacer uniquement <strong>data/ebola_dashboard.json</strong>.
   </section>
 
 </main>
@@ -544,175 +509,376 @@
   const unwOrange = "#F58220";
   const lightBlue = "#9CC7E8";
   const grey = "#D9E2F3";
+  const darkGrey = "#64748B";
 
   Chart.defaults.font.family = "'Source Sans 3', Arial, sans-serif";
   Chart.defaults.color = "#333";
 
-  // Données illustratives à remplacer par les données réelles
-  const dailyLabels = [
-    "01 Jun", "02 Jun", "03 Jun", "04 Jun", "05 Jun", "06 Jun", "07 Jun",
-    "08 Jun", "09 Jun", "10 Jun", "11 Jun", "12 Jun", "13 Jun", "14 Jun"
-  ];
+  const charts = {};
 
-  const dailyCases = [3, 5, 4, 8, 7, 9, 11, 10, 13, 12, 15, 14, 17, 18];
-  const dailyDeaths = [0, 1, 0, 2, 1, 2, 3, 2, 4, 3, 4, 5, 4, 5];
+  function fmtNumber(value) {
+    if (value === null || value === undefined || value === "") return "-";
+    return Number(value).toLocaleString("fr-FR");
+  }
 
-  new Chart(document.getElementById("dailyTrendChart"), {
-    type: "line",
-    data: {
-      labels: dailyLabels,
-      datasets: [
-        {
-          label: "Nouveaux cas",
-          data: dailyCases,
-          borderColor: unwBlue,
-          backgroundColor: "rgba(68,139,202,0.12)",
-          tension: 0.35,
-          fill: true,
-          pointRadius: 4
-        },
-        {
-          label: "Décès",
-          data: dailyDeaths,
-          borderColor: unwOrange,
-          backgroundColor: "rgba(245,130,32,0.12)",
-          tension: 0.35,
-          fill: true,
-          pointRadius: 4
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { position: "bottom" }
+  function fmtPercent(value) {
+    if (value === null || value === undefined || value === "") return "-";
+    return `${Number(value).toLocaleString("fr-FR", { maximumFractionDigits: 1 })}%`;
+  }
+
+  function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+  }
+
+  function destroyChart(id) {
+    if (charts[id]) {
+      charts[id].destroy();
+      delete charts[id];
+    }
+  }
+
+  function priorityClass(priority) {
+    const p = String(priority || "").toLowerCase();
+    if (p.includes("critique") || p.includes("élev") || p.includes("eleve")) return "critical";
+    if (p.includes("surveiller") || p.includes("mod")) return "moderate";
+    return "low";
+  }
+
+  function renderKpis(data) {
+    const k = data.kpis || {};
+
+    setText("periodLabel", data.metadata?.periode || "2026");
+    setText("lastUpdate", data.metadata?.derniere_mise_a_jour || "-");
+    setText("dataSources", Array.isArray(data.metadata?.sources) ? data.metadata.sources.join(", ") : "-");
+
+    setText("kpiCases", fmtNumber(k.cas_cumules));
+    setText("kpiDeaths", fmtNumber(k.deces));
+    setText("kpiRecovered", fmtNumber(k.gueris));
+    setText("kpiFemale", fmtPercent(k.femmes_filles_pct));
+    setText("kpiZones", fmtNumber(k.zones_affectees));
+    setText("kpiAlerts", fmtNumber(k.alertes_actives));
+    setText("kpiFatalityRate", `Taux létalité : ${fmtPercent(k.taux_letalite_pct)}`);
+  }
+
+  function renderAlerts(data) {
+    const container = document.getElementById("alertsContainer");
+    const list = document.getElementById("recommendationsList");
+
+    container.innerHTML = "";
+    list.innerHTML = "";
+
+    (data.alertes_decisionnelles || []).forEach(item => {
+      const div = document.createElement("div");
+      div.className = "alert";
+      div.innerHTML = `<strong>${item.titre || "Alerte"} :</strong> ${item.description || ""}`;
+      container.appendChild(div);
+    });
+
+    (data.recommandations || []).forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = item;
+      list.appendChild(li);
+    });
+  }
+
+  function renderHealthZones(data) {
+    const tbody = document.getElementById("healthZonesTable");
+    tbody.innerHTML = "";
+
+    (data.zones_sante_prioritaires || []).forEach(row => {
+      const tr = document.createElement("tr");
+      const badgeClass = priorityClass(row.priorite);
+
+      tr.innerHTML = `
+        <td>${row.province || "-"}</td>
+        <td>${row.zone_sante || "-"}</td>
+        <td>${fmtNumber(row.cas_cumules)}</td>
+        <td>${fmtNumber(row.deces)}</td>
+        <td>${fmtPercent(row.femmes_filles_pct)}</td>
+        <td><span class="status-badge ${badgeClass}">${row.priorite || "-"}</span></td>
+        <td>${row.action_recommandee || "-"}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    if (!tbody.children.length) {
+      tbody.innerHTML = `<tr><td colspan="7">Aucune zone de santé renseignée.</td></tr>`;
+    }
+  }
+
+  function renderDailyTrend(data) {
+    const daily = data.tendance_journaliere || [];
+
+    destroyChart("dailyTrendChart");
+    charts.dailyTrendChart = new Chart(document.getElementById("dailyTrendChart"), {
+      type: "line",
+      data: {
+        labels: daily.map(d => d.date),
+        datasets: [
+          {
+            label: "Nouveaux cas",
+            data: daily.map(d => d.nouveaux_cas),
+            borderColor: unwBlue,
+            backgroundColor: "rgba(68,139,202,0.12)",
+            tension: 0.35,
+            fill: true,
+            pointRadius: 2
+          },
+          {
+            label: "Décès",
+            data: daily.map(d => d.deces),
+            borderColor: unwOrange,
+            backgroundColor: "rgba(245,130,32,0.12)",
+            tension: 0.35,
+            fill: true,
+            pointRadius: 2
+          },
+          {
+            label: "Alertes",
+            data: daily.map(d => d.alertes),
+            borderColor: darkGrey,
+            backgroundColor: "rgba(100,116,139,0.10)",
+            tension: 0.35,
+            fill: false,
+            pointRadius: 2
+          }
+        ]
       },
-      scales: {
-        y: {
-          beginAtZero: true,
-          grid: { color: "#edf1f7" }
-        },
-        x: {
-          grid: { display: false }
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: "bottom" } },
+        scales: {
+          y: { beginAtZero: true, grid: { color: "#edf1f7" } },
+          x: { grid: { display: false } }
         }
       }
-    }
-  });
+    });
+  }
 
-  new Chart(document.getElementById("monthlyTrendChart"), {
-    type: "bar",
-    data: {
-      labels: ["Mars", "Avril", "Mai", "Juin", "Juillet"],
-      datasets: [
-        {
-          label: "Cas mensuels",
-          data: [8, 17, 31, 46, 26],
-          backgroundColor: unwBlue
-        },
-        {
-          label: "Décès mensuels",
-          data: [2, 5, 9, 17, 9],
-          backgroundColor: unwOrange
+  function renderMonthlyTrend(data) {
+    const monthly = data.tendance_mensuelle || [];
+
+    destroyChart("monthlyTrendChart");
+    charts.monthlyTrendChart = new Chart(document.getElementById("monthlyTrendChart"), {
+      type: "bar",
+      data: {
+        labels: monthly.map(d => d.mois),
+        datasets: [
+          {
+            label: "Cas mensuels",
+            data: monthly.map(d => d.cas),
+            backgroundColor: unwBlue
+          },
+          {
+            label: "Décès mensuels",
+            data: monthly.map(d => d.deces),
+            backgroundColor: unwOrange
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: "bottom" } },
+        scales: {
+          y: { beginAtZero: true, grid: { color: "#edf1f7" } },
+          x: { grid: { display: false } }
         }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { position: "bottom" } },
-      scales: {
-        y: { beginAtZero: true, grid: { color: "#edf1f7" } },
-        x: { grid: { display: false } }
       }
-    }
-  });
+    });
+  }
 
-  new Chart(document.getElementById("sexChart"), {
-    type: "doughnut",
-    data: {
-      labels: ["Femmes/Filles", "Hommes/Garçons"],
-      datasets: [
-        {
-          data: [56, 44],
-          backgroundColor: [unwOrange, unwBlue],
+  function renderSexChart(data) {
+    const sex = data.repartition_sexe || [];
+
+    destroyChart("sexChart");
+    charts.sexChart = new Chart(document.getElementById("sexChart"), {
+      type: "doughnut",
+      data: {
+        labels: sex.map(d => d.sexe),
+        datasets: [{
+          data: sex.map(d => d.cas),
+          backgroundColor: [unwOrange, unwBlue, grey],
           borderWidth: 2,
           borderColor: "#fff"
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { position: "bottom" }
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: "bottom" } }
       }
-    }
-  });
+    });
+  }
 
-  new Chart(document.getElementById("ageSexChart"), {
-    type: "bar",
-    data: {
-      labels: ["0–5", "6–17", "18–49", "50+"],
-      datasets: [
-        {
-          label: "Femmes/Filles",
-          data: [9, 14, 36, 12],
-          backgroundColor: unwOrange
-        },
-        {
-          label: "Hommes/Garçons",
-          data: [7, 11, 28, 11],
-          backgroundColor: unwBlue
+  function renderAgeSexChart(data) {
+    const ageSex = data.age_sexe || [];
+
+    destroyChart("ageSexChart");
+    charts.ageSexChart = new Chart(document.getElementById("ageSexChart"), {
+      type: "bar",
+      data: {
+        labels: ageSex.map(d => d.groupe_age),
+        datasets: [
+          {
+            label: "Femmes/Filles",
+            data: ageSex.map(d => d.femmes_filles),
+            backgroundColor: unwOrange
+          },
+          {
+            label: "Hommes/Garçons",
+            data: ageSex.map(d => d.hommes_garcons),
+            backgroundColor: unwBlue
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: "bottom" } },
+        scales: {
+          y: { beginAtZero: true, grid: { color: "#edf1f7" } },
+          x: { grid: { display: false } }
         }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { position: "bottom" } },
-      scales: {
-        y: { beginAtZero: true, grid: { color: "#edf1f7" } },
-        x: { grid: { display: false } }
       }
-    }
-  });
+    });
+  }
 
-  new Chart(document.getElementById("gihaChart"), {
-    type: "radar",
-    data: {
-      labels: [
-        "Protection",
-        "Accès santé",
-        "RCCE",
-        "Leadership femmes",
-        "Moyens subsistance",
-        "Données SADD"
-      ],
-      datasets: [
-        {
+  function renderGihaChart(data) {
+    const giha = data.indicateurs_giha || [];
+
+    destroyChart("gihaChart");
+    charts.gihaChart = new Chart(document.getElementById("gihaChart"), {
+      type: "radar",
+      data: {
+        labels: giha.map(d => d.indicateur),
+        datasets: [{
           label: "Niveau de risque / besoin",
-          data: [85, 76, 70, 64, 82, 58],
+          data: giha.map(d => d.valeur),
           borderColor: ochaBlue,
           backgroundColor: "rgba(68,139,202,0.20)",
           pointBackgroundColor: unwOrange
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { position: "bottom" } },
-      scales: {
-        r: {
-          min: 0,
-          max: 100,
-          ticks: { display: false },
-          grid: { color: "#dde3f0" }
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: "bottom" } },
+        scales: {
+          r: {
+            min: 0,
+            max: 100,
+            ticks: { display: false },
+            grid: { color: "#dde3f0" }
+          }
         }
       }
-    }
-  });
+    });
+  }
+
+  function renderContactsVaccinationChart(data) {
+    const daily = data.tendance_journaliere || [];
+
+    destroyChart("contactsVaccinationChart");
+    charts.contactsVaccinationChart = new Chart(document.getElementById("contactsVaccinationChart"), {
+      type: "line",
+      data: {
+        labels: daily.map(d => d.date),
+        datasets: [
+          {
+            label: "Contacts suivis",
+            data: daily.map(d => d.contacts_suivis),
+            borderColor: ochaBlue,
+            backgroundColor: "rgba(31,78,121,0.10)",
+            tension: 0.35,
+            fill: true,
+            pointRadius: 1
+          },
+          {
+            label: "Vaccinés",
+            data: daily.map(d => d.vaccines),
+            borderColor: unwOrange,
+            backgroundColor: "rgba(245,130,32,0.10)",
+            tension: 0.35,
+            fill: true,
+            pointRadius: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: "bottom" } },
+        scales: {
+          y: { beginAtZero: true, grid: { color: "#edf1f7" } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+  }
+
+  function renderFundingChart(data) {
+    const funding = data.financement || [];
+
+    destroyChart("fundingChart");
+    charts.fundingChart = new Chart(document.getElementById("fundingChart"), {
+      type: "bar",
+      data: {
+        labels: funding.map(d => d.source),
+        datasets: [{
+          label: "Financement mobilisé USD",
+          data: funding.map(d => d.usd),
+          backgroundColor: unwBlue
+        }]
+      },
+      options: {
+        indexAxis: "y",
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: {
+            beginAtZero: true,
+            grid: { color: "#edf1f7" },
+            ticks: {
+              callback: value => `${Number(value / 1000000).toLocaleString("fr-FR")}M`
+            }
+          },
+          y: { grid: { display: false } }
+        }
+      }
+    });
+  }
+
+  function initDashboard(data) {
+    renderKpis(data);
+    renderAlerts(data);
+    renderHealthZones(data);
+    renderDailyTrend(data);
+    renderMonthlyTrend(data);
+    renderSexChart(data);
+    renderAgeSexChart(data);
+    renderGihaChart(data);
+    renderContactsVaccinationChart(data);
+    renderFundingChart(data);
+  }
+
+  fetch("data/ebola_dashboard.json")
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Fichier JSON introuvable");
+      }
+      return response.json();
+    })
+    .then(data => {
+      initDashboard(data);
+    })
+    .catch(error => {
+      console.error(error);
+      document.getElementById("dataError").style.display = "block";
+    });
 </script>
 
 </body>
