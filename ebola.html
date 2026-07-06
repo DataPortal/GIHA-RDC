@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>GIHA RDC – Suivi de la crise Ebola</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+      --ocha-blue: #1F4E79;
+      --unw-blue: #448BCA;
+      --unw-orange: #F58220;
+      --text-dark: #222;
+      --text-muted: #666;
+      --bg-soft: #f5f7fb;
+      --card-bg: #fff;
+      --border-soft: #dde3f0;
+      --radius-lg: 18px;
+      --shadow-soft: 0 10px 28px rgba(15, 35, 52, 0.16);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 6px;
+      font-family: "Source Sans 3", Arial, sans-serif;
+      background: radial-gradient(circle at top left, #e9f1ff 0, #f5f7fb 40%, #ffffff 100%);
+      color: var(--text-dark);
+    }
+
+    .header-band {
+      background: var(--unw-blue);
+      color: #fff;
+      padding: 10px 26px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: 0 4px 12px rgba(15, 35, 52, 0.18);
+    }
+
+    .header-title-small {
+      font-size: 9pt;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      opacity: 0.9;
+    }
+
+    .header-title-main {
+      font-size: 14pt;
+      font-weight: 600;
+    }
+
+    .header-subtitle {
+      font-size: 10pt;
+      opacity: 0.9;
+    }
+
+    .header-right {
+      text-align: right;
+      font-size: 10pt;
+    }
+
+    .header-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 3px 9px;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      font-size: 9pt;
+      margin-bottom: 4px;
+    }
+
+    .header-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--unw-orange);
+    }
+
+    .top-nav {
+      background: linear-gradient(90deg, var(--unw-blue), var(--ocha-blue));
+      color: #fff;
+      padding: 6px 26px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 18px;
+      font-size: 0.9rem;
+      flex-wrap: wrap;
+    }
+
+    .top-nav a {
+      color: #fff;
+      text-decoration: none;
+      padding-bottom: 2px;
+      border-bottom: 2px solid transparent;
+    }
+
+    .top-nav a:hover,
+    .top-nav a.active {
+      border-bottom-color: var(--unw-orange);
+      font-weight: 600;
+    }
+
+    .page {
+      max-width: 1280px;
+      margin: 14px auto 10px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: var(--shadow-soft);
+      padding: 20px 24px 26px;
+    }
+
+    .intro {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .intro h1 {
+      margin: 0 0 6px;
+      font-size: 1.5rem;
+      color: var(--ocha-blue);
+    }
+
+    .intro p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .update-box {
+      background: #fff8f1;
+      border-left: 5px solid var(--unw-orange);
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      min-width: 260px;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .kpi-card {
+      background: linear-gradient(135deg, #f7f9ff 0, #ffffff 65%);
+      border: 1px solid rgba(68, 139, 202, 0.18);
+      border-radius: 16px;
+      padding: 12px;
+      box-shadow: 0 8px 20px rgba(15, 35, 52, 0.08);
+    }
+
+    .kpi-label {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .kpi-value {
+      color: var(--ocha-blue);
+      font-size: 1.55rem;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    .kpi-note {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      margin-top: 2px;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .section-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      box-shadow: 0 8px 20px rgba(15, 35, 52, 0.07);
+    }
+
+    .section-card h2 {
+      margin: 0 0 10px;
+      color: var(--ocha-blue);
+      font-size: 1.05rem;
+    }
+
+    .chart-box {
+      height: 310px;
+    }
+
+    .mini-chart {
+      height: 240px;
+    }
+
+    .two-cols {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .decision-list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--text-dark);
+      font-size: 0.92rem;
+    }
+
+    .decision-list li {
+      margin-bottom: 8px;
+    }
+
+    .alert {
+      padding: 10px 12px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      border-left: 5px solid var(--unw-orange);
+      background: #fff8f1;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    th {
+      background: var(--ocha-blue);
+      color: #fff;
+      text-align: left;
+      padding: 8px;
+    }
+
+    td {
+      padding: 8px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    tr:nth-child(even) {
+      background: #f8fafd;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 600;
+    }
+
+    .critical {
+      background: #fff1e8;
+      color: #9d4b00;
+    }
+
+    .moderate {
+      background: #eef6ff;
+      color: var(--ocha-blue);
+    }
+
+    .footer-note {
+      margin-top: 12px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 1050px) {
+      .kpi-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .dashboard-grid,
+      .two-cols {
+        grid-template-columns: 1fr;
+      }
+
+      .intro {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .page {
+        padding: 14px;
+      }
+
+      .header-band {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header-right {
+        text-align: left;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff !important;
+        padding: 0;
+      }
+
+      .top-nav {
+        display: none;
+      }
+
+      .page {
+        box-shadow: none;
+        border-radius: 0;
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header-band">
+  <div>
+    <div class="header-title-small">COMITÉ GENRE DANS L’ACTION HUMANITAIRE – RDC</div>
+    <div class="header-title-main">Portail GiHA – Suivi de la crise Ebola</div>
+    <div class="header-subtitle">
+      Tableau de bord d’aide à la décision pour ONU Femmes, EHP, ICCG, clusters et partenaires.
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="header-chip">
+      <span class="header-dot"></span>
+      <span><strong>Early Warning</strong> &amp; GiHA</span>
+    </div>
+    <div><strong>Période :</strong> 2026</div>
+  </div>
+</header>
+
+<nav class="top-nav">
+  <a href="index.html">Accueil</a>
+  <a href="snapshot.html">Snapshot</a>
+  <a href="plan_action.html">Plan d’action</a>
+  <a href="documents.html">Documents</a>
+  <a href="ebola.html" class="active">Suivi Ebola</a>
+</nav>
+
+<main class="page">
+
+  <section class="intro">
+    <div>
+      <h1>Suivi stratégique de la crise Ebola</h1>
+      <p>
+        Cette page permet de suivre l’évolution journalière et mensuelle de la crise,
+        d’analyser les données désagrégées par sexe et âge, d’identifier les zones critiques
+        et de soutenir la prise de décision sensible au genre.
+      </p>
+    </div>
+
+    <div class="update-box">
+      <strong>Dernière mise à jour :</strong> à renseigner selon le dernier SitRep OMS / Ministère de la Santé.<br>
+      <strong>Sources :</strong> OMS, Ministère de la Santé RDC, Africa CDC, OCHA, clusters, partenaires GiHA.
+    </div>
+  </section>
+
+  <section class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">Cas cumulés</div>
+      <div class="kpi-value" id="kpiCases">128</div>
+      <div class="kpi-note">Confirmés + probables</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-label">Décès</div>
+      <div class="kpi-value" id="kpiDeaths">42</div>
+      <div class="kpi-note">Taux létalité estimé</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-label">Guéris</div>
+      <div class="kpi-value" id="kpiRecovered">51</div>
+      <div class="kpi-note">Sorties guéries</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-label">Femmes/Filles</div>
+      <div class="kpi-value" id="kpiFemale">56%</div>
+      <div class="kpi-note">Cas désagrégés genre</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-label">Zones affectées</div>
+      <div class="kpi-value" id="kpiZones">9</div>
+      <div class="kpi-note">Zones de santé touchées</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-label">Alertes actives</div>
+      <div class="kpi-value" id="kpiAlerts">23</div>
+      <div class="kpi-note">À investiguer / suivre</div>
+    </div>
+  </section>
+
+  <section class="dashboard-grid">
+    <div class="section-card">
+      <h2>Tendance journalière des cas et décès</h2>
+      <div class="chart-box">
+        <canvas id="dailyTrendChart"></canvas>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <h2>Signaux d’alerte décisionnels</h2>
+
+      <div class="alert">
+        <strong>Protection :</strong> risque accru pour les femmes et filles dans les zones sous restriction de mobilité.
+      </div>
+
+      <div class="alert">
+        <strong>Accès aux services :</strong> suivi nécessaire des femmes enceintes, survivantes de VBG et ménages dirigés par des femmes.
+      </div>
+
+      <div class="alert">
+        <strong>Leadership féminin :</strong> intégrer les organisations féminines locales dans la RCCE, la surveillance communautaire et les mécanismes de feedback.
+      </div>
+
+      <ul class="decision-list">
+        <li>Prioriser les zones avec hausse rapide des cas.</li>
+        <li>Suivre les écarts femmes/hommes dans l’accès aux services.</li>
+        <li>Documenter les impacts des restrictions sur les moyens de subsistance.</li>
+        <li>Mobiliser des ressources dédiées à la protection et au leadership des femmes.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="two-cols">
+    <div class="section-card">
+      <h2>Tendance mensuelle</h2>
+      <div class="mini-chart">
+        <canvas id="monthlyTrendChart"></canvas>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <h2>Répartition par sexe</h2>
+      <div class="mini-chart">
+        <canvas id="sexChart"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <section class="two-cols">
+    <div class="section-card">
+      <h2>Cas par groupe d’âge et sexe</h2>
+      <div class="mini-chart">
+        <canvas id="ageSexChart"></canvas>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <h2>Dimensions GiHA à suivre</h2>
+      <div class="mini-chart">
+        <canvas id="gihaChart"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-card">
+    <h2>Zones de santé prioritaires</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Province</th>
+          <th>Zone de santé</th>
+          <th>Cas cumulés</th>
+          <th>Décès</th>
+          <th>% femmes/filles</th>
+          <th>Niveau de priorité</th>
+          <th>Action recommandée ONU Femmes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ituri</td>
+          <td>Exemple ZS 1</td>
+          <td>34</td>
+          <td>11</td>
+          <td>59%</td>
+          <td><span class="status-badge critical">Critique</span></td>
+          <td>Renforcer RCCE sensible au genre, protection et engagement WLOs.</td>
+        </tr>
+        <tr>
+          <td>Nord-Kivu</td>
+          <td>Exemple ZS 2</td>
+          <td>28</td>
+          <td>8</td>
+          <td>53%</td>
+          <td><span class="status-badge critical">Critique</span></td>
+          <td>Suivre accès aux services essentiels et risques VBG.</td>
+        </tr>
+        <tr>
+          <td>Sud-Kivu</td>
+          <td>Exemple ZS 3</td>
+          <td>17</td>
+          <td>4</td>
+          <td>48%</td>
+          <td><span class="status-badge moderate">À surveiller</span></td>
+          <td>Documenter impacts sur moyens de subsistance et mobilité.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="footer-note">
+    Les données actuellement affichées sont illustratives. Remplacer les séries dans le bloc JavaScript par les données consolidées issues des SitReps, fichiers OMS, Ministère de la Santé, OCHA, Africa CDC et partenaires.
+  </section>
+
+</main>
+
+<script>
+  const unwBlue = "#448BCA";
+  const ochaBlue = "#1F4E79";
+  const unwOrange = "#F58220";
+  const lightBlue = "#9CC7E8";
+  const grey = "#D9E2F3";
+
+  Chart.defaults.font.family = "'Source Sans 3', Arial, sans-serif";
+  Chart.defaults.color = "#333";
+
+  // Données illustratives à remplacer par les données réelles
+  const dailyLabels = [
+    "01 Jun", "02 Jun", "03 Jun", "04 Jun", "05 Jun", "06 Jun", "07 Jun",
+    "08 Jun", "09 Jun", "10 Jun", "11 Jun", "12 Jun", "13 Jun", "14 Jun"
+  ];
+
+  const dailyCases = [3, 5, 4, 8, 7, 9, 11, 10, 13, 12, 15, 14, 17, 18];
+  const dailyDeaths = [0, 1, 0, 2, 1, 2, 3, 2, 4, 3, 4, 5, 4, 5];
+
+  new Chart(document.getElementById("dailyTrendChart"), {
+    type: "line",
+    data: {
+      labels: dailyLabels,
+      datasets: [
+        {
+          label: "Nouveaux cas",
+          data: dailyCases,
+          borderColor: unwBlue,
+          backgroundColor: "rgba(68,139,202,0.12)",
+          tension: 0.35,
+          fill: true,
+          pointRadius: 4
+        },
+        {
+          label: "Décès",
+          data: dailyDeaths,
+          borderColor: unwOrange,
+          backgroundColor: "rgba(245,130,32,0.12)",
+          tension: 0.35,
+          fill: true,
+          pointRadius: 4
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: "bottom" }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: { color: "#edf1f7" }
+        },
+        x: {
+          grid: { display: false }
+        }
+      }
+    }
+  });
+
+  new Chart(document.getElementById("monthlyTrendChart"), {
+    type: "bar",
+    data: {
+      labels: ["Mars", "Avril", "Mai", "Juin", "Juillet"],
+      datasets: [
+        {
+          label: "Cas mensuels",
+          data: [8, 17, 31, 46, 26],
+          backgroundColor: unwBlue
+        },
+        {
+          label: "Décès mensuels",
+          data: [2, 5, 9, 17, 9],
+          backgroundColor: unwOrange
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { position: "bottom" } },
+      scales: {
+        y: { beginAtZero: true, grid: { color: "#edf1f7" } },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+
+  new Chart(document.getElementById("sexChart"), {
+    type: "doughnut",
+    data: {
+      labels: ["Femmes/Filles", "Hommes/Garçons"],
+      datasets: [
+        {
+          data: [56, 44],
+          backgroundColor: [unwOrange, unwBlue],
+          borderWidth: 2,
+          borderColor: "#fff"
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: "bottom" }
+      }
+    }
+  });
+
+  new Chart(document.getElementById("ageSexChart"), {
+    type: "bar",
+    data: {
+      labels: ["0–5", "6–17", "18–49", "50+"],
+      datasets: [
+        {
+          label: "Femmes/Filles",
+          data: [9, 14, 36, 12],
+          backgroundColor: unwOrange
+        },
+        {
+          label: "Hommes/Garçons",
+          data: [7, 11, 28, 11],
+          backgroundColor: unwBlue
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { position: "bottom" } },
+      scales: {
+        y: { beginAtZero: true, grid: { color: "#edf1f7" } },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+
+  new Chart(document.getElementById("gihaChart"), {
+    type: "radar",
+    data: {
+      labels: [
+        "Protection",
+        "Accès santé",
+        "RCCE",
+        "Leadership femmes",
+        "Moyens subsistance",
+        "Données SADD"
+      ],
+      datasets: [
+        {
+          label: "Niveau de risque / besoin",
+          data: [85, 76, 70, 64, 82, 58],
+          borderColor: ochaBlue,
+          backgroundColor: "rgba(68,139,202,0.20)",
+          pointBackgroundColor: unwOrange
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { position: "bottom" } },
+      scales: {
+        r: {
+          min: 0,
+          max: 100,
+          ticks: { display: false },
+          grid: { color: "#dde3f0" }
+        }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
