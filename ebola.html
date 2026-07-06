@@ -500,6 +500,8 @@
 </main>
 
 <script>
+  const DATA_URL = "https://dataportal.github.io/GIHA-RDC/data/ebola_dashboard.json";
+
   const unwBlue = "#448BCA";
   const ochaBlue = "#1F4E79";
   const unwOrange = "#F58220";
@@ -530,6 +532,16 @@
     if (el) el.textContent = value;
   }
 
+  function showError(message) {
+    const errorBox = document.getElementById("dataError");
+    errorBox.style.display = "block";
+    errorBox.innerHTML = `
+      Impossible de charger les données Ebola.<br>
+      <strong>Détail :</strong> ${message}<br>
+      Vérifie le fichier <strong>${DATA_URL}</strong>.
+    `;
+  }
+
   function destroyChart(id) {
     if (charts[id]) {
       charts[id].destroy();
@@ -549,10 +561,7 @@
 
     setText("periodLabel", data.metadata?.periode || "2026");
     setText("lastUpdate", data.metadata?.derniere_mise_a_jour || "-");
-    setText(
-      "dataSources",
-      Array.isArray(data.metadata?.sources) ? data.metadata.sources.join(", ") : "-"
-    );
+    setText("dataSources", Array.isArray(data.metadata?.sources) ? data.metadata.sources.join(", ") : "-");
 
     setText("kpiCases", fmtNumber(k.cas_cumules));
     setText("kpiDeaths", fmtNumber(k.deces));
@@ -804,9 +813,7 @@
           },
           {
             label: "Vaccinés",
-            data: daily.map(d =>
-              valueOrZero(d.vaccines || d.personnes_vaccinees || d.vaccines_jour)
-            ),
+            data: daily.map(d => valueOrZero(d.vaccines || d.personnes_vaccinees || d.vaccines_jour)),
             borderColor: unwOrange,
             backgroundColor: "rgba(245,130,32,0.10)",
             tension: 0.35,
@@ -873,28 +880,28 @@
     renderFundingChart(data);
   }
 
- document.addEventListener("DOMContentLoaded", function () {
-  fetch("https://dataportal.github.io/GIHA-RDC/data/ebola_dashboard.json")
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("Erreur HTTP " + response.status);
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log("DONNEES EBOLA CHARGEES :", data);
-      initDashboard(data);
-    })
-    .catch(error => {
-      console.error("ERREUR CHARGEMENT EBOLA :", error);
-      const errorBox = document.getElementById("dataError");
-      errorBox.style.display = "block";
-      errorBox.innerHTML = `
-        Impossible de charger les données Ebola.<br>
-        <strong>Détail :</strong> ${error.message}
-      `;
-    });
-});
+  document.addEventListener("DOMContentLoaded", function () {
+    fetch(DATA_URL + "?v=" + new Date().getTime())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Erreur HTTP " + response.status);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log("DONNEES EBOLA CHARGEES :", data);
+
+        if (!data.kpis || !data.tendance_journaliere || !data.tendance_mensuelle) {
+          throw new Error("Structure JSON invalide : sections essentielles manquantes.");
+        }
+
+        initDashboard(data);
+      })
+      .catch(error => {
+        console.error("ERREUR CHARGEMENT EBOLA :", error);
+        showError(error.message);
+      });
+  });
 </script>
 
 </body>
