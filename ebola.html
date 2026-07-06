@@ -18,7 +18,6 @@
       --unw-orange: #F58220;
       --text-dark: #222;
       --text-muted: #666;
-      --bg-soft: #f5f7fb;
       --card-bg: #fff;
       --border-soft: #dde3f0;
       --radius-lg: 18px;
@@ -117,6 +116,17 @@
       border-radius: 20px;
       box-shadow: var(--shadow-soft);
       padding: 20px 24px 26px;
+    }
+
+    .error-box {
+      display: none;
+      background: #fff1e8;
+      border-left: 5px solid var(--unw-orange);
+      color: #7c2d12;
+      padding: 12px 14px;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
     }
 
     .intro {
@@ -280,17 +290,6 @@
       color: var(--text-muted);
     }
 
-    .error-box {
-      display: none;
-      background: #fff1e8;
-      border-left: 5px solid var(--unw-orange);
-      color: #7c2d12;
-      padding: 12px 14px;
-      border-radius: 10px;
-      margin-bottom: 16px;
-      font-size: 0.9rem;
-    }
-
     @media (max-width: 1050px) {
       .kpi-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .dashboard-grid, .two-cols { grid-template-columns: 1fr; }
@@ -351,10 +350,7 @@
 
 <main class="page">
 
-  <div class="error-box" id="dataError">
-    Impossible de charger le fichier <strong>data/ebola_dashboard.json</strong>.
-    Vérifie que le fichier existe bien dans le dossier <strong>data</strong> et que le site est publié via GitHub Pages.
-  </div>
+  <div class="error-box" id="dataError"></div>
 
   <section class="intro">
     <div>
@@ -507,7 +503,6 @@
   const unwBlue = "#448BCA";
   const ochaBlue = "#1F4E79";
   const unwOrange = "#F58220";
-  const lightBlue = "#9CC7E8";
   const grey = "#D9E2F3";
   const darkGrey = "#64748B";
 
@@ -517,13 +512,17 @@
   const charts = {};
 
   function fmtNumber(value) {
-    if (value === null || value === undefined || value === "") return "-";
+    if (value === null || value === undefined || value === "" || Number.isNaN(Number(value))) return "-";
     return Number(value).toLocaleString("fr-FR");
   }
 
   function fmtPercent(value) {
-    if (value === null || value === undefined || value === "") return "-";
+    if (value === null || value === undefined || value === "" || Number.isNaN(Number(value))) return "-";
     return `${Number(value).toLocaleString("fr-FR", { maximumFractionDigits: 1 })}%`;
+  }
+
+  function valueOrZero(value) {
+    return Number(value || 0);
   }
 
   function setText(id, value) {
@@ -550,7 +549,10 @@
 
     setText("periodLabel", data.metadata?.periode || "2026");
     setText("lastUpdate", data.metadata?.derniere_mise_a_jour || "-");
-    setText("dataSources", Array.isArray(data.metadata?.sources) ? data.metadata.sources.join(", ") : "-");
+    setText(
+      "dataSources",
+      Array.isArray(data.metadata?.sources) ? data.metadata.sources.join(", ") : "-"
+    );
 
     setText("kpiCases", fmtNumber(k.cas_cumules));
     setText("kpiDeaths", fmtNumber(k.deces));
@@ -580,6 +582,10 @@
       li.textContent = item;
       list.appendChild(li);
     });
+
+    if (!container.children.length) {
+      container.innerHTML = `<div class="alert"><strong>Information :</strong> aucune alerte décisionnelle renseignée.</div>`;
+    }
   }
 
   function renderHealthZones(data) {
@@ -618,7 +624,7 @@
         datasets: [
           {
             label: "Nouveaux cas",
-            data: daily.map(d => d.nouveaux_cas),
+            data: daily.map(d => valueOrZero(d.nouveaux_cas)),
             borderColor: unwBlue,
             backgroundColor: "rgba(68,139,202,0.12)",
             tension: 0.35,
@@ -627,7 +633,7 @@
           },
           {
             label: "Décès",
-            data: daily.map(d => d.deces),
+            data: daily.map(d => valueOrZero(d.deces)),
             borderColor: unwOrange,
             backgroundColor: "rgba(245,130,32,0.12)",
             tension: 0.35,
@@ -636,7 +642,7 @@
           },
           {
             label: "Alertes",
-            data: daily.map(d => d.alertes),
+            data: daily.map(d => valueOrZero(d.alertes)),
             borderColor: darkGrey,
             backgroundColor: "rgba(100,116,139,0.10)",
             tension: 0.35,
@@ -668,12 +674,12 @@
         datasets: [
           {
             label: "Cas mensuels",
-            data: monthly.map(d => d.cas),
+            data: monthly.map(d => valueOrZero(d.cas)),
             backgroundColor: unwBlue
           },
           {
             label: "Décès mensuels",
-            data: monthly.map(d => d.deces),
+            data: monthly.map(d => valueOrZero(d.deces)),
             backgroundColor: unwOrange
           }
         ]
@@ -699,7 +705,7 @@
       data: {
         labels: sex.map(d => d.sexe),
         datasets: [{
-          data: sex.map(d => d.cas),
+          data: sex.map(d => valueOrZero(d.cas)),
           backgroundColor: [unwOrange, unwBlue, grey],
           borderWidth: 2,
           borderColor: "#fff"
@@ -724,12 +730,12 @@
         datasets: [
           {
             label: "Femmes/Filles",
-            data: ageSex.map(d => d.femmes_filles),
+            data: ageSex.map(d => valueOrZero(d.femmes_filles)),
             backgroundColor: unwOrange
           },
           {
             label: "Hommes/Garçons",
-            data: ageSex.map(d => d.hommes_garcons),
+            data: ageSex.map(d => valueOrZero(d.hommes_garcons)),
             backgroundColor: unwBlue
           }
         ]
@@ -756,7 +762,7 @@
         labels: giha.map(d => d.indicateur),
         datasets: [{
           label: "Niveau de risque / besoin",
-          data: giha.map(d => d.valeur),
+          data: giha.map(d => valueOrZero(d.valeur)),
           borderColor: ochaBlue,
           backgroundColor: "rgba(68,139,202,0.20)",
           pointBackgroundColor: unwOrange
@@ -789,7 +795,7 @@
         datasets: [
           {
             label: "Contacts suivis",
-            data: daily.map(d => d.contacts_suivis),
+            data: daily.map(d => valueOrZero(d.contacts_suivis)),
             borderColor: ochaBlue,
             backgroundColor: "rgba(31,78,121,0.10)",
             tension: 0.35,
@@ -798,7 +804,9 @@
           },
           {
             label: "Vaccinés",
-            data: daily.map(d => d.vaccines),
+            data: daily.map(d =>
+              valueOrZero(d.vaccines || d.personnes_vaccinees || d.vaccines_jour)
+            ),
             borderColor: unwOrange,
             backgroundColor: "rgba(245,130,32,0.10)",
             tension: 0.35,
@@ -829,7 +837,7 @@
         labels: funding.map(d => d.source),
         datasets: [{
           label: "Financement mobilisé USD",
-          data: funding.map(d => d.usd),
+          data: funding.map(d => valueOrZero(d.usd)),
           backgroundColor: unwBlue
         }]
       },
@@ -865,19 +873,32 @@
     renderFundingChart(data);
   }
 
-  fetch("data/ebola_dashboard.json")
+  fetch("./data/ebola_dashboard.json?v=" + new Date().getTime())
     .then(response => {
       if (!response.ok) {
-        throw new Error("Fichier JSON introuvable");
+        throw new Error("Erreur HTTP " + response.status + " - fichier JSON introuvable ou inaccessible");
       }
       return response.json();
     })
     .then(data => {
+      console.log("DONNEES EBOLA CHARGEES :", data);
+
+      if (!data.kpis || !data.tendance_journaliere || !data.tendance_mensuelle) {
+        throw new Error("Structure JSON invalide : sections kpis, tendance_journaliere ou tendance_mensuelle manquantes");
+      }
+
       initDashboard(data);
     })
     .catch(error => {
-      console.error(error);
-      document.getElementById("dataError").style.display = "block";
+      console.error("ERREUR CHARGEMENT EBOLA :", error);
+
+      const errorBox = document.getElementById("dataError");
+      errorBox.style.display = "block";
+      errorBox.innerHTML = `
+        Impossible de charger ou lire <strong>data/ebola_dashboard.json</strong>.<br>
+        <strong>Détail :</strong> ${error.message}<br>
+        Vérifie le nom exact du fichier, le dossier <strong>data</strong>, la validité du JSON et le déploiement GitHub Pages.
+      `;
     });
 </script>
 
