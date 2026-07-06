@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet" />
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
   <style>
     :root {
@@ -269,20 +269,9 @@
       font-weight: 600;
     }
 
-    .critical {
-      background: #fff1e8;
-      color: #9d4b00;
-    }
-
-    .moderate {
-      background: #eef6ff;
-      color: var(--ocha-blue);
-    }
-
-    .low {
-      background: #f1f5f9;
-      color: #334155;
-    }
+    .critical { background: #fff1e8; color: #9d4b00; }
+    .moderate { background: #eef6ff; color: var(--ocha-blue); }
+    .low { background: #f1f5f9; color: #334155; }
 
     .footer-note {
       margin-top: 12px;
@@ -307,16 +296,9 @@
     }
 
     @media print {
-      body {
-        background: #fff !important;
-        padding: 0;
-      }
+      body { background: #fff !important; padding: 0; }
       .top-nav { display: none; }
-      .page {
-        box-shadow: none;
-        border-radius: 0;
-        margin: 0;
-      }
+      .page { box-shadow: none; border-radius: 0; margin: 0; }
     }
   </style>
 </head>
@@ -374,31 +356,26 @@
       <div class="kpi-value" id="kpiCases">-</div>
       <div class="kpi-note">Confirmés + probables</div>
     </div>
-
     <div class="kpi-card">
       <div class="kpi-label">Décès</div>
       <div class="kpi-value" id="kpiDeaths">-</div>
       <div class="kpi-note" id="kpiFatalityRate">Taux létalité : -</div>
     </div>
-
     <div class="kpi-card">
       <div class="kpi-label">Guéris</div>
       <div class="kpi-value" id="kpiRecovered">-</div>
       <div class="kpi-note">Sorties guéries</div>
     </div>
-
     <div class="kpi-card">
       <div class="kpi-label">Femmes/Filles</div>
       <div class="kpi-value" id="kpiFemale">-</div>
       <div class="kpi-note">Part des cas désagrégés</div>
     </div>
-
     <div class="kpi-card">
       <div class="kpi-label">Zones affectées</div>
       <div class="kpi-value" id="kpiZones">-</div>
       <div class="kpi-note">Zones de santé touchées</div>
     </div>
-
     <div class="kpi-card">
       <div class="kpi-label">Alertes actives</div>
       <div class="kpi-value" id="kpiAlerts">-</div>
@@ -409,11 +386,8 @@
   <section class="dashboard-grid">
     <div class="section-card">
       <h2>Tendance journalière des cas, décès et alertes</h2>
-      <div class="chart-box">
-        <canvas id="dailyTrendChart"></canvas>
-      </div>
+      <div class="chart-box"><canvas id="dailyTrendChart"></canvas></div>
     </div>
-
     <div class="section-card">
       <h2>Signaux d’alerte décisionnels</h2>
       <div id="alertsContainer"></div>
@@ -424,54 +398,38 @@
   <section class="two-cols">
     <div class="section-card">
       <h2>Tendance mensuelle</h2>
-      <div class="mini-chart">
-        <canvas id="monthlyTrendChart"></canvas>
-      </div>
+      <div class="mini-chart"><canvas id="monthlyTrendChart"></canvas></div>
     </div>
-
     <div class="section-card">
       <h2>Répartition par sexe</h2>
-      <div class="mini-chart">
-        <canvas id="sexChart"></canvas>
-      </div>
+      <div class="mini-chart"><canvas id="sexChart"></canvas></div>
     </div>
   </section>
 
   <section class="two-cols">
     <div class="section-card">
       <h2>Cas par groupe d’âge et sexe</h2>
-      <div class="mini-chart">
-        <canvas id="ageSexChart"></canvas>
-      </div>
+      <div class="mini-chart"><canvas id="ageSexChart"></canvas></div>
     </div>
-
     <div class="section-card">
       <h2>Dimensions GiHA à suivre</h2>
-      <div class="mini-chart">
-        <canvas id="gihaChart"></canvas>
-      </div>
+      <div class="mini-chart"><canvas id="gihaChart"></canvas></div>
     </div>
   </section>
 
   <section class="two-cols">
     <div class="section-card">
       <h2>Contacts suivis et vaccination</h2>
-      <div class="mini-chart">
-        <canvas id="contactsVaccinationChart"></canvas>
-      </div>
+      <div class="mini-chart"><canvas id="contactsVaccinationChart"></canvas></div>
     </div>
-
     <div class="section-card">
       <h2>Financement de la réponse</h2>
-      <div class="mini-chart">
-        <canvas id="fundingChart"></canvas>
-      </div>
+      <div class="mini-chart"><canvas id="fundingChart"></canvas></div>
     </div>
   </section>
 
   <section class="section-card">
     <h2>Zones de santé prioritaires</h2>
-
     <table>
       <thead>
         <tr>
@@ -485,9 +443,7 @@
         </tr>
       </thead>
       <tbody id="healthZonesTable">
-        <tr>
-          <td colspan="7">Chargement des données...</td>
-        </tr>
+        <tr><td colspan="7">Chargement des données...</td></tr>
       </tbody>
     </table>
   </section>
@@ -500,7 +456,7 @@
 </main>
 
 <script>
-  const DATA_URL = "https://dataportal.github.io/GIHA-RDC/data/ebola_dashboard.json";
+  const DATA_URL = "./data/ebola_dashboard.json";
 
   const unwBlue = "#448BCA";
   const ochaBlue = "#1F4E79";
@@ -508,10 +464,14 @@
   const grey = "#D9E2F3";
   const darkGrey = "#64748B";
 
-  Chart.defaults.font.family = "'Source Sans 3', Arial, sans-serif";
-  Chart.defaults.color = "#333";
-
   const charts = {};
+
+  function setupChartDefaults() {
+    if (window.Chart) {
+      Chart.defaults.font.family = "'Source Sans 3', Arial, sans-serif";
+      Chart.defaults.color = "#333";
+    }
+  }
 
   function fmtNumber(value) {
     if (value === null || value === undefined || value === "" || Number.isNaN(Number(value))) return "-";
@@ -538,15 +498,8 @@
     errorBox.innerHTML = `
       Impossible de charger les données Ebola.<br>
       <strong>Détail :</strong> ${message}<br>
-      Vérifie le fichier <strong>${DATA_URL}</strong>.
+      Vérifie le fichier <strong>data/ebola_dashboard.json</strong>.
     `;
-  }
-
-  function destroyChart(id) {
-    if (charts[id]) {
-      charts[id].destroy();
-      delete charts[id];
-    }
   }
 
   function priorityClass(priority) {
@@ -622,11 +575,24 @@
     }
   }
 
+  function createChart(id, config) {
+    if (!window.Chart) {
+      throw new Error("Chart.js n'est pas chargé.");
+    }
+
+    const canvas = document.getElementById(id);
+    if (!canvas) {
+      throw new Error("Canvas introuvable : " + id);
+    }
+
+    if (charts[id]) charts[id].destroy();
+    charts[id] = new Chart(canvas, config);
+  }
+
   function renderDailyTrend(data) {
     const daily = data.tendance_journaliere || [];
 
-    destroyChart("dailyTrendChart");
-    charts.dailyTrendChart = new Chart(document.getElementById("dailyTrendChart"), {
+    createChart("dailyTrendChart", {
       type: "line",
       data: {
         labels: daily.map(d => d.date),
@@ -675,8 +641,7 @@
   function renderMonthlyTrend(data) {
     const monthly = data.tendance_mensuelle || [];
 
-    destroyChart("monthlyTrendChart");
-    charts.monthlyTrendChart = new Chart(document.getElementById("monthlyTrendChart"), {
+    createChart("monthlyTrendChart", {
       type: "bar",
       data: {
         labels: monthly.map(d => d.mois),
@@ -708,8 +673,7 @@
   function renderSexChart(data) {
     const sex = data.repartition_sexe || [];
 
-    destroyChart("sexChart");
-    charts.sexChart = new Chart(document.getElementById("sexChart"), {
+    createChart("sexChart", {
       type: "doughnut",
       data: {
         labels: sex.map(d => d.sexe),
@@ -731,8 +695,7 @@
   function renderAgeSexChart(data) {
     const ageSex = data.age_sexe || [];
 
-    destroyChart("ageSexChart");
-    charts.ageSexChart = new Chart(document.getElementById("ageSexChart"), {
+    createChart("ageSexChart", {
       type: "bar",
       data: {
         labels: ageSex.map(d => d.groupe_age),
@@ -764,8 +727,7 @@
   function renderGihaChart(data) {
     const giha = data.indicateurs_giha || [];
 
-    destroyChart("gihaChart");
-    charts.gihaChart = new Chart(document.getElementById("gihaChart"), {
+    createChart("gihaChart", {
       type: "radar",
       data: {
         labels: giha.map(d => d.indicateur),
@@ -796,8 +758,7 @@
   function renderContactsVaccinationChart(data) {
     const daily = data.tendance_journaliere || [];
 
-    destroyChart("contactsVaccinationChart");
-    charts.contactsVaccinationChart = new Chart(document.getElementById("contactsVaccinationChart"), {
+    createChart("contactsVaccinationChart", {
       type: "line",
       data: {
         labels: daily.map(d => d.date),
@@ -837,8 +798,7 @@
   function renderFundingChart(data) {
     const funding = data.financement || [];
 
-    destroyChart("fundingChart");
-    charts.fundingChart = new Chart(document.getElementById("fundingChart"), {
+    createChart("fundingChart", {
       type: "bar",
       data: {
         labels: funding.map(d => d.source),
@@ -871,20 +831,27 @@
     renderKpis(data);
     renderAlerts(data);
     renderHealthZones(data);
-    renderDailyTrend(data);
-    renderMonthlyTrend(data);
-    renderSexChart(data);
-    renderAgeSexChart(data);
-    renderGihaChart(data);
-    renderContactsVaccinationChart(data);
-    renderFundingChart(data);
+
+    if (window.Chart) {
+      renderDailyTrend(data);
+      renderMonthlyTrend(data);
+      renderSexChart(data);
+      renderAgeSexChart(data);
+      renderGihaChart(data);
+      renderContactsVaccinationChart(data);
+      renderFundingChart(data);
+    } else {
+      showError("Les KPI et tableaux sont chargés, mais Chart.js n'est pas disponible pour afficher les graphiques.");
+    }
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    fetch(DATA_URL + "?v=" + new Date().getTime())
+    setupChartDefaults();
+
+    fetch(DATA_URL)
       .then(response => {
         if (!response.ok) {
-          throw new Error("Erreur HTTP " + response.status);
+          throw new Error("Erreur HTTP " + response.status + " lors du chargement du JSON.");
         }
         return response.json();
       })
@@ -892,7 +859,7 @@
         console.log("DONNEES EBOLA CHARGEES :", data);
 
         if (!data.kpis || !data.tendance_journaliere || !data.tendance_mensuelle) {
-          throw new Error("Structure JSON invalide : sections essentielles manquantes.");
+          throw new Error("Structure JSON invalide : kpis, tendance_journaliere ou tendance_mensuelle manquant.");
         }
 
         initDashboard(data);
