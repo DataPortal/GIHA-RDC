@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Succinct de l'étude rapide - Comité GIHA</title>
+
+  <style>
+    :root{
+      --blue:#0397d6;
+      --light-blue:#8bc0e8;
+      --grey:#6d6e70;
+      --grey-mid:#77787b;
+      --black:#231f20;
+      --white:#ffffff;
+      --bg:#f5f8fb;
+      --border:#dbe6ee;
+      --shadow:0 10px 30px rgba(35,31,32,.08);
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family: "Arial", "Helvetica Neue", Helvetica, sans-serif;
+      background:var(--bg);
+      color:var(--black);
+      line-height:1.55;
+    }
+
+    .page{
+      width:min(1180px, 94%);
+      margin:auto;
+    }
+
+    header{
+      background:linear-gradient(135deg, var(--blue), #087db0);
+      color:white;
+      padding:36px 0 32px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    header::after{
+      content:"";
+      position:absolute;
+      right:-140px;
+      top:-100px;
+      width:420px;
+      height:420px;
+      border-radius:50%;
+      background:rgba(255,255,255,.08);
+    }
+
+    .eyebrow{
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      font-size:.82rem;
+      font-weight:700;
+      opacity:.92;
+      margin-bottom:10px;
+    }
+
+    h1{
+      font-size:clamp(2rem,4vw,3.5rem);
+      line-height:1.05;
+      max-width:900px;
+      margin-bottom:16px;
+    }
+
+    .subtitle{
+      font-size:1.12rem;
+      max-width:860px;
+      opacity:.95;
+    }
+
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:22px;
+    }
+
+    .meta span{
+      border:1px solid rgba(255,255,255,.4);
+      padding:7px 12px;
+      border-radius:999px;
+      font-size:.88rem;
+      background:rgba(255,255,255,.08);
+    }
+
+    nav{
+      background:white;
+      border-bottom:1px solid var(--border);
+      position:sticky;
+      top:0;
+      z-index:20;
+    }
+
+    .nav-inner{
+      width:min(1180px, 94%);
+      margin:auto;
+      display:flex;
+      gap:18px;
+      overflow:auto;
+      padding:12px 0;
+    }
+
+    nav a{
+      text-decoration:none;
+      color:var(--grey);
+      font-size:.9rem;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    nav a:hover{
+      color:var(--blue);
+    }
+
+    main{
+      padding:30px 0 60px;
+    }
+
+    section{
+      margin-bottom:28px;
+    }
+
+    .section-card{
+      background:white;
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:26px;
+      box-shadow:var(--shadow);
+    }
+
+    .section-title{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:16px;
+    }
+
+    .section-title .num{
+      width:34px;
+      height:34px;
+      border-radius:50%;
+      background:var(--blue);
+      color:white;
+      display:grid;
+      place-items:center;
+      font-weight:700;
+      font-size:.9rem;
+      flex-shrink:0;
+    }
+
+    .section-title h2{
+      color:var(--blue);
+      font-size:1.55rem;
+    }
+
+    .lead{
+      font-size:1.04rem;
+      color:#363636;
+    }
+
+    .stats-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+      margin-top:22px;
+    }
+
+    .stat{
+      background:white;
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:20px;
+      position:relative;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+    }
+
+    .stat::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:0;
+      width:5px;
+      height:100%;
+      background:var(--blue);
+    }
+
+    .stat .value{
+      font-size:2rem;
+      font-weight:800;
+      color:var(--blue);
+      line-height:1;
+      margin-bottom:8px;
+    }
+
+    .stat .label{
+      color:var(--grey);
+      font-weight:700;
+      font-size:.9rem;
+    }
+
+    .method-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+      margin-top:18px;
+    }
+
+    .method{
+      background:#f7fbfe;
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:18px;
+    }
+
+    .method h3{
+      font-size:1rem;
+      color:var(--blue);
+      margin-bottom:6px;
+    }
+
+    .sector-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:18px;
+      margin-top:18px;
+    }
+
+    .sector{
+      background:white;
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:20px;
+      box-shadow:var(--shadow);
+    }
+
+    .sector h3{
+      color:var(--blue);
+      margin-bottom:8px;
+      font-size:1.15rem;
+    }
+
+    .sector .big{
+      font-size:1.8rem;
+      font-weight:800;
+      color:var(--black);
+      margin-bottom:6px;
+    }
+
+    .sector p{
+      color:#454545;
+      font-size:.96rem;
+    }
+
+    .bar{
+      margin-top:12px;
+    }
+
+    .bar-row{
+      display:grid;
+      grid-template-columns:170px 1fr 64px;
+      gap:10px;
+      align-items:center;
+      margin:8px 0;
+      font-size:.88rem;
+    }
+
+    .track{
+      height:9px;
+      border-radius:999px;
+      background:#e9f2f7;
+      overflow:hidden;
+    }
+
+    .fill{
+      height:100%;
+      border-radius:999px;
+      background:var(--blue);
+    }
+
+    .chain{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:8px;
+      margin-top:18px;
+    }
+
+    .chain .step{
+      background:#f2f8fc;
+      border:1px solid var(--light-blue);
+      border-radius:999px;
+      padding:9px 14px;
+      font-weight:700;
+      font-size:.88rem;
+    }
+
+    .chain .arrow{
+      color:var(--blue);
+      font-weight:900;
+    }
+
+    .callout{
+      margin-top:20px;
+      border-left:5px solid var(--blue);
+      background:#eef8fd;
+      padding:18px 20px;
+      border-radius:12px;
+    }
+
+    .callout strong{
+      color:var(--blue);
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:16px;
+      overflow:hidden;
+      border-radius:14px;
+    }
+
+    th{
+      background:var(--blue);
+      color:white;
+      text-align:left;
+      padding:12px 13px;
+      font-size:.9rem;
+    }
+
+    td{
+      padding:11px 13px;
+      border-bottom:1px solid var(--border);
+      font-size:.9rem;
+      vertical-align:top;
+    }
+
+    tr:nth-child(even) td{
+      background:#f8fbfd;
+    }
+
+    .validation{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+      margin-top:18px;
+    }
+
+    .decision{
+      border:1px solid var(--border);
+      background:white;
+      border-radius:16px;
+      padding:18px;
+    }
+
+    .decision strong{
+      color:var(--blue);
+    }
+
+    .final-message{
+      background:linear-gradient(135deg,var(--blue),#087db0);
+      color:white;
+      border-radius:20px;
+      padding:28px;
+      box-shadow:var(--shadow);
+    }
+
+    .final-message h2{
+      margin-bottom:10px;
+      font-size:1.5rem;
+    }
+
+    .final-message p{
+      font-size:1.08rem;
+      max-width:900px;
+    }
+
+    footer{
+      background:var(--black);
+      color:#ddd;
+      padding:22px 0;
+      font-size:.85rem;
+      margin-top:30px;
+    }
+
+    .foot-flex{
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    @media (max-width:900px){
+      .stats-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      .sector-grid,
+      .method-grid,
+      .validation{
+        grid-template-columns:1fr;
+      }
+
+      .bar-row{
+        grid-template-columns:130px 1fr 54px;
+      }
+    }
+
+    @media print{
+      nav{display:none;}
+      body{background:white;}
+      .section-card,.stat,.sector{
+        box-shadow:none;
+      }
+      section{
+        page-break-inside:avoid;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="page">
+    <div class="eyebrow">Comité Genre dans l’Action Humanitaire — RDC</div>
+    <h1>Etude rapide des impacts des restrictions de mobilité liées à l’épidémie d’Ebola</h1>
+    <p class="subtitle">
+      Risques différenciés pour les femmes et les filles, conséquences sectorielles
+      et priorités d’action pour une réponse plus inclusive et mieux financée.
+    </p>
+
+    <div class="meta">
+      <span>Ituri</span>
+      <span>Nord-Kivu</span>
+      <span>Sud-Kivu</span>
+      <span>Août 2026</span>
+      <span>ONU Femmes / Comité GIHA</span>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#pourquoi">Pourquoi l’étude</a>
+    <a href="#portee">Portée</a>
+    <a href="#resultats">Résultats clés</a>
+    <a href="#risques">Risques différenciés</a>
+    <a href="#synthese">Lecture sectorielle</a>
+    <a href="#validation">Validation GIHA</a>
+  </div>
+</nav>
+
+<main class="page">
+
+  <section id="pourquoi">
+    <div class="section-card">
+      <div class="section-title">
+        <div class="num">1</div>
+        <h2>Pourquoi cette étude ?</h2>
+      </div>
+
+      <p class="lead">
+        Cette étude rapide a été conduite sous l’égide du Comité GIHA, avec le leadership
+        d’ONU Femmes, afin de mieux comprendre les conséquences des restrictions de mobilité
+        et des fermetures de frontières sur les femmes et les filles dans l’Est de la RDC.
+      </p>
+
+      <div class="callout">
+        <strong>Constat central :</strong>
+        les restrictions peuvent contribuer à réduire la transmission, mais lorsqu’elles ne sont
+        pas accompagnées de mesures économiques, sanitaires et de protection adaptées,
+        elles déplacent une part importante du coût de la crise vers les femmes et les filles.
+      </div>
+    </div>
+  </section>
+
+  <section id="portee">
+    <div class="section-title">
+      <div class="num">2</div>
+      <h2>Une mobilisation importante des organisations féminines</h2>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="value">189</div>
+        <div class="label">WLOs mobilisées</div>
+      </div>
+      <div class="stat">
+        <div class="value">945</div>
+        <div class="label">Participantes estimées</div>
+      </div>
+      <div class="stat">
+        <div class="value">3</div>
+        <div class="label">Provinces couvertes</div>
+      </div>
+      <div class="stat">
+        <div class="value">3</div>
+        <div class="label">Modalités de participation</div>
+      </div>
+    </div>
+
+    <div class="method-grid">
+      <div class="method">
+        <h3>104 WLOs via Kobo</h3>
+        <p>104 questionnaires admissibles pour l’analyse principale, sur 111 soumissions reçues.</p>
+      </div>
+
+      <div class="method">
+        <h3>53 WLOs en ligne</h3>
+        <p>Consultation approfondie sur les mécanismes, besoins, contraintes et solutions.</p>
+      </div>
+
+      <div class="method">
+        <h3>32 WLOs en présentiel</h3>
+        <p>Discussion collective sur les effets persistants, la protection et le relèvement.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="resultats">
+    <div class="section-title">
+      <div class="num">3</div>
+      <h2>Résultats clés par secteur</h2>
+    </div>
+
+    <div class="sector-grid">
+
+      <div class="sector">
+        <h3>Économie et moyens de subsistance</h3>
+        <div class="big">79,1 %</div>
+        <p>citent la fermeture des frontières comme cause de perte de revenus.</p>
+
+        <div class="bar">
+          <div class="bar-row">
+            <span>Hausse des prix</span>
+            <div class="track"><div class="fill" style="width:50%"></div></div>
+            <strong>50,0 %</strong>
+          </div>
+          <div class="bar-row">
+            <span>Marchés réduits</span>
+            <div class="track"><div class="fill" style="width:46.5%"></div></div>
+            <strong>46,5 %</strong>
+          </div>
+          <div class="bar-row">
+            <span>Moins de clients</span>
+            <div class="track"><div class="fill" style="width:45.3%"></div></div>
+            <strong>45,3 %</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="sector">
+        <h3>Santé et SSR</h3>
+        <div class="big">62,5 %</div>
+        <p>indiquent que l’accès aux soins est devenu plus difficile.</p>
+
+        <div class="bar">
+          <div class="bar-row">
+            <span>Évitement centres</span>
+            <div class="track"><div class="fill" style="width:80.8%"></div></div>
+            <strong>80,8 %</strong>
+          </div>
+          <div class="bar-row">
+            <span>SSR partielle</span>
+            <div class="track"><div class="fill" style="width:60%"></div></div>
+            <strong>60,0 %</strong>
+          </div>
+          <div class="bar-row">
+            <span>SSR pleine</span>
+            <div class="track"><div class="fill" style="width:28.4%"></div></div>
+            <strong>28,4 %</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="sector">
+        <h3>Protection et VBG</h3>
+        <div class="big">86,5 %</div>
+        <p>estiment que les risques pour les femmes et les filles ont augmenté.</p>
+
+        <div class="bar">
+          <div class="bar-row">
+            <span>Besoin suivi/référ.</span>
+            <div class="track"><div class="fill" style="width:84.4%"></div></div>
+            <strong>84,4 %</strong>
+          </div>
+          <div class="bar-row">
+            <span>Services partiels</span>
+            <div class="track"><div class="fill" style="width:52.1%"></div></div>
+            <strong>52,1 %</strong>
+          </div>
+          <div class="bar-row">
+            <span>Accès plus difficile</span>
+            <div class="track"><div class="fill" style="width:58.2%"></div></div>
+            <strong>58,2 %</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="sector">
+        <h3>RCCE et confiance</h3>
+        <div class="big">37,5 %</div>
+        <p>déclarent un niveau de confiance faible dans la réponse.</p>
+
+        <div class="bar">
+          <div class="bar-row">
+            <span>Radio</span>
+            <div class="track"><div class="fill" style="width:72.1%"></div></div>
+            <strong>72,1 %</strong>
+          </div>
+          <div class="bar-row">
+            <span>Agents santé</span>
+            <div class="track"><div class="fill" style="width:62.8%"></div></div>
+            <strong>62,8 %</strong>
+          </div>
+          <div class="bar-row">
+            <span>WLOs</span>
+            <div class="track"><div class="fill" style="width:54.7%"></div></div>
+            <strong>54,7 %</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="sector">
+        <h3>Leadership et localisation</h3>
+        <div class="big">85,9 %</div>
+        <p>des organisations concernées ne disposent d’aucun financement spécifique Ebola.</p>
+
+        <div class="bar">
+          <div class="bar-row">
+            <span>Besoin données</span>
+            <div class="track"><div class="fill" style="width:68%"></div></div>
+            <strong>68,0 %</strong>
+          </div>
+          <div class="bar-row">
+            <span>Besoin RCCE</span>
+            <div class="track"><div class="fill" style="width:65.3%"></div></div>
+            <strong>65,3 %</strong>
+          </div>
+          <div class="bar-row">
+            <span>Manque ressources</span>
+            <div class="track"><div class="fill" style="width:62.2%"></div></div>
+            <strong>62,2 %</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="sector">
+        <h3>Sécurité alimentaire et adaptation</h3>
+        <div class="big">46</div>
+        <p>mentions de réduction des repas parmi les stratégies d’adaptation.</p>
+
+        <div class="bar">
+          <div class="bar-row">
+            <span>Endettement</span>
+            <div class="track"><div class="fill" style="width:74%"></div></div>
+            <strong>34</strong>
+          </div>
+          <div class="bar-row">
+            <span>Vente de biens</span>
+            <div class="track"><div class="fill" style="width:72%"></div></div>
+            <strong>33</strong>
+          </div>
+          <div class="bar-row">
+            <span>Retrait école</span>
+            <div class="track"><div class="fill" style="width:41%"></div></div>
+            <strong>19</strong>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="risques">
+    <div class="section-card">
+      <div class="section-title">
+        <div class="num">4</div>
+        <h2>Les risques ne sont pas isolés : ils s’accumulent</h2>
+      </div>
+
+      <p class="lead">
+        Les résultats montrent une chaîne d’impacts qui traverse les secteurs et qui
+        affecte de manière disproportionnée les femmes les plus dépendantes du commerce
+        informel, des marchés transfrontaliers et des revenus quotidiens.
+      </p>
+
+      <div class="chain">
+        <div class="step">Restrictions</div>
+        <div class="arrow">→</div>
+        <div class="step">Perte de revenus</div>
+        <div class="arrow">→</div>
+        <div class="step">Consommation du capital</div>
+        <div class="arrow">→</div>
+        <div class="step">Endettement</div>
+        <div class="arrow">→</div>
+        <div class="step">Réduction des repas</div>
+        <div class="arrow">→</div>
+        <div class="step">Soins retardés</div>
+        <div class="arrow">→</div>
+        <div class="step">VBG / exploitation</div>
+        <div class="arrow">→</div>
+        <div class="step">Déscolarisation</div>
+      </div>
+
+      <div class="callout">
+        <strong>Groupes particulièrement exposés :</strong>
+        commerçantes transfrontalières, cheffes de ménage et veuves, adolescentes,
+        femmes déplacées, femmes vivant avec handicap, agentes de santé et aidantes.
+      </div>
+    </div>
+  </section>
+
+  <section id="synthese">
+    <div class="section-card">
+      <div class="section-title">
+        <div class="num">5</div>
+        <h2>Lecture sectorielle pour le Comité GIHA</h2>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Secteur</th>
+            <th>Signal clé</th>
+            <th>Priorité immédiate</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Économie</td>
+            <td>79,1 % citent la fermeture des frontières comme cause de perte</td>
+            <td>Cash, recapitalisation, soutien au commerce</td>
+          </tr>
+          <tr>
+            <td>Santé</td>
+            <td>62,5 % : accès aux soins plus difficile</td>
+            <td>Réduire coûts, transport, peur et stigmatisation</td>
+          </tr>
+          <tr>
+            <td>SSR</td>
+            <td>60 % : accès seulement partiel</td>
+            <td>Maintien effectif SSR et maternité</td>
+          </tr>
+          <tr>
+            <td>Protection/VBG</td>
+            <td>86,5 % : risques accrus</td>
+            <td>Paquet VBG/PSEA, espaces sûrs, référencement</td>
+          </tr>
+          <tr>
+            <td>RCCE</td>
+            <td>Confiance faible ou moyenne dominante</td>
+            <td>Écoute communautaire et implication des WLOs</td>
+          </tr>
+          <tr>
+            <td>Localisation</td>
+            <td>85,9 % sans financement Ebola spécifique</td>
+            <td>Fonds rapide et financement direct des WLOs</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="validation">
+    <div class="section-card">
+      <div class="section-title">
+        <div class="num">6</div>
+        <h2>Points proposés à la validation du Comité GIHA</h2>
+      </div>
+
+      <div class="validation">
+        <div class="decision">
+          <strong>01 — Valider les constats</strong>
+          <p>
+            Reconnaître la nature cumulative et différenciée des impacts sur les femmes
+            et les filles.
+          </p>
+        </div>
+
+        <div class="decision">
+          <strong>02 — Valider la portée</strong>
+          <p>
+            Retenir 189 WLOs mobilisées et environ 567 participantes estimées.
+          </p>
+        </div>
+
+        <div class="decision">
+          <strong>03 — Valider les priorités</strong>
+          <p>
+            Protection économique, santé/SSR, VBG/PSEA, RCCE, données, handicap et localisation.
+          </p>
+        </div>
+
+        <div class="decision">
+          <strong>04 — Autoriser la diffusion</strong>
+          <p>
+            Finaliser l’étude comme outil de plaidoyer auprès des clusters, autorités,
+            agences des Nations Unies et bailleurs.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="final-message">
+      <h2>Message de conclusion</h2>
+      <p>
+        Les restrictions de mobilité peuvent être nécessaires pour limiter la transmission,
+        mais sans mesures d’accompagnement, elles transfèrent une part importante du coût de la crise
+        vers les femmes et les filles. Les 189 WLOs mobilisées constituent à la fois une source
+        d’évidence, une capacité locale et un levier opérationnel pour une réponse Ebola plus efficace.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="page foot-flex">
+    <div>ONU Femmes | Comité GIHA | RDC</div>
+    <div>Analyse rapide des impacts des restrictions de mobilité liées à la MVE — Août 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>
